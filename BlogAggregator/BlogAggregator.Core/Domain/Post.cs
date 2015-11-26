@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlogAggregator.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,5 +26,15 @@ namespace BlogAggregator.Core.Domain
 
         // Post corresponds to just one blog
         public virtual Blog Blog { get; set; }
+
+        public void Update(PostModel post)
+        {           
+            BlogID = post.BlogID;
+            Content = post.Content;
+            Description = post.Description;
+            Link = post.Link;
+            PublicationDate = post.PublicationDate;
+            Title = post.Title;
+        }
     }
 }

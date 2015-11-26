@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BlogAggregator.Core.Models;
 
 namespace BlogAggregator.Core.Domain
 {
@@ -21,5 +22,17 @@ namespace BlogAggregator.Core.Domain
 
         // Author can have many blogs
         public virtual ICollection<Blog> Blogs { get; set; }
+
+        public void Update(AuthorModel author)
+        {
+            if (author.AuthorID == 0)
+            {
+                CreatedDate = DateTime.Now;
+            }
+
+            BlogID = author.BlogID;
+            Email = author.Email;
+            Name = author.Name;
+        }
     }
 }
