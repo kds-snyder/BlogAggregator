@@ -181,7 +181,7 @@ namespace BlogAggregator.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            // Put the blog description and title from the website in the blog record
+            // Put the blog description and title from the blog website in the blog record
             using (var blogWebData = new Core.Services.BlogWebData())
             {
                 blogWebData.GetBlogInformationWP(blog);
@@ -209,11 +209,15 @@ namespace BlogAggregator.API.Controllers
             //  that was set in the DB blog after db.SaveChanges
             blog.BlogID = dbBlog.BlogID;
 
-            // Parse the blog posts and store them in the DB
-            using (var blogWebData = new Core.Services.BlogWebData())
+            // If approved, parse the blog posts and store them in the DB
+
+            if (blog.Approved)
             {
-                blogWebData.ParseBlogPostsWP(blog);
-            }
+                using (var blogWebData = new Core.Services.BlogWebData())
+                {
+                    blogWebData.ParseBlogPostsWP(blog);
+                }
+            }            
 
             // Return the created blog record
             return CreatedAtRoute("DefaultApi", new { id = blog.BlogID }, blog);

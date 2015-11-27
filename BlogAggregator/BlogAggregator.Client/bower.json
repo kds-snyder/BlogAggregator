@@ -1,0 +1,22 @@
+{
+  "name": "BlogAggregator.Client",
+  "homepage": "https://github.com/kds-snyder/BlogAggregator",
+  "authors": [
+    "kds-snyder <kds_snyder@yahoo.com>"
+  ],
+  "description": "BlogAggregator",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-material": "~0.11.4"
+  }
+}
