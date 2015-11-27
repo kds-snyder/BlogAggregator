@@ -107,11 +107,29 @@ namespace BlogAggregator.API.Controllers
                 return BadRequest();
             }
 
-            // Get the DB blog, update it according to the input BlogModel object,           
-            //   and then set indicator that DB blog has been modified
+            // Get the DB blog and save the approved indicator
             var dbBlog = db.Blogs.Find(id);
+            bool approvedBeforeUpdate = dbBlog.Approved;
+
+            // Update the DB blog according to the input BlogModel object,
+            //   and then set indicator that DB blog has been modified
             dbBlog.Update(blog);
             db.Entry(dbBlog).State = EntityState.Modified;
+
+            // If approved indicator was changed from true to false, 
+            //   remove any posts corresponding to blog
+            if (approvedBeforeUpdate && !blog.Approved)
+            {
+                var dbPosts = db.Posts.Where(p => p.BlogID == id);
+
+                if (dbPosts.Count() > 0)
+                {
+                    foreach (var dbPost in dbPosts)
+                    {
+                        db.Posts.Remove(dbPost);
+                    }
+                }
+            }
 
             // Save database changes
             try
@@ -130,6 +148,16 @@ namespace BlogAggregator.API.Controllers
                 }
             }
 
+            // If approved indicator was changed from false to true, 
+            //  parse the blog posts and store them in DB
+            if (!approvedBeforeUpdate && blog.Approved)
+            {
+                using (var blogWebData = new Core.Services.BlogWebData())
+                {
+                    blogWebData.ParseBlogPostsWP(blog);
+                }
+            }
+
             return StatusCode(HttpStatusCode.NoContent);
         }
 
@@ -143,9 +171,15 @@ namespace BlogAggregator.API.Controllers
                 return BadRequest(ModelState);
             }
 
+            // Put the blog description and title from the website in the blog record
+            using (var blogWebData = new Core.Services.BlogWebData())
+            {
+                blogWebData.GetBlogInformationWP(blog);
+            }
+                          
             //Set up new Blog object, populated from input blog
             Blog dbBlog = new Blog();
-            dbBlog.Update(blog);
+            dbBlog.Update(blog);            
 
             // Add the new Blog object to the DB
             db.Blogs.Add(dbBlog);
@@ -164,6 +198,14 @@ namespace BlogAggregator.API.Controllers
             // Set blog ID in BlogModel object with the ID 
             //  that was set in the DB blog after db.SaveChanges
             blog.BlogID = dbBlog.BlogID;
+
+            // Parse the blog posts and store them in the DB
+            using (var blogWebData = new Core.Services.BlogWebData())
+            {
+                blogWebData.ParseBlogPostsWP(blog);
+            }
+
+            // Return the created blog record
             return CreatedAtRoute("DefaultApi", new { id = blog.BlogID }, blog);
         }
 
@@ -191,19 +233,19 @@ namespace BlogAggregator.API.Controllers
                     }
                 }
 
-                // Remove the author corresponding to the blog
-                var dbAuthors = db.Authors.Where(a => a.BlogID == id);
+                // Get the blog author, and then remove the blog
+                var dbAuthor = db.Authors.Where(a =>
+                            db.Blogs.Any(b => b.BlogID == id &&
+                                         b.AuthorID == a.AuthorID)).FirstOrDefault();
+                db.Blogs.Remove(dbBlog);
 
-                if (dbAuthors.Count() > 0)
+                // Remove the author if the author has no blogs                
+                if (dbAuthor != null &&
+                    db.Blogs.Where(b => b.AuthorID == dbAuthor.AuthorID).Count() == 0)
                 {
-                    foreach (var dbAuthor in dbAuthors)
-                    {
-                        db.Authors.Remove(dbAuthor);
-                    }
+                    db.Authors.Remove(dbAuthor);
                 }
 
-                // Remove the blog
-                db.Blogs.Remove(dbBlog);
                 db.SaveChanges();
             }
             catch (Exception e)
