@@ -17,14 +17,15 @@ namespace BlogAggregator.API.Controllers
 {
     public class AuthorsController : ApiController
     {
-        //private BlogAggregatorDbContext db = new BlogAggregatorDbContext();
-       
+        private BlogAggregatorDbContext db = new BlogAggregatorDbContext();
+        /*
         private readonly IBlogAggregatorDbContext db;       
 
         public AuthorsController(IBlogAggregatorDbContext context)
         {
             db = context;
-        }       
+        }  
+        */     
 
         // GET: api/Authors
         public IEnumerable<AuthorModel> GetAuthors()
@@ -68,7 +69,6 @@ namespace BlogAggregator.API.Controllers
             // Return the list of BlogModel objects            
             return Ok(Mapper.Map<IEnumerable<BlogModel>>(dbBlogs));
         }
-
 
         // GET: api/authors/5/posts
         // Get posts belonging to author corresponding to author ID
