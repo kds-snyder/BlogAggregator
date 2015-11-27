@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="app">
 	<head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,16 +7,22 @@
 		<title>Blog Aggregator</title>
 
 		<link href="bower_components/angular-material/angular-material.css" rel="stylesheet" />
+
+        <link href="img/origin.png" rel="icon" type="image/x-icon" />
 	</head>
 	<body>
 
-	
+        <div ui-view></div>
 
 		<script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 		<script src="bower_components/angular-aria/angular-aria.js"></script>
 		<script src="bower_components/angular-animate/angular-animate.js"></script>
 		<script src="bower_components/angular-material/angular-material.js"></script>
 
 		<script src="js/app.js"></script>
+        <script src="js/app/app.ctrl.js"></script>
+        <script src="js/app/addblog.ctrl.js"></script>
+        <script src="js/app/posts.ctrl.js"></script>
 	</body>
 </html>
