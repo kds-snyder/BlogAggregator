@@ -94,6 +94,10 @@
     <Compile Include="Migrations\201511262023287_CreateDatabase.Designer.cs">
       <DependentUpon>201511262023287_CreateDatabase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511270411063_RemoveBlogIDFromAuthorTable.cs" />
+    <Compile Include="Migrations\201511270411063_RemoveBlogIDFromAuthorTable.Designer.cs">
+      <DependentUpon>201511270411063_RemoveBlogIDFromAuthorTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AuthorModel.cs" />
     <Compile Include="Models\BlogModel.cs" />
@@ -108,6 +112,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201511262023287_CreateDatabase.resx">
       <DependentUpon>201511262023287_CreateDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511270411063_RemoveBlogIDFromAuthorTable.resx">
+      <DependentUpon>201511270411063_RemoveBlogIDFromAuthorTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

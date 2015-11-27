@@ -12,8 +12,6 @@ namespace BlogAggregator.Core.Domain
     {
         public int AuthorID { get; set; }
 
-        public int BlogID { get; set; }
-
         public DateTime CreatedDate { get; set; }
        
         public string Email { get; set; }
@@ -29,8 +27,7 @@ namespace BlogAggregator.Core.Domain
             {
                 CreatedDate = DateTime.Now;
             }
-
-            BlogID = author.BlogID;
+            
             Email = author.Email;
             Name = author.Name;
         }

@@ -27,3 +27,4 @@ C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core\obj\Debug\BlogAggregato
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core\obj\Debug\BlogAggregator.Core.pdb
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core\obj\Debug\BlogAggregator.Core.Migrations.CreateDatabase.resources
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core\obj\Debug\BlogAggregator.Core.csproj.GenerateResource.Cache
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core\obj\Debug\BlogAggregator.Core.Migrations.RemoveBlogIDFromAuthorTable.resources

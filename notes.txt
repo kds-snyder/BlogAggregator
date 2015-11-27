@@ -24,3 +24,6 @@ How to get the picture of the blog author? It's not in the RSS feed. Have them u
 On front end, clicking blog author's name should lead to: their blog? Clicking post title should lead to post?
 
 The characters "..." in blog title XML are unprintable character in blog title string
+
+Dependency injection of DB to API controller resulted in error. Does DI package such as Ninject need to be used? 
+If repository layer is used between Entity Framework and Web API, how does an API method know from the repository method result whether to return NotFound or BadRequest? How can the repository method return both the HTTP result and the list of results from the query (e.g. /api/author/5/posts)

@@ -2,8 +2,8 @@ use BlogAggregator;
 GO
 
 INSERT INTO Authors
-(BlogID, CreatedDate, Email, Name) 
-VALUES (1, '11/26/2015 12:40', 'a@b.com', 'Karen Snyder');
+(CreatedDate, Email, Name) 
+VALUES ('11/26/2015 12:40', 'a@b.com', 'Karen Snyder');
 
 --INSERT INTO Authors
 --(BlogID, CreatedDate, Email, Name) 

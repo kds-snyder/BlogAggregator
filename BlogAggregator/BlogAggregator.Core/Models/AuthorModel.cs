@@ -10,8 +10,6 @@ namespace BlogAggregator.Core.Models
     {
         public int AuthorID { get; set; }
 
-        public int BlogID { get; set; }
-
         public DateTime CreatedDate { get; set; }
 
         public string Email { get; set; }

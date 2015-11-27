@@ -17,7 +17,17 @@ namespace BlogAggregator.API.Controllers
 {
     public class BlogsController : ApiController
     {
-        private BlogAggregatorDbContext db = new BlogAggregatorDbContext();
+        private readonly IBlogAggregatorDbContext db;
+
+        public BlogsController()
+        {
+            db = new BlogAggregatorDbContext();
+        }
+
+        public BlogsController(IBlogAggregatorDbContext context)
+        {
+            db = context;
+        }
 
         // GET: api/Blogs
         public IEnumerable<BlogModel> GetBlogs()
