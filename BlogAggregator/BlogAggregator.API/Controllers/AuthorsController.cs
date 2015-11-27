@@ -17,7 +17,14 @@ namespace BlogAggregator.API.Controllers
 {
     public class AuthorsController : ApiController
     {
-        private BlogAggregatorDbContext db = new BlogAggregatorDbContext();
+        //private BlogAggregatorDbContext db = new BlogAggregatorDbContext();
+       
+        private readonly IBlogAggregatorDbContext db;       
+
+        public AuthorsController(IBlogAggregatorDbContext context)
+        {
+            db = context;
+        }       
 
         // GET: api/Authors
         public IEnumerable<AuthorModel> GetAuthors()

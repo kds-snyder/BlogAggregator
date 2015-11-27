@@ -1,0 +1,26 @@
+extract
+transform
+load
+
+interface ipost
+
+wp posts inherit from ipost
+
+------------------------------------------
+Open:
+
+Should blog title and description be stored in DB, or retrieved from blog feed when needed? If retrieved when needed, what is the API endpoint?
+
+Blog publication data is in UTC;  Convert.ToDateTime changes it to PST. Is this OK or should it be left in UTC? 
+
+Check that entered URL is valid
+
+Check if http: (or https:) needs to be inserted at start of entered URL? Postman has no problem with kdssnyder.wordpress.com, but XMLParser has error: Could not find a part of the path 'C:\dev\XMLParser\XMLParser\XMLParser\bin\Debug\kdssnyder.wordpress.com\feed
+
+How to get picture for blog post? It's not in the RSS feed.
+
+How to get the picture of the blog author? It's not in the RSS feed. Have them upload it when they register blog? If so, where can it be stored?
+
+On front end, clicking blog author's name should lead to: their blog? Clicking post title should lead to post?
+
+The characters "..." in blog title XML are unprintable character in blog title string

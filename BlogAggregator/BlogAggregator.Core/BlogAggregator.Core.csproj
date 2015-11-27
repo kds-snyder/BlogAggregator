@@ -89,6 +89,7 @@
     <Compile Include="Domain\Blog.cs" />
     <Compile Include="Domain\Post.cs" />
     <Compile Include="Infrastructure\BlogAggregatorDbContext.cs" />
+    <Compile Include="Infrastructure\IBlogAggregatorDbContext.cs" />
     <Compile Include="Migrations\201511262023287_CreateDatabase.cs" />
     <Compile Include="Migrations\201511262023287_CreateDatabase.Designer.cs">
       <DependentUpon>201511262023287_CreateDatabase.cs</DependentUpon>

@@ -1,0 +1,27 @@
+error at localhost:50111/api/authors, after changing AuthorsController to remove this line:
+
+private BlogAggregatorDbContext db = new BlogAggregatorDbContext();
+
+and add these lines:
+       
+        private readonly IBlogAggregatorDbContext db;       
+
+        public AuthorsController(IBlogAggregatorDbContext context)
+        {
+            db = context;
+        }       
+----------------
+
+
+{
+Message: "An error has occurred.",
+ExceptionMessage: "An error occurred when trying to create a controller of type 'AuthorsController'. Make sure that the controller has a parameterless public constructor.",
+ExceptionType: "System.InvalidOperationException",
+StackTrace: " at System.Web.Http.Dispatcher.DefaultHttpControllerActivator.Create(HttpRequestMessage request, HttpControllerDescriptor controllerDescriptor, Type controllerType) at System.Web.Http.Controllers.HttpControllerDescriptor.CreateController(HttpRequestMessage request) at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()",
+InnerException: {
+Message: "An error has occurred.",
+ExceptionMessage: "Type 'BlogAggregator.API.Controllers.AuthorsController' does not have a default constructor",
+ExceptionType: "System.ArgumentException",
+StackTrace: " at System.Linq.Expressions.Expression.New(Type type) at System.Web.Http.Internal.TypeActivator.Create[TBase](Type instanceType) at System.Web.Http.Dispatcher.DefaultHttpControllerActivator.GetInstanceOrActivator(HttpRequestMessage request, Type controllerType, Func`1& activator) at System.Web.Http.Dispatcher.DefaultHttpControllerActivator.Create(HttpRequestMessage request, HttpControllerDescriptor controllerDescriptor, Type controllerType)"
+}
+}

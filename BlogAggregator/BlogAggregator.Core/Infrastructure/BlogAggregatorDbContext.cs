@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BlogAggregator.Core.Infrastructure
 {
-    public class BlogAggregatorDbContext : IdentityDbContext
+    public class BlogAggregatorDbContext : IdentityDbContext, IBlogAggregatorDbContext
     {
 
         public BlogAggregatorDbContext() : base("BlogAggregator")
@@ -17,9 +17,7 @@ namespace BlogAggregator.Core.Infrastructure
         }
 
         public IDbSet<Author> Authors { get; set; }
-
         public IDbSet<Blog> Blogs { get; set; }
-
         public IDbSet<Post> Posts { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
