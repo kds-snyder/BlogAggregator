@@ -1,7 +1,8 @@
-angular.module('app', ['ui.router', 'ngMaterial']).config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider) {
+angular.module('app', ['ui.router', 'ngMaterial', 'ngMessages', 'ngResource']).config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider) {
 
     $mdThemingProvider.theme('default')
-        .primaryPalette('teal');
+        .primaryPalette('cyan')
+        .accentPalette('green');
     
     $urlRouterProvider.otherwise('/app/posts');
 

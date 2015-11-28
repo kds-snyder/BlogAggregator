@@ -1,1 +1,35 @@
-﻿<h1>Add Blog</h1>
+﻿<md-content layout-padding>
+    <div layout="row" layout-align="center center">
+        <h1>Add Blog</h1>
+        <form name="addBlogForm" data-ng-submit="addBlog()">
+            <md-input-container class="md-block">
+                <label>Name</label>
+                <input required name="authorName" ng-model="author.Name">
+                <div ng-messages="addBlogForm.authorName.$error" role="alert">
+                    <div ng-message="required">You must enter your name</div>
+                </div>
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label>Email</label>
+                <input required type="email" name="authorEmail" ng-model="author.Email"
+                       ng-pattern="/^.+@.+\..+$/" />
+                <div ng-messages="addBlogForm.authorEmail.$error" role="alert">
+                    <div ng-message-exp="['required']">
+                        You must enter an email address
+                    </div>
+                    <div ng-message-exp="['pattern']">
+                        Your email address is not in the format of an email address
+                    </div>
+                </div>
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label>Link to Blog</label>
+                <input required name="blogLink" ng-model="blog.Link">
+                <div ng-messages="addBlogForm.blogLink.$error" role="alert">
+                    <div ng-message="required">You must enter the link to your blog</div>
+                </div>
+            </md-input-container>
+            <md-button class="md-raised md-accent" type="submit">Submit</md-button>
+        </form>
+    </div>
+</md-content>
