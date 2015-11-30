@@ -5,3 +5,5 @@ load
 interface ipost
 
 wp posts inherit from ipost
+
+>>GetAuthorForPost: how to use lambda? 

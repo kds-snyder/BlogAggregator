@@ -58,11 +58,14 @@ namespace BlogAggregator.API.Controllers
             {
                 return BadRequest();
             }
-            
-            // Get author corresponding to post                                   
-            var dbAuthor = 
-                db.Authors.Where(a => db.Blogs.Any(b => db.Posts.Any(p => p.PostID == postID))).FirstOrDefault();            
-           
+
+            // Get author corresponding to post  
+            var dbPost = db.Posts.Find(postID);
+            var dbAuthor = db.Authors.Find(dbPost.Blog.AuthorID);
+
+            //dbAuthor = db.Authors.Select(a => db.Blogs.Select(b => db.Posts.Select(p => p.PostID)));
+            // db.Authors.Where(a => db.Blogs.Any(b => db.Posts.Any(p => p.PostID == postID))).FirstOrDefault();
+
             // Return the author as AuthorModel object           
             return Ok(Mapper.Map<AuthorModel>(dbAuthor));
         }

@@ -2,8 +2,8 @@ use BlogAggregator;
 GO
 
 UPDATE Blogs
-SET Approved = 0
-WHERE AuthorID = (SELECT AuthorID FROM Authors Where Name = 'Karen Snyder');
+SET Approved = 1
+WHERE AuthorID = (SELECT AuthorID FROM Authors Where Name = 'Adriann Bracken');
 
 SELECT * FROM Authors;
 SELECT * FROM Blogs;

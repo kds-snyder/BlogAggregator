@@ -5,13 +5,14 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using BlogAggregator.Core.Domain;
 using BlogAggregator.Core.Infrastructure;
 using AutoMapper;
 using BlogAggregator.Core.Models;
+using System.Web.Http.Results;
+using BlogAggregator.Core.Services;
 
 namespace BlogAggregator.API.Controllers
 {
@@ -162,10 +163,7 @@ namespace BlogAggregator.API.Controllers
             //  parse the blog posts and store them in DB
             if (!approvedBeforeUpdate && blog.Approved)
             {
-                using (var blogWebData = new Core.Services.BlogWebData())
-                {
-                    blogWebData.ParseBlogPostsWP(blog);
-                }
+                    BlogWebDataWP.GetBlogPosts(blog);               
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -174,18 +172,22 @@ namespace BlogAggregator.API.Controllers
         // POST: api/Blogs
         [ResponseType(typeof(BlogModel))]
         public IHttpActionResult PostBlog(BlogModel blog)
-        {
+        {           
+
             // Validate request
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            // Put the blog description and title from the blog website in the blog record
-            using (var blogWebData = new Core.Services.BlogWebData())
-            {
-                blogWebData.GetBlogInformationWP(blog);
-            }
+            // Get the blog information from the blog website 
+            // If unable to get the information, do not create the blog record
+ 
+                bool result = BlogWebDataWP.GetBlogInformation(blog);
+                if (!result)
+                {
+                    return NotFound();
+                }                        
                           
             //Set up new Blog object, populated from input blog
             Blog dbBlog = new Blog();
@@ -213,10 +215,7 @@ namespace BlogAggregator.API.Controllers
 
             if (blog.Approved)
             {
-                using (var blogWebData = new Core.Services.BlogWebData())
-                {
-                    blogWebData.ParseBlogPostsWP(blog);
-                }
+                    BlogWebDataWP.GetBlogPosts(blog);                
             }            
 
             // Return the created blog record
