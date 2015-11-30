@@ -4,14 +4,14 @@
         <form name="addBlogForm" data-ng-submit="addBlog()">
             <md-input-container class="md-block">
                 <label>Name</label>
-                <input required name="authorName" ng-model="author.Name">
+                <input required name="authorName" ng-model="blog.authorName">
                 <div ng-messages="addBlogForm.authorName.$error" role="alert">
                     <div ng-message="required">You must enter your name</div>
                 </div>
             </md-input-container>
             <md-input-container class="md-block">
                 <label>Email</label>
-                <input required type="email" name="authorEmail" ng-model="author.Email"
+                <input required type="email" name="authorEmail" ng-model="blog.authorEmail"
                        ng-pattern="/^.+@.+\..+$/" />
                 <div ng-messages="addBlogForm.authorEmail.$error" role="alert">
                     <div ng-message-exp="['required']">
