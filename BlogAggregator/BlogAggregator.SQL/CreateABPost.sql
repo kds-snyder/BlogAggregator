@@ -12,6 +12,5 @@ VALUES (2,
 <p><iframe width="640" height="360" src="https://www.youtube.com/embed/H5Vzo-iPGCo?feature=oembed" frameborder="0" allowfullscreen></iframe></p>
 </div>');
 
-SELECT * FROM Authors;
 SELECT * FROM Blogs;
 SELECT * FROM Posts;

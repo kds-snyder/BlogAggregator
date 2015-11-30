@@ -3,8 +3,7 @@ GO
 
 UPDATE Blogs
 SET Approved = 1
-WHERE AuthorID = (SELECT AuthorID FROM Authors Where Name = 'Karen Snyder');
+WHERE BlogID = (SELECT BlogID FROM Blogs Where AuthorName = 'Karen Snyder');
 
-SELECT * FROM Authors;
 SELECT * FROM Blogs;
 SELECT * FROM Posts;

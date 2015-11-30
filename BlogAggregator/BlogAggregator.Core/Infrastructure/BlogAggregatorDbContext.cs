@@ -16,17 +16,11 @@ namespace BlogAggregator.Core.Infrastructure
         {
         }
 
-        public IDbSet<Author> Authors { get; set; }
         public IDbSet<Blog> Blogs { get; set; }
         public IDbSet<Post> Posts { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Author>().HasKey(a => a.AuthorID);
-            modelBuilder.Entity<Author>().HasMany(a => a.Blogs)
-                                         .WithRequired(b => b.Author)
-                                         .HasForeignKey(b => b.AuthorID);
-
             modelBuilder.Entity<Blog>().HasKey(b => b.BlogID);
             modelBuilder.Entity<Blog>().HasMany(b => b.Posts)
                                          .WithRequired(p => p.Blog)

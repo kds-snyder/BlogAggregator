@@ -10,11 +10,13 @@ namespace BlogAggregator.Core.Models
     {
         public int BlogID { get; set; }
 
-        public int AuthorID { get; set; }
-
         public DateTime CreatedDate { get; set; }
 
         public bool Approved { get; set; }
+
+        public string AuthorEmail { get; set; }
+
+        public string AuthorName { get; set; }
 
         public string Description { get; set; }
 

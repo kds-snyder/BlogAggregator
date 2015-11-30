@@ -10,8 +10,7 @@ using System.Threading.Tasks;
 namespace BlogAggregator.Core.Infrastructure
 {
     public interface IBlogAggregatorDbContext : IDisposable
-    {
-        IDbSet<Author> Authors { get; set; }
+    {       
         IDbSet<Blog> Blogs { get; set; }
         IDbSet<Post> Posts { get; set; }
 

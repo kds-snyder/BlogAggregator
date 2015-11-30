@@ -85,7 +85,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Domain\Author.cs" />
     <Compile Include="Domain\Blog.cs" />
     <Compile Include="Domain\Post.cs" />
     <Compile Include="Infrastructure\BlogAggregatorDbContext.cs" />
@@ -98,8 +97,11 @@
     <Compile Include="Migrations\201511270411063_RemoveBlogIDFromAuthorTable.Designer.cs">
       <DependentUpon>201511270411063_RemoveBlogIDFromAuthorTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511300321243_RemoveAuthorTable_And_AddNameAndEmailToBlogTable.cs" />
+    <Compile Include="Migrations\201511300321243_RemoveAuthorTable_And_AddNameAndEmailToBlogTable.Designer.cs">
+      <DependentUpon>201511300321243_RemoveAuthorTable_And_AddNameAndEmailToBlogTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\AuthorModel.cs" />
     <Compile Include="Models\BlogModel.cs" />
     <Compile Include="Models\PostModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -118,6 +120,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511270411063_RemoveBlogIDFromAuthorTable.resx">
       <DependentUpon>201511270411063_RemoveBlogIDFromAuthorTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511300321243_RemoveAuthorTable_And_AddNameAndEmailToBlogTable.resx">
+      <DependentUpon>201511300321243_RemoveAuthorTable_And_AddNameAndEmailToBlogTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

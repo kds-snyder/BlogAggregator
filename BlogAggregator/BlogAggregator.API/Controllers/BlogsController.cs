@@ -49,31 +49,6 @@ namespace BlogAggregator.API.Controllers
             return Ok(Mapper.Map<BlogModel>(dbBlog));
         }
 
-        // GET: api/blogs/5/author
-        // Get author belonging to blog corresponding to blog ID
-        [Route("api/blogs/{blogID}/author")]
-        public IHttpActionResult GetAuthorForBlog(int blogID)
-        {
-            // Validate request
-            if (!BlogExists(blogID))
-            {
-                return BadRequest();
-            }
-            
-            // Get author corresponding to blog                       
-            var dbAuthor = db.Authors.Where(a =>
-                            db.Blogs.Any(b => b.BlogID == blogID &&
-                                         b.AuthorID == a.AuthorID)).FirstOrDefault();                                          
-
-            if (dbAuthor == null)
-            {
-                return NotFound();
-            }
-
-            // Return the author as AuthorModel object           
-            return Ok(Mapper.Map<AuthorModel>(dbAuthor));
-        }
-
         // GET: api/blogs/5/posts
         // Get posts belonging to blog corresponding to blog ID
         [Route("api/blogs/{blogID}/posts")]
@@ -246,18 +221,8 @@ namespace BlogAggregator.API.Controllers
                     }
                 }
 
-                // Get the blog author, and then remove the blog
-                var dbAuthor = db.Authors.Where(a =>
-                            db.Blogs.Any(b => b.BlogID == id &&
-                                         b.AuthorID == a.AuthorID)).FirstOrDefault();
-                db.Blogs.Remove(dbBlog);
-
-                // Remove the author if the author has no blogs                
-                if (dbAuthor != null &&
-                    db.Blogs.Where(b => b.AuthorID == dbAuthor.AuthorID).Count() == 0)
-                {
-                    db.Authors.Remove(dbAuthor);
-                }
+                // Remove the blog
+                 db.Blogs.Remove(dbBlog);
 
                 db.SaveChanges();
             }

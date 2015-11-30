@@ -12,11 +12,13 @@ namespace BlogAggregator.Core.Domain
     {       
         public int BlogID { get; set; }
 
-        public int AuthorID { get; set; }
-
         public DateTime CreatedDate { get; set; }
 
         public bool Approved { get; set; }
+
+        public string AuthorEmail { get; set; }
+
+        public string AuthorName { get; set; }
 
         public string Description { get; set; }
                 
@@ -25,10 +27,7 @@ namespace BlogAggregator.Core.Domain
         public string Title { get; set; }
 
         // Blog can have many posts
-        public virtual ICollection<Post> Posts { get; set; }
-
-        // Blog can have just one author
-        public virtual Author Author { get; set; }
+        public virtual ICollection<Post> Posts { get; set; }        
 
         public void Update(BlogModel blog)
         {
@@ -36,9 +35,10 @@ namespace BlogAggregator.Core.Domain
             {
                 CreatedDate = DateTime.Now;
             }
-
-            AuthorID = blog.AuthorID;
+            
             Approved = blog.Approved;
+            AuthorName = blog.AuthorName;
+            AuthorEmail = blog.AuthorEmail;
             Description = blog.Description;
             Link = blog.Link;
             Title = blog.Title;

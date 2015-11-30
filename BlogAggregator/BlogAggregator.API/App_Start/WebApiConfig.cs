@@ -43,7 +43,6 @@ namespace BlogAggregator.API
 
         public static void setUpAutoMapper()
         {
-            Mapper.CreateMap<Author, AuthorModel>();
             Mapper.CreateMap<Blog, BlogModel>();
             Mapper.CreateMap<Post, PostModel>();            
         }

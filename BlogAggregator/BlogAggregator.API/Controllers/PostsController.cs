@@ -48,28 +48,6 @@ namespace BlogAggregator.API.Controllers
             return Ok(Mapper.Map<PostModel>(dbPost));
         }
 
-        // GET: api/posts/5/author
-        // Get author for post corresponding to post ID
-        [Route("api/posts/{postID}/author")]
-        public IHttpActionResult GetAuthorForPost(int postID)
-        {
-            // Validate request
-            if (!PostExists(postID))
-            {
-                return BadRequest();
-            }
-
-            // Get author corresponding to post  
-            var dbPost = db.Posts.Find(postID);
-            var dbAuthor = db.Authors.Find(dbPost.Blog.AuthorID);
-
-            //dbAuthor = db.Authors.Select(a => db.Blogs.Select(b => db.Posts.Select(p => p.PostID)));
-            // db.Authors.Where(a => db.Blogs.Any(b => db.Posts.Any(p => p.PostID == postID))).FirstOrDefault();
-
-            // Return the author as AuthorModel object           
-            return Ok(Mapper.Map<AuthorModel>(dbAuthor));
-        }
-
         // PUT: api/Posts/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutPost(int id, PostModel post)
