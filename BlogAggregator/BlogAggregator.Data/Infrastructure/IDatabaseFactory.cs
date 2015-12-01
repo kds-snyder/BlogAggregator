@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace BlogAggregator.Data.Infrastructure
 {
-    public class Repository<TEntity> 
+    public interface IDatabaseFactory : IDisposable
     {
-        public Repository(IDatabaseFactory databaseFactory)
-        {
-
-        }
+        BlogAggregatorDbContext GetDataContext();
     }
 }

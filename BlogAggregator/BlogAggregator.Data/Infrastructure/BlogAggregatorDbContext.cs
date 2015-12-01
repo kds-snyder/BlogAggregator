@@ -7,17 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlogAggregator.Core.Infrastructure
+namespace BlogAggregator.Data.Infrastructure
 {
-    public class BlogAggregatorDbContext : IdentityDbContext
+    public class BlogAggregatorDbContext : DbContext
     {
 
-        public BlogAggregatorDbContext() : base("BlogAggregator")
+        public BlogAggregatorDbContext() : base("BlogAggregator_repo")
         {
         }
 
         public IDbSet<Blog> Blogs { get; set; }
         public IDbSet<Post> Posts { get; set; }
+        public IDbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
