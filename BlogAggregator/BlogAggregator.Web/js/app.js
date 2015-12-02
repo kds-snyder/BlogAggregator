@@ -3,6 +3,8 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngMessages', 'ngResource']).c
     $mdThemingProvider.theme('default')
         .primaryPalette('cyan')
         .accentPalette('green');
+    $mdThemingProvider.theme('toast-error');
+    $mdThemingProvider.theme('toast-success');
     
     $urlRouterProvider.otherwise('/app/posts');
 
