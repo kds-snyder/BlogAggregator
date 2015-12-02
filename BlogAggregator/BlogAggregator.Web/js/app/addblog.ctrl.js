@@ -1,4 +1,4 @@
-angular.module('app').controller('AddBlogController', function ($scope, Blog) {
+angular.module('app').controller('AddBlogController', function (Blog, $mdToast, $scope) {
   
     $scope.blog = new Blog();
 
