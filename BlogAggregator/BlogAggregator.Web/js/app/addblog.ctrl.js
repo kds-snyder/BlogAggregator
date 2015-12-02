@@ -19,24 +19,25 @@ angular.module('app').controller('AddBlogController', function (Blog, $mdToast, 
         $scope.blog.$save(function () {
             $mdToast.showSimple('Blog was added successfully');
 
-            // Clear the input form
-            $scope.blog.BlogID = 0;
-            $scope.blog.Approved = false;
-            $scope.blog.AuthorEmail = '';
-            $scope.blog.AuthorName = '';
-            $scope.blog.Description = '';
-            $scope.blog.Link = '';
-            $scope.blog.Title = '';             
-            $scope.addBlogForm.$setPristine();
-            $scope.addBlogForm.$setUntouched();
+            // Clear the blog object and input form
+            $scope.clearInputBlog();
 
         },
         function (error) {
-            $mdToast.showSimple('Error adding blog. Please verify that '
-                        + $scope.blog.Link + ' is a link to a valid blog');
-
-            debugger;
+            $mdToast.showSimple('Error adding blog. Please verify that you entered a link to a valid blog');
         });
+    };
 
+    // Clear blog object and input form
+    $scope.clearInputBlog = function () {
+        $scope.blog.BlogID = 0;
+        $scope.blog.Approved = false;
+        $scope.blog.AuthorEmail = '';
+        $scope.blog.AuthorName = '';
+        $scope.blog.Description = '';
+        $scope.blog.Link = '';
+        $scope.blog.Title = '';
+        $scope.addBlogForm.$setPristine();
+        $scope.addBlogForm.$setUntouched();
     };
 });
