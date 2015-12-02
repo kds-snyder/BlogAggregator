@@ -13,5 +13,7 @@ namespace BlogAggregator.Core.Domain
         public string UserName { get; set; }
         public string PasswordHash { get; set; }
         public string SecurityStamp { get; set; }
+
+        public virtual ICollection<ExternalLogin> ExternalLogins { get; set; }        
     }
 }

@@ -86,12 +86,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\Blog.cs" />
+    <Compile Include="Domain\ExternalLogin.cs" />
     <Compile Include="Domain\Post.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Infrastructure\Disposable.cs" />
+    <Compile Include="Infrastructure\IRepository.cs" />
+    <Compile Include="Infrastructure\IUnitOfWork.cs" />
     <Compile Include="Models\BlogModel.cs" />
     <Compile Include="Models\PostModel.cs" />
+    <Compile Include="Models\RegistrationModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\IBlogRepository.cs" />
+    <Compile Include="Repository\IExternalLoginRepository.cs" />
+    <Compile Include="Repository\IPostRepository.cs" />
+    <Compile Include="Repository\IUserRepository.cs" />
     <Compile Include="Services\BlogData.cs" />
     <Compile Include="Services\BlogWebDataWP.cs" />
     <Compile Include="Services\StringExtensions.cs" />
