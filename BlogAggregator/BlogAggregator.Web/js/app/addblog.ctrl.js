@@ -20,16 +20,13 @@ angular.module('app').controller('AddBlogController', function (Blog, $mdToast, 
             $mdToast.showSimple('Blog was added successfully');
 
             // Clear the input form
-            /*
             $scope.blog.BlogID = 0;
             $scope.blog.Approved = false;
-            $scope.blog.authorEmail = '';
-            $scope.blog.authorName = '';
+            $scope.blog.AuthorEmail = '';
+            $scope.blog.AuthorName = '';
             $scope.blog.Description = '';
             $scope.blog.Link = '';
-            $scope.blog.Title = '';
-            */
-            $scope.blog = null;
+            $scope.blog.Title = '';             
             $scope.addBlogForm.$setPristine();
             $scope.addBlogForm.$setUntouched();
 

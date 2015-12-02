@@ -11,16 +11,16 @@
             </md-input-container>
             <md-input-container class="md-block" flex>
                 <label>Author Name</label>
-                <input required name="authorName" ng-model="blog.authorName">
-                <div ng-messages="addBlogForm.authorName.$error" ng-show="addBlogForm.$submitted">
+                <input required name="blogAuthorName" ng-model="blog.AuthorName">
+                <div ng-messages="addBlogForm.blogAuthorName.$error" ng-show="addBlogForm.$submitted">
                     <div ng-message="required">You must enter your name</div>
                 </div>
             </md-input-container>
             <md-input-container class="md-block" flex>
                 <label>Author Email</label>
-                <input required type="email" name="authorEmail" ng-model="blog.authorEmail"
+                <input required type="email" name="blogAuthorEmail" ng-model="blog.AuthorEmail"
                        ng-pattern="/^.+@.+\..+$/" />
-                <div ng-messages="addBlogForm.authorEmail.$error" ng-show="addBlogForm.$submitted">
+                <div ng-messages="addBlogForm.blogAuthorEmail.$error" ng-show="addBlogForm.$submitted">
                     <div ng-message-exp="['required']">
                         You must enter an email address
                     </div>
