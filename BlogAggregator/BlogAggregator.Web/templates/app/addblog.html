@@ -1,38 +1,42 @@
-﻿<md-content layout-padding>
-    <div layout="column" layout-wrap>
-        <h3 flex>Add Blog</h3>
-        <form name="addBlogForm" data-ng-submit="addBlog()">
-            <md-input-container class="md-block" flex>
-                <label>Link to Blog</label>
-                <input required autofocus name="blogLink" ng-model="blog.Link">
-                <div ng-messages="addBlogForm.blogLink.$error" ng-show="addBlogForm.$submitted">
-                    <div ng-message="required">You must enter the link to your blog</div>
+﻿<md-content layout="column" layout-padding layout-wrap>
+    <h3 flex>Add Blog</h3>
+    <form name="addBlogForm" data-ng-submit="addBlog()">
+        <md-input-container class="md-block" flex><!-- input for blog link -->           
+            <label>Link to Blog</label>
+            <input required autofocus name="blogLink" ng-model="blog.Link">
+            <div ng-messages="addBlogForm.blogLink.$error" ng-show="addBlogForm.$submitted">
+                <div ng-message="required">You must enter the link to your blog</div>
+            </div>
+        </md-input-container><!-- end input for blog link -->
+        <md-input-container class="md-block" flex><!-- input for blog author name -->            
+            <label>Author Name</label>
+            <input required name="blogAuthorName" ng-model="blog.AuthorName">
+            <div ng-messages="addBlogForm.blogAuthorName.$error" ng-show="addBlogForm.$submitted">
+                <div ng-message="required">You must enter your name</div>
+            </div>
+        </md-input-container><!-- end input for blog author name -->
+        <md-input-container class="md-block" flex><!-- input for blog author email -->            
+            <label>Author Email</label>
+            <input required type="email" name="blogAuthorEmail" ng-model="blog.AuthorEmail"
+                   ng-pattern="/^.+@.+\..+$/" />
+            <div ng-messages="addBlogForm.blogAuthorEmail.$error" ng-show="addBlogForm.$submitted">
+                <div ng-message-exp="['required']">
+                    You must enter an email address
                 </div>
-            </md-input-container>
-            <md-input-container class="md-block" flex>
-                <label>Author Name</label>
-                <input required name="blogAuthorName" ng-model="blog.AuthorName">
-                <div ng-messages="addBlogForm.blogAuthorName.$error" ng-show="addBlogForm.$submitted">
-                    <div ng-message="required">You must enter your name</div>
+                <div ng-message-exp="['pattern']">
+                    Your email address is not in the format of an email address
                 </div>
-            </md-input-container>
-            <md-input-container class="md-block" flex>
-                <label>Author Email</label>
-                <input required type="email" name="blogAuthorEmail" ng-model="blog.AuthorEmail"
-                       ng-pattern="/^.+@.+\..+$/" />
-                <div ng-messages="addBlogForm.blogAuthorEmail.$error" ng-show="addBlogForm.$submitted">
-                    <div ng-message-exp="['required']">
-                        You must enter an email address
-                    </div>
-                    <div ng-message-exp="['pattern']">
-                        Your email address is not in the format of an email address
-                    </div>
-                </div>
-            </md-input-container>
-            <div flex>
+            </div>
+        </md-input-container><!-- end input for blog author email -->
+        <div layout="row">
+            <div flex="15"><!-- div for submit button -->               
                 <p></p>
                 <button class="md-button md-raised md-accent" type="submit">Submit</button>
-            </div>
-        </form>
-    </div>
+            </div><!-- end div for submit button -->
+            <div class="container" ng-class="{hide: !loading}" flex="50"><!-- container for blog loading mask -->                             
+                <md-progress-circular md-mode="indeterminate"></md-progress-circular>                
+                    <span class="md-primary" id="loading-text">Loading blog...</span>               
+            </div><!-- end container for blog loading mask -->
+        </div>
+    </form>
 </md-content>

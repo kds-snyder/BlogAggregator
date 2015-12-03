@@ -1,15 +1,20 @@
 angular.module('app').controller('AddBlogController', function (Blog, $mdToast, $scope) {
   
     $scope.blog = new Blog();
+    $scope.loading = false;
 
     $scope.addBlog = function () {
 
         // TODO: remove when blog moderation is ready
         $scope.blog.Approved = true;
 
-        // Save the new blog in the database
+        // Set loading indicator and save the new blog
+        $scope.loading = true;
         $scope.blog.$save(function () {
- 
+            
+            // Blog saved successfully: 
+            //  Clear loading indicator and display success message
+            $scope.loading = false;
             $mdToast.show($mdToast.simple().content('Blog was added successfully')
                             .position('top right').theme("toast-success"));
 
@@ -18,6 +23,9 @@ angular.module('app').controller('AddBlogController', function (Blog, $mdToast, 
 
         },
         function (error) {
+            // Blog could not be saved: 
+            //  Clear loading indicator and display error message
+            $scope.loading = false;
             $mdToast.show($mdToast.simple()
                            .content('Error adding blog: Please verify that you entered a link to a valid blog')
                            .position('top right').theme("toast-error"));

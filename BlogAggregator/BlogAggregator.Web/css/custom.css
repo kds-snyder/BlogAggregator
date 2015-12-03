@@ -6,3 +6,7 @@ md-toast.md-toast-error-theme {
 md-toast.md-toast-success-theme {
     background-color: green;
 }
+
+#loading-text {
+    color: rgb(0,188,212);
+}
