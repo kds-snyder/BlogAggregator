@@ -9,7 +9,7 @@ wp posts inherit from ipost
 
 is it OK to inject post repository into blog controller in addition to blog repository?
 
-in update, will unit of work commit work for posts also if they are removed?
-
 in update method, catch DbUpdateConcurrencyException requires using System.Data.Entity.Infrastructure;
+
+BlogData class in Services inherits from IDisposable but needs Dispose method. Is it bad practice to access data in Services? Should the service method that parses posts just return the list of posts, and then the calling API method should write the posts?
 

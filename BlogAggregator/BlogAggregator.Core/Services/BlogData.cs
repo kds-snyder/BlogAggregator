@@ -1,5 +1,6 @@
 ﻿using BlogAggregator.Core.Domain;
 using BlogAggregator.Core.Infrastructure;
+using BlogAggregator.Core.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,14 @@ namespace BlogAggregator.Core.Services
 {
     public class BlogData : IDisposable
     {
-        private BlogAggregatorDbContext db = new BlogAggregatorDbContext();
+        private readonly IPostRepository _postRepository;
+        private readonly IUnitOfWork _unitOfWork;
+
+        public BlogData(IPostRepository postRepository, IUnitOfWork unitOfWork)
+        {
+            _postRepository = postRepository;
+            _unitOfWork = unitOfWork;
+        }
 
         // Write the posts in the input posts to the database
         // Return true if successful, otherwise return false
@@ -20,7 +28,7 @@ namespace BlogAggregator.Core.Services
 
             foreach (var post in posts)
             {
-                db.Posts.Add(new Post
+                _postRepository.Add(new Post
                 {
                     BlogID = blogID,
                     Content = post.Content,
@@ -33,7 +41,7 @@ namespace BlogAggregator.Core.Services
 
             try
             {
-                db.SaveChanges();
+                _unitOfWork.Commit();
             }
             catch (Exception e)
             {
@@ -46,7 +54,7 @@ namespace BlogAggregator.Core.Services
 
         public void Dispose()
         {
-            db.Dispose();
+           //base.Dispose();
         }
     }
 }
