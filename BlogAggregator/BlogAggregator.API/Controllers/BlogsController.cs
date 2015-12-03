@@ -115,28 +115,25 @@ namespace BlogAggregator.API.Controllers
                 _unitOfWork.Commit();
             }
 
-            //catch (DbUpdateConcurrencyException e)
-            catch (Exception e)
+            catch (DBConcurrencyException e)
             {
-                /*
                 if (!BlogExists(id))
                 {
                     return NotFound();
                 }
                 else
                 {
-                */
-                throw new Exception("Unable to update the blog in the database", e);
-                //}
+                    throw new Exception("Unable to update the blog in the database", e);
+                }
             }
 
             // If approved indicator was changed from false to true, 
             //  parse the blog posts and store them in DB
             if (!approvedBeforeUpdate && blog.Approved)
-            {                
+            {
                 var wordPressBlogReader = new WordPressBlogReader();
                 var blogService = new BlogService(wordPressBlogReader, _postRepository, _unitOfWork);
-                blogService.ExtractAndSaveBlogPosts(blog);                
+                blogService.ExtractAndSaveBlogPosts(blog);
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -180,10 +177,10 @@ namespace BlogAggregator.API.Controllers
 
             // If approved, parse the blog posts and store them in the DB
             if (blog.Approved)
-            {                
+            {
                 var blogService = new BlogService(wordPressBlogReader, _postRepository, _unitOfWork);
                 blogService.ExtractAndSaveBlogPosts(blog);
-            }           
+            }
 
             // Set blog ID in BlogModel object with the ID 
             //  that was set in the DB blog after db.SaveChanges
@@ -244,6 +241,6 @@ namespace BlogAggregator.API.Controllers
                     _postRepository.Delete(dbPost);
                 }
             }
-        }  
+        }
     }
 }

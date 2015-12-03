@@ -9,16 +9,19 @@ using BlogAggregator.Core.Models;
 using BlogAggregator.Core.Repository;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using System.Data;
 
 namespace BlogAggregator.API.Controllers
 {
     public class PostsController : ApiController
-    {        
+    {
+        private readonly IBlogRepository _blogRepository;
         private readonly IPostRepository _postRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public PostsController(IPostRepository postRepository, IUnitOfWork unitOfWork)
+        public PostsController(IBlogRepository blogRepository, IPostRepository postRepository, IUnitOfWork unitOfWork)
         {
+            _blogRepository = blogRepository;
             _postRepository = postRepository;
             _unitOfWork = unitOfWork;
         }        
@@ -57,7 +60,6 @@ namespace BlogAggregator.API.Controllers
                 return BadRequest();
             }
 
-
             // Get the DB post, update it according to the input PostModel object,           
             //   and then update the DB post in the database
             var dbPost = _postRepository.GetByID(id);
@@ -69,21 +71,17 @@ namespace BlogAggregator.API.Controllers
             {
                 _unitOfWork.Commit();
             }
-            //catch (DbUpdateConcurrencyException e)
-            catch (Exception e)
+            catch (DBConcurrencyException e)            
             { 
-            /*
                 if (!PostExists(id))
                 {
                     return NotFound();
                 }
                 else
                 {
-                */
                     throw new Exception("Unable to update the post in the database", e);
-                //}
+                }
             }
-
             return StatusCode(HttpStatusCode.NoContent);
         }
 
@@ -95,6 +93,12 @@ namespace BlogAggregator.API.Controllers
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+
+            // Check that the corresponding blog exists
+            if (!_blogRepository.Any(b => b.BlogID == post.BlogID))
+            {
+                throw new Exception("Unable to add the post to the database, as it does not correspond to a blog");
             }
 
             //Set up new Post object, populated from input post

@@ -55,3 +55,5 @@ C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Debug\SimpleIn
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Debug\BlogAggregator.Data.pdb
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Debug\Microsoft.Owin.Security.OAuth.xml
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Debug\Microsoft.Owin.Security.xml
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Debug\Moq.dll
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Debug\Moq.xml
