@@ -11,5 +11,5 @@ is it OK to inject post repository into blog controller in addition to blog repo
 
 in update method, catch DbUpdateConcurrencyException requires using System.Data.Entity.Infrastructure;
 
-BlogData class in Services inherits from IDisposable but needs Dispose method. Is it bad practice to access data in Services? Should the service method that parses posts just return the list of posts, and then the calling API method should write the posts?
+serverauthorization: need to set claims?
 

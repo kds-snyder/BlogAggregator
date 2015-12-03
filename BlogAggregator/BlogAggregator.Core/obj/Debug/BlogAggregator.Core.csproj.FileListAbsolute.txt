@@ -25,7 +25,3 @@ C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core\bin\Debug\Newtonsoft.Js
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core\obj\Debug\BlogAggregator.Core.csprojResolveAssemblyReference.cache
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core\obj\Debug\BlogAggregator.Core.dll
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core\obj\Debug\BlogAggregator.Core.pdb
-C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core\obj\Debug\BlogAggregator.Core.Migrations.CreateDatabase.resources
-C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core\obj\Debug\BlogAggregator.Core.csproj.GenerateResource.Cache
-C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core\obj\Debug\BlogAggregator.Core.Migrations.RemoveBlogIDFromAuthorTable.resources
-C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core\obj\Debug\BlogAggregator.Core.Migrations.RemoveAuthorTable_And_AddNameAndEmailToBlogTable.resources
