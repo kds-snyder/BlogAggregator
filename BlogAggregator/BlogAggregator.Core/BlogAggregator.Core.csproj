@@ -95,7 +95,9 @@
     <Compile Include="Models\BlogModel.cs" />
     <Compile Include="Models\PostModel.cs" />
     <Compile Include="Models\RegistrationModel.cs" />
+    <Compile Include="OAuth\BlogAggregatorAuthorizationServerProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\IAuthRepository.cs" />
     <Compile Include="Repository\IBlogRepository.cs" />
     <Compile Include="Repository\IExternalLoginRepository.cs" />
     <Compile Include="Repository\IPostRepository.cs" />

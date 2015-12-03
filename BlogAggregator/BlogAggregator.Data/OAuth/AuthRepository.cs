@@ -1,5 +1,7 @@
 ﻿using BlogAggregator.Core.Domain;
 using BlogAggregator.Core.Models;
+using BlogAggregator.Core.Repository;
+using BlogAggregator.Data.Infrastructure;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -7,9 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlogAggregator.Data.Infrastructure
+namespace BlogAggregator.Data.OAuth
 {
-    public class AuthRepository :  IDisposable
+    public class AuthRepository : IAuthRepository, IDisposable
     {
         private readonly IDatabaseFactory _databaseFactory;
         private UserManager<User, int> _userManager;
@@ -46,7 +48,7 @@ namespace BlogAggregator.Data.Infrastructure
         public async Task<User> FindUser(string userName, string password)
         {
             return await _userManager.FindAsync(userName, password);
-            
+
         }
 
         public void Dispose()
@@ -54,6 +56,5 @@ namespace BlogAggregator.Data.Infrastructure
             _userManager.Dispose();
 
         }
-
     }
 }
