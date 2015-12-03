@@ -85,11 +85,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlogReader\WordPress\IWordPressBlogReader.cs" />
     <Compile Include="Domain\Blog.cs" />
+    <Compile Include="Domain\Enums.cs" />
     <Compile Include="Domain\ExternalLogin.cs" />
     <Compile Include="Domain\Post.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Infrastructure\Disposable.cs" />
+    <Compile Include="BlogReader\IBlogReader.cs" />
     <Compile Include="Infrastructure\IRepository.cs" />
     <Compile Include="Infrastructure\IUnitOfWork.cs" />
     <Compile Include="Models\BlogModel.cs" />
@@ -102,8 +105,9 @@
     <Compile Include="Repository\IExternalLoginRepository.cs" />
     <Compile Include="Repository\IPostRepository.cs" />
     <Compile Include="Repository\IUserRepository.cs" />
-    <Compile Include="Services\BlogData.cs" />
-    <Compile Include="Services\BlogWebDataWP.cs" />
+    <Compile Include="BlogReader\WordPress\WordPressBlogReader.cs" />
+    <Compile Include="Services\BlogService.cs" />
+    <Compile Include="Services\IBlogService.cs" />
     <Compile Include="Services\StringExtensions.cs" />
     <Compile Include="Services\WebData.cs" />
   </ItemGroup>

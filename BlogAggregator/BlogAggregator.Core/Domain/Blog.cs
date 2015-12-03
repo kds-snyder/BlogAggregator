@@ -12,6 +12,8 @@ namespace BlogAggregator.Core.Domain
     {       
         public int BlogID { get; set; }
 
+        public BlogTypes BlogType { get; set; }
+
         public DateTime CreatedDate { get; set; }
 
         public bool Approved { get; set; }
@@ -39,6 +41,7 @@ namespace BlogAggregator.Core.Domain
             Approved = blog.Approved;
             AuthorName = blog.AuthorName;
             AuthorEmail = blog.AuthorEmail;
+            BlogType = blog.BlogType;
             Description = blog.Description;
             Link = blog.Link;
             Title = blog.Title;

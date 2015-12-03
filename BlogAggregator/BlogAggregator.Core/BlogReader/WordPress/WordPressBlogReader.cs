@@ -1,6 +1,7 @@
 ﻿using BlogAggregator.Core.Domain;
 using BlogAggregator.Core.Infrastructure;
 using BlogAggregator.Core.Models;
+using BlogAggregator.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,16 +9,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace BlogAggregator.Core.Services
+namespace BlogAggregator.Core.BlogReader.WordPress
 {
     // Handle Word Press blogs
-    public static class BlogWebDataWP 
+    public class WordPressBlogReader : IWordPressBlogReader
     {
-
         // Retrieve blog description and title from blog Website
         //  according to blog link, and store in the blog record
         // Return true if able to get the info, otherwise return false
-        public static bool GetBlogInformation(BlogModel blog)
+        public bool VerifyBlog(BlogModel blog)
         {
             bool result = false;
 
@@ -36,7 +36,7 @@ namespace BlogAggregator.Core.Services
 
         // Parse the posts corresponding to blog,
         //  and return a list of the posts       
-        public static List<Post> GetBlogPosts(BlogModel blog)
+        public IEnumerable<Post> GetBlogPosts(BlogModel blog)
         {
             List<Post> blogPosts = new List<Post>();
 
@@ -54,15 +54,15 @@ namespace BlogAggregator.Core.Services
         }
 
         // Get the XML string from the blog RSS feed
-        private static string getBlogXML(BlogModel blog)
+        private string getBlogXML(BlogModel blog)
         {
             string xmlUrl = getXMLUrl(blog.Link);
-            string xmlData = WebData.GetWebData(xmlUrl);
+            string xmlData = WebData.Instance.GetWebData(xmlUrl);
             return xmlData;
         }
 
         // Get the URL of the blog RSS feed from the blog link
-        private static string getXMLUrl(string inputUrl)
+        private string getXMLUrl(string inputUrl)
         {
             string XMLUrl;
 
@@ -82,7 +82,7 @@ namespace BlogAggregator.Core.Services
         // Get the blog information from the input XML data,
         //  and set it in the blog record
         // Return true if no error occurs, otherwise return false
-        private static bool parseBlogInfo(string xmlData, BlogModel blog)
+        private bool parseBlogInfo(string xmlData, BlogModel blog)
         {
             bool result = true;
 
@@ -110,7 +110,7 @@ namespace BlogAggregator.Core.Services
 
         // Get the blog posts from the input XML data,
         //  and return as list of Post objects        
-        private static List<Post> parseBlogPosts(string xmlData, int blogID)
+        private List<Post> parseBlogPosts(string xmlData, int blogID)
         {           
             var posts = new List<Post>();
 
@@ -151,7 +151,7 @@ namespace BlogAggregator.Core.Services
         // Get the content namespace specified in the input XML document,
         // from the <rss> tag, attribute xmlns:content
         // If xmlns:content not found, use default value
-        private static XNamespace getContentNameSpace(XDocument xmlDoc)
+        private XNamespace getContentNameSpace(XDocument xmlDoc)
         {
             XNamespace contentNameSpace = "http://purl.org/rss/1.0/modules/content/";
 

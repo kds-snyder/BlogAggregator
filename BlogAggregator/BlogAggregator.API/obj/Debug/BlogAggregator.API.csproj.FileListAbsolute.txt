@@ -56,3 +56,5 @@ C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API\bin\SimpleInjector.Integ
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API\bin\System.Web.Http.Owin.xml
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API\bin\Microsoft.Owin.Security.OAuth.xml
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API\bin\Microsoft.Owin.Security.xml
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API\bin\Microsoft.Owin.Host.SystemWeb.xml

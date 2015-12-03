@@ -93,7 +93,7 @@ namespace BlogAggregator.Data.Infrastructure
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+           
         }
 
         #endregion

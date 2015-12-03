@@ -12,6 +12,7 @@ using BlogAggregator.Core.Models;
 using BlogAggregator.Core.Services;
 using BlogAggregator.Core.Repository;
 using BlogAggregator.Core.Infrastructure;
+using BlogAggregator.Core.BlogReader.WordPress;
 
 namespace BlogAggregator.API.Controllers
 {
@@ -19,13 +20,15 @@ namespace BlogAggregator.API.Controllers
     {
         private readonly IBlogRepository _blogRepository;
         private readonly IPostRepository _postRepository;
-        private readonly IUnitOfWork _unitOfWork;        
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IBlogService _blogService;
 
-        public BlogsController(IBlogRepository blogRepository, IPostRepository postRepository, IUnitOfWork unitOfWork)
+        public BlogsController(IBlogRepository blogRepository, IPostRepository postRepository, IUnitOfWork unitOfWork, IBlogService blogService)
         {
             _blogRepository = blogRepository;
             _postRepository = postRepository;
             _unitOfWork = unitOfWork;
+            _blogService = blogService;
         }
 
         // GET: api/Blogs
@@ -61,7 +64,7 @@ namespace BlogAggregator.API.Controllers
             // Get list of posts where the blog ID
             //  matches the blog IDs belonging to the blog            
             var dbPosts = _postRepository.Where(p => p.BlogID == blogID);
- 
+
             if (dbPosts.Count() == 0)
             {
                 return NotFound();
@@ -84,7 +87,7 @@ namespace BlogAggregator.API.Controllers
             if (id != blog.BlogID)
             {
                 return BadRequest();
-            }           
+            }
 
             // Get the DB blog and save the approved indicator
             var dbBlog = _blogRepository.GetByID(id);
@@ -97,20 +100,13 @@ namespace BlogAggregator.API.Controllers
             // Update the DB blog according to the input BlogModel object,
             //   and then update the DB blog in the database
             dbBlog.Update(blog);
-            _blogRepository.Update(dbBlog);           
+            _blogRepository.Update(dbBlog);
 
             // If approved indicator was changed from true to false, 
             //   remove any posts corresponding to blog
             if (approvedBeforeUpdate && !blog.Approved)
             {
-                deleteBlogPosts(id);               
-            }
-
-            // If approved indicator was changed from false to true, 
-            //  parse the blog posts and store them in DB
-            if (!approvedBeforeUpdate && blog.Approved)
-            {
-                parseBlogPosts(blog);                
+                deleteBlogPosts(id);
             }
 
             // Save database changes
@@ -130,17 +126,26 @@ namespace BlogAggregator.API.Controllers
                 else
                 {
                 */
-                    throw new Exception("Unable to update the blog in the database", e);
+                throw new Exception("Unable to update the blog in the database", e);
                 //}
-            }           
+            }
+
+            // If approved indicator was changed from false to true, 
+            //  parse the blog posts and store them in DB
+            if (!approvedBeforeUpdate && blog.Approved)
+            {                
+                var wordPressBlogReader = new WordPressBlogReader();
+                var blogService = new BlogService(wordPressBlogReader, _postRepository, _unitOfWork);
+                blogService.ExtractAndSaveBlogPosts(blog);                
+            }
 
             return StatusCode(HttpStatusCode.NoContent);
         }
-        
+
         // POST: api/Blogs
         [ResponseType(typeof(BlogModel))]
         public IHttpActionResult PostBlog(BlogModel blog)
-        {           
+        {
 
             // Validate request
             if (!ModelState.IsValid)
@@ -150,25 +155,18 @@ namespace BlogAggregator.API.Controllers
 
             // Get the blog information from the blog website 
             // If unable to get the information, do not create the blog record
- 
-                bool result = BlogWebDataWP.GetBlogInformation(blog);
-                if (!result)
-                {
-                    return NotFound();
-                }                        
-                          
+            var wordPressBlogReader = new WordPressBlogReader();
+            if (!wordPressBlogReader.VerifyBlog(blog))
+            {
+                return NotFound();
+            }
+
             //Set up new Blog object, populated from input blog
             Blog dbBlog = new Blog();
-            dbBlog.Update(blog);            
+            dbBlog.Update(blog);
 
             // Add the new Blog object to the DB
             _blogRepository.Add(dbBlog);
-
-            // If approved, parse the blog posts and store them in the DB
-            if (blog.Approved)
-            {
-                parseBlogPosts(blog);
-            }
 
             // Save the changes in the database
             try
@@ -177,13 +175,19 @@ namespace BlogAggregator.API.Controllers
             }
             catch (Exception e)
             {
-
                 throw new Exception("Unable to add the blog to the database", e);
             }
 
+            // If approved, parse the blog posts and store them in the DB
+            if (blog.Approved)
+            {                
+                var blogService = new BlogService(wordPressBlogReader, _postRepository, _unitOfWork);
+                blogService.ExtractAndSaveBlogPosts(blog);
+            }           
+
             // Set blog ID in BlogModel object with the ID 
             //  that was set in the DB blog after db.SaveChanges
-            blog.BlogID = dbBlog.BlogID;    
+            blog.BlogID = dbBlog.BlogID;
 
             // Return the created blog record
             return CreatedAtRoute("DefaultApi", new { id = blog.BlogID }, blog);
@@ -240,31 +244,6 @@ namespace BlogAggregator.API.Controllers
                     _postRepository.Delete(dbPost);
                 }
             }
-        }
-
-        // Parse the posts for the blog,
-        //  and save them in the Post table
-        private void parseBlogPosts(BlogModel blog)
-        {
-            List<Post> postList = BlogWebDataWP.GetBlogPosts(blog);
-            saveBlogPosts(postList, blog.BlogID);
-        }
-
-        // Write the posts in the input posts to the Post table
-        private void saveBlogPosts(List<Post> posts, int blogID)
-        {
-            foreach (var post in posts)
-            {
-                _postRepository.Add(new Post
-                {
-                    BlogID = blogID,
-                    Content = post.Content,
-                    Description = post.Description,
-                    Link = post.Link,
-                    PublicationDate = post.PublicationDate,
-                    Title = post.Title
-                });
-            }           
-        }
+        }  
     }
 }

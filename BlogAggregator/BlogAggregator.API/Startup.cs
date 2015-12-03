@@ -1,6 +1,8 @@
-﻿using BlogAggregator.Core.Domain;
+﻿using BlogAggregator.Core.BlogReader.WordPress;
+using BlogAggregator.Core.Domain;
 using BlogAggregator.Core.Infrastructure;
 using BlogAggregator.Core.Repository;
+using BlogAggregator.Core.Services;
 using BlogAggregator.Data.Infrastructure;
 using BlogAggregator.Data.Repository;
 using Microsoft.AspNet.Identity;
@@ -37,13 +39,14 @@ namespace BlogAggregator.API
 
         }
 
+        // Register containers for classes that use dependency injection
         private Container ConfigureSimpleInjector(IAppBuilder app)
         {
             var container = new Container();
 
             container.Options.DefaultScopedLifestyle = new ExecutionContextScopeLifestyle();
 
-            container.Register<IUserStore<User, int>, UserStore>();
+            container.Register<IUserStore<User, int>, UserStore>(Lifestyle.Scoped);
 
             container.Register<IDatabaseFactory, DatabaseFactory>(Lifestyle.Scoped);
 
@@ -53,6 +56,9 @@ namespace BlogAggregator.API
             container.Register<IPostRepository, PostRepository>();
             container.Register<IUserRepository, UserRepository>();
             container.Register<IExternalLoginRepository, ExternalLoginRepository>();
+
+            container.Register<IBlogService, BlogService>();
+            container.Register<IWordPressBlogReader, WordPressBlogReader>();
 
             app.Use(async (context, next) => {
                 using (container.BeginExecutionContextScope())

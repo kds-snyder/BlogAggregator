@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlogAggregator.Core.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,8 @@ namespace BlogAggregator.Core.Models
     public class BlogModel
     {
         public int BlogID { get; set; }
+
+        public BlogTypes BlogType { get; set; }
 
         public DateTime CreatedDate { get; set; }
 
