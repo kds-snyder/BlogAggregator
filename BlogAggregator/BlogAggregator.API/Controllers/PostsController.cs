@@ -1,33 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using BlogAggregator.Core.Domain;
 using BlogAggregator.Core.Infrastructure;
 using BlogAggregator.Core.Models;
 using AutoMapper;
+using BlogAggregator.Core.Repository;
 
 namespace BlogAggregator.API.Controllers
 {
     public class PostsController : ApiController
-    {
-        private readonly IBlogAggregatorDbContext db;
+    {        
+        private readonly IPostRepository _postRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public PostsController()
+        public PostsController(IPostRepository postRepository, IUnitOfWork unitOfWork)
         {
-            db = new BlogAggregatorDbContext();
-        }
-
-        public PostsController(IBlogAggregatorDbContext context)
-        {
-            db = context;
-        }
+            _postRepository = postRepository;
+            _unitOfWork = unitOfWork;
+        }        
 
         // GET: api/Posts
         public IEnumerable<PostModel> GetPosts()

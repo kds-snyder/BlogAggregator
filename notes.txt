@@ -6,6 +6,10 @@ interface ipost
 
 wp posts inherit from ipost
 
->>GetAuthorForPost: how to use lambda? 
 
-If error occurs reading URL or parsing, should msg be written to console?
+is it OK to inject post repository into blog controller in addition to blog repository?
+
+in update, will unit of work commit work for posts also if they are removed?
+
+in update method, catch DbUpdateConcurrencyException requires using System.Data.Entity.Infrastructure;
+

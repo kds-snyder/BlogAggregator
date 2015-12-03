@@ -1,46 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
 using BlogAggregator.Core.Domain;
-using BlogAggregator.Core.Infrastructure;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using BlogAggregator.Core.Models;
-using System.Web.Http.Results;
 using BlogAggregator.Core.Services;
+using BlogAggregator.Core.Repository;
+using BlogAggregator.Core.Infrastructure;
 
 namespace BlogAggregator.API.Controllers
 {
     public class BlogsController : ApiController
     {
-        private readonly IBlogAggregatorDbContext db;
+        private readonly IBlogRepository _blogRepository;
+        private readonly IPostRepository _postRepository;
+        private readonly IUnitOfWork _unitOfWork;        
 
-        public BlogsController()
+        public BlogsController(IBlogRepository blogRepository, IPostRepository postRepository, IUnitOfWork unitOfWork)
         {
-            db = new BlogAggregatorDbContext();
-        }
-
-        public BlogsController(IBlogAggregatorDbContext context)
-        {
-            db = context;
+            _blogRepository = blogRepository;
+            _postRepository = postRepository;
+            _unitOfWork = unitOfWork;
         }
 
         // GET: api/Blogs
-        public IEnumerable<BlogModel> GetBlogs()
+        public IQueryable<BlogModel> GetBlogs()
         {
-            return Mapper.Map<IEnumerable<BlogModel>>(db.Blogs);
+            return _blogRepository.GetAll().ProjectTo<BlogModel>();
         }
 
         // GET: api/Blogs/5
         [ResponseType(typeof(BlogModel))]
         public IHttpActionResult GetBlog(int id)
         {
-            Blog dbBlog = db.Blogs.Find(id);
+            Blog dbBlog = _blogRepository.GetByID(id);
             if (dbBlog == null)
             {
                 return NotFound();
@@ -62,15 +60,15 @@ namespace BlogAggregator.API.Controllers
 
             // Get list of posts where the blog ID
             //  matches the blog IDs belonging to the blog            
-            var dbPosts = db.Posts.Where(p => p.BlogID == blogID);
+            var dbPosts = _postRepository.Where(p => p.BlogID == blogID);
  
             if (dbPosts.Count() == 0)
             {
                 return NotFound();
             }
 
-            // Return the list of PostModel objects            
-            return Ok(Mapper.Map<IEnumerable<PostModel>>(dbPosts));
+            // Return list of PostModel objects            
+            return Ok(dbPosts.ProjectTo<PostModel>());
         }
 
         // PUT: api/Blogs/5
@@ -86,52 +84,47 @@ namespace BlogAggregator.API.Controllers
             if (id != blog.BlogID)
             {
                 return BadRequest();
-            }
+            }           
 
-            if (!BlogExists(id))
+            // Get the DB blog and save the approved indicator
+            var dbBlog = _blogRepository.GetByID(id);
+            if (dbBlog == null)
             {
                 return BadRequest();
             }
-
-            // Get the DB blog and save the approved indicator
-            var dbBlog = db.Blogs.Find(id);
             bool approvedBeforeUpdate = dbBlog.Approved;
 
             // Update the DB blog according to the input BlogModel object,
-            //   and then set indicator that DB blog has been modified
+            //   and then update the DB blog in the repository
             dbBlog.Update(blog);
-            db.Entry(dbBlog).State = EntityState.Modified;
+            _blogRepository.Update(dbBlog);           
 
             // If approved indicator was changed from true to false, 
             //   remove any posts corresponding to blog
             if (approvedBeforeUpdate && !blog.Approved)
             {
-                var dbPosts = db.Posts.Where(p => p.BlogID == id);
-
-                if (dbPosts.Count() > 0)
-                {
-                    foreach (var dbPost in dbPosts)
-                    {
-                        db.Posts.Remove(dbPost);
-                    }
-                }
+                DeleteBlogPosts(id);               
             }
 
             // Save database changes
             try
             {
-                db.SaveChanges();
+                _unitOfWork.Commit();
             }
-            catch (DbUpdateConcurrencyException e)
+
+            //catch (DbUpdateConcurrencyException e)
+            catch (Exception e)
             {
+                /*
                 if (!BlogExists(id))
                 {
                     return NotFound();
                 }
                 else
                 {
+                */
                     throw new Exception("Unable to update the blog in the database", e);
-                }
+                //}
             }
 
             // If approved indicator was changed from false to true, 
@@ -169,12 +162,12 @@ namespace BlogAggregator.API.Controllers
             dbBlog.Update(blog);            
 
             // Add the new Blog object to the DB
-            db.Blogs.Add(dbBlog);
+            _blogRepository.Add(dbBlog);
 
             // Save the changes in the database
             try
             {
-                db.SaveChanges();
+                _unitOfWork.Commit();
             }
             catch (Exception e)
             {
@@ -187,7 +180,6 @@ namespace BlogAggregator.API.Controllers
             blog.BlogID = dbBlog.BlogID;
 
             // If approved, parse the blog posts and store them in the DB
-
             if (blog.Approved)
             {
                     BlogWebDataWP.GetBlogPosts(blog);                
@@ -202,7 +194,7 @@ namespace BlogAggregator.API.Controllers
         public IHttpActionResult DeleteBlog(int id)
         {
             // Get the DB blog corresponding to the blog ID
-            Blog dbBlog = db.Blogs.Find(id);
+            Blog dbBlog = _blogRepository.GetByID(id);
             if (dbBlog == null)
             {
                 return NotFound();
@@ -210,21 +202,12 @@ namespace BlogAggregator.API.Controllers
 
             try
             {
-                // Remove any posts corresponding to the blog               
-                var dbPosts = db.Posts.Where(p => p.BlogID == id);
- 
-                if (dbPosts.Count() > 0)
-                {
-                    foreach (var dbPost in dbPosts)
-                    {
-                        db.Posts.Remove(dbPost);
-                    }
-                }
+                DeleteBlogPosts(id);
 
                 // Remove the blog
-                 db.Blogs.Remove(dbBlog);
+                _blogRepository.Delete(dbBlog);
 
-                db.SaveChanges();
+                _unitOfWork.Commit();
             }
             catch (Exception e)
             {
@@ -244,9 +227,23 @@ namespace BlogAggregator.API.Controllers
             base.Dispose(disposing);
         }
 
+        // Remove posts corresponding to blog
+        private void DeleteBlogPosts(int blogID)
+        {
+            var dbPosts = _postRepository.Where(p => p.BlogID == blogID);
+
+            if (dbPosts.Count() > 0)
+            {
+                foreach (var dbPost in dbPosts)
+                {
+                    _postRepository.Delete(dbPost);
+                }
+            }
+        }
+
         private bool BlogExists(int id)
         {
-            return db.Blogs.Count(e => e.BlogID == id) > 0;
+            return _blogRepository.Count(e => e.BlogID == id) > 0;
         }
     }
 }
