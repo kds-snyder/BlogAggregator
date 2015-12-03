@@ -67,6 +67,10 @@
     <Compile Include="Migrations\201512030325308_CreateDatabase.Designer.cs">
       <DependentUpon>201512030325308_CreateDatabase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512032015460_AddBlogType.cs" />
+    <Compile Include="Migrations\201512032015460_AddBlogType.Designer.cs">
+      <DependentUpon>201512032015460_AddBlogType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OAuth\AuthRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -78,6 +82,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201512030325308_CreateDatabase.resx">
       <DependentUpon>201512030325308_CreateDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512032015460_AddBlogType.resx">
+      <DependentUpon>201512032015460_AddBlogType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

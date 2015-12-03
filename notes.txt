@@ -11,5 +11,5 @@ is it OK to inject post repository into blog controller in addition to blog repo
 
 in update method, catch DbUpdateConcurrencyException requires using System.Data.Entity.Infrastructure;
 
-serverauthorization: need to set claims?
+DbConcurrencyException 
 

@@ -2,8 +2,8 @@ use BlogAggregator_repo;
 GO
 
 INSERT INTO Blogs
-( CreatedDate, Approved, AuthorName, AuthorEmail, Description, Link, Title) 
-VALUES ('11/28/2015 19:40', 0,
+( CreatedDate, BlogType, Approved, AuthorName, AuthorEmail, Description, Link, Title) 
+VALUES ('11/28/2015 19:40', 1, 1,
 		'Adriann Bracken',
 		'c@d.com',
 		'My journey to becoming a web developer', 
@@ -12,7 +12,7 @@ VALUES ('11/28/2015 19:40', 0,
 
 INSERT INTO Posts
 (BlogID, Link, PublicationDate, Title, [Description], Content) 
-VALUES (1, 
+VALUES (2, 
 		'http://bracken.design/2015/10/19/coding-with-girls/',
 		'10/18/2015 7:01:18 PM', 
 		'Coding with girls', 
