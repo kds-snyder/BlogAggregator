@@ -103,7 +103,14 @@ namespace BlogAggregator.API.Controllers
             //   remove any posts corresponding to blog
             if (approvedBeforeUpdate && !blog.Approved)
             {
-                DeleteBlogPosts(id);               
+                deleteBlogPosts(id);               
+            }
+
+            // If approved indicator was changed from false to true, 
+            //  parse the blog posts and store them in DB
+            if (!approvedBeforeUpdate && blog.Approved)
+            {
+                parseBlogPosts(blog);                
             }
 
             // Save database changes
@@ -125,18 +132,11 @@ namespace BlogAggregator.API.Controllers
                 */
                     throw new Exception("Unable to update the blog in the database", e);
                 //}
-            }
-
-            // If approved indicator was changed from false to true, 
-            //  parse the blog posts and store them in DB
-            if (!approvedBeforeUpdate && blog.Approved)
-            {
-                    BlogWebDataWP.GetBlogPosts(blog);               
-            }
+            }           
 
             return StatusCode(HttpStatusCode.NoContent);
         }
-
+        
         // POST: api/Blogs
         [ResponseType(typeof(BlogModel))]
         public IHttpActionResult PostBlog(BlogModel blog)
@@ -164,6 +164,12 @@ namespace BlogAggregator.API.Controllers
             // Add the new Blog object to the DB
             _blogRepository.Add(dbBlog);
 
+            // If approved, parse the blog posts and store them in the DB
+            if (blog.Approved)
+            {
+                parseBlogPosts(blog);
+            }
+
             // Save the changes in the database
             try
             {
@@ -177,13 +183,7 @@ namespace BlogAggregator.API.Controllers
 
             // Set blog ID in BlogModel object with the ID 
             //  that was set in the DB blog after db.SaveChanges
-            blog.BlogID = dbBlog.BlogID;
-
-            // If approved, parse the blog posts and store them in the DB
-            if (blog.Approved)
-            {
-                    BlogWebDataWP.GetBlogPosts(blog);                
-            }            
+            blog.BlogID = dbBlog.BlogID;    
 
             // Return the created blog record
             return CreatedAtRoute("DefaultApi", new { id = blog.BlogID }, blog);
@@ -202,7 +202,7 @@ namespace BlogAggregator.API.Controllers
 
             try
             {
-                DeleteBlogPosts(id);
+                deleteBlogPosts(id);
 
                 // Remove the blog
                 _blogRepository.Delete(dbBlog);
@@ -223,8 +223,13 @@ namespace BlogAggregator.API.Controllers
             base.Dispose(disposing);
         }
 
+        private bool BlogExists(int id)
+        {
+            return _blogRepository.Count(e => e.BlogID == id) > 0;
+        }
+
         // Remove posts corresponding to blog
-        private void DeleteBlogPosts(int blogID)
+        private void deleteBlogPosts(int blogID)
         {
             var dbPosts = _postRepository.Where(p => p.BlogID == blogID);
 
@@ -237,9 +242,29 @@ namespace BlogAggregator.API.Controllers
             }
         }
 
-        private bool BlogExists(int id)
+        // Parse the posts for the blog,
+        //  and save them in the Post table
+        private void parseBlogPosts(BlogModel blog)
         {
-            return _blogRepository.Count(e => e.BlogID == id) > 0;
+            List<Post> postList = BlogWebDataWP.GetBlogPosts(blog);
+            saveBlogPosts(postList, blog.BlogID);
+        }
+
+        // Write the posts in the input posts to the Post table
+        private void saveBlogPosts(List<Post> posts, int blogID)
+        {
+            foreach (var post in posts)
+            {
+                _postRepository.Add(new Post
+                {
+                    BlogID = blogID,
+                    Content = post.Content,
+                    Description = post.Description,
+                    Link = post.Link,
+                    PublicationDate = post.PublicationDate,
+                    Title = post.Title
+                });
+            }           
         }
     }
 }

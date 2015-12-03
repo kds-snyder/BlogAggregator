@@ -35,10 +35,10 @@ namespace BlogAggregator.Core.Services
         }
 
         // Parse the posts corresponding to blog,
-        //  and store them in the DB
-        public static bool GetBlogPosts(BlogModel blog)
+        //  and return a list of the posts       
+        public static List<Post> GetBlogPosts(BlogModel blog)
         {
-            bool result = false;
+            List<Post> blogPosts = new List<Post>();
 
             // Get the XML of the blog
             string xmlData = getBlogXML(blog);
@@ -47,10 +47,10 @@ namespace BlogAggregator.Core.Services
             // and store in the blog record
             if (xmlData != "")
             {
-                result = parseBlogPosts(xmlData, blog.BlogID);
+                blogPosts = parseBlogPosts(xmlData, blog.BlogID);
             }
 
-            return result;
+            return blogPosts;
         }
 
         // Get the XML string from the blog RSS feed
@@ -109,11 +109,9 @@ namespace BlogAggregator.Core.Services
         }
 
         // Get the blog posts from the input XML data,
-        //  and write them in the database
-        // Return true if no error occurs, otherwise return false
-        private static bool parseBlogPosts(string xmlData, int blogID)
-        {
-            bool result = true;
+        //  and return as list of Post objects        
+        private static List<Post> parseBlogPosts(string xmlData, int blogID)
+        {           
             var posts = new List<Post>();
 
             try
@@ -135,21 +133,19 @@ namespace BlogAggregator.Core.Services
                            Link = post.Element("link").Value,
                            PublicationDate = Convert.ToDateTime(post.Element("pubDate").Value),
                            Title = post.Element("title").Value
-                       }).ToList();
-
-                    // Write the posts to the DB
-                    using (var blogData = new BlogData())
-                    {
-                        result = blogData.SavePosts(posts, blogID);
-                    }                   
+                       }).ToList();                             
                 }
             }
             catch (Exception e)
             {
-                result = false;
+                // If error occurred, ensure that null object is returned
+                if (posts != null)
+                {
+                    posts = new List<Post>();
+                }
             }
 
-            return result;
+            return posts;
         }
 
         // Get the content namespace specified in the input XML document,
