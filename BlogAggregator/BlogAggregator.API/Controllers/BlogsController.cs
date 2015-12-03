@@ -95,7 +95,7 @@ namespace BlogAggregator.API.Controllers
             bool approvedBeforeUpdate = dbBlog.Approved;
 
             // Update the DB blog according to the input BlogModel object,
-            //   and then update the DB blog in the repository
+            //   and then update the DB blog in the database
             dbBlog.Update(blog);
             _blogRepository.Update(dbBlog);           
 
