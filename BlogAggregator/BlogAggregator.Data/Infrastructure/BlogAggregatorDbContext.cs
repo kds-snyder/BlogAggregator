@@ -12,7 +12,7 @@ namespace BlogAggregator.Data.Infrastructure
     public class BlogAggregatorDbContext : DbContext
     {
 
-        public BlogAggregatorDbContext() : base("BlogAggregator_repo")
+        public BlogAggregatorDbContext() : base("BlogAggregator")
         {
         }
 
