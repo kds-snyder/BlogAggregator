@@ -14,7 +14,6 @@ C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Debug\BlogAggr
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Debug\BlogAggregator.API.Tests.dll
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Debug\BlogAggregator.API.Tests.pdb
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Debug\BlogAggregator.API.dll
-C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Debug\System.Web.Http.dll
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Debug\System.Web.Http.Cors.dll
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Debug\BlogAggregator.Core.dll

@@ -31,6 +31,9 @@ namespace BlogAggregator.API.Tests
         private int _postIDFirst = 2;
         private int _postIDSecond = 3;
         private int _postIDThird = 4;
+        private int _postIDFirstIndexInData = 0;
+        private int _postIDSecondIndexInData = 1;
+        private int _postIDThirdIndexInData = 2;
         private int _postIDNonexistent = 8;
 
         [TestInitialize]
@@ -106,9 +109,9 @@ namespace BlogAggregator.API.Tests
             _blogRepositoryMock.Setup(b => b.Any(bl => bl.BlogID == _blogIDNoMockPosts)).Returns(true);
 
             _postRepositoryMock.Setup(p => p.GetAll()).Returns(_posts.AsQueryable());
-            _postRepositoryMock.Setup(p => p.GetByID(_postIDFirst)).Returns(_posts[0]);
-            _postRepositoryMock.Setup(p => p.GetByID(_postIDSecond)).Returns(_posts[1]);
-            _postRepositoryMock.Setup(p => p.GetByID(_postIDThird)).Returns(_posts[2]);
+            _postRepositoryMock.Setup(p => p.GetByID(_postIDFirst)).Returns(_posts[_postIDFirstIndexInData]);
+            _postRepositoryMock.Setup(p => p.GetByID(_postIDSecond)).Returns(_posts[_postIDSecondIndexInData]);
+            _postRepositoryMock.Setup(p => p.GetByID(_postIDThird)).Returns(_posts[_postIDThirdIndexInData]);
 
             // Set up unit of work and controller
             _unitOfWorkMock = new Mock<IUnitOfWork>();
@@ -288,6 +291,45 @@ namespace BlogAggregator.API.Tests
             // Assert
             // Test fails if it reaches here, as API method should throw exception
             Assert.Fail();
+        }
+
+        [TestMethod]
+        public void DeletePostReturnsOk()
+        {
+            // Arrange
+
+            // Act
+            IHttpActionResult actionResult = _controller.DeletePost(_postIDFirst);
+
+            // Assert
+            // Verify:
+            //  GetByID is called once
+            //  Delete is called once with correct object
+            //  Unit of work commit is called once
+            //  Result is OK, and content result ID matches
+            _postRepositoryMock.Verify(p => p.GetByID(_postIDFirst), Times.Once);
+            _postRepositoryMock.Verify(p => p.Delete(_posts[_postIDFirstIndexInData]), Times.Once);
+            _unitOfWorkMock.Verify(uow => uow.Commit(), Times.Once);
+            Assert.IsInstanceOfType(actionResult, typeof(OkNegotiatedContentResult<PostModel>));
+            var contentResult = actionResult as OkNegotiatedContentResult<PostModel>;
+            Assert.IsNotNull(contentResult);
+            Assert.IsNotNull(contentResult.Content);
+            Assert.IsTrue(contentResult.Content.PostID == _postIDFirst);           
+        }
+
+        [TestMethod]
+        public void DeleteNonExistentPostReturnsNotFound()
+        {
+            // Arrange
+
+            // Act
+            IHttpActionResult actionResult = _controller.DeletePost(_postIDNonexistent);
+
+            // Assert
+            // Verify that GetByID is called once
+            // Verify that result is NotFound
+            _postRepositoryMock.Verify(p => p.GetByID(_postIDNonexistent), Times.Once);
+            Assert.IsInstanceOfType(actionResult, typeof(NotFoundResult));
         }
     }
 }
