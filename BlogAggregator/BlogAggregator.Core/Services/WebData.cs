@@ -9,10 +9,12 @@ namespace BlogAggregator.Core.Services
 {
     public class WebData
     {
+        public static WebData Instance => new WebData();
+
         // Read data from input webUrl
         // Return result of read as string
         // If read is unsuccessful, return empty string
-        public static string GetWebData(string webUrl)
+        public string GetWebData(string webUrl)
         {
             string webData;
 
@@ -33,5 +35,6 @@ namespace BlogAggregator.Core.Services
             return webData;
             
         }
+       
     }
 }

@@ -1,23 +1,10 @@
 extract
 transform
 load
+            // Arrange
 
-interface ipost
+            // Act
 
-wp posts inherit from ipost
+            // Assert
 
->>GetAuthorForPost: how to use lambda? 
-
-
-    debugger;
-
-    $http.get('http://localhost:3000/api/posts')
-        .then(function successCallback(response) {
-            $scope.posts = response.data;
-            debugger;
-        },
-        function errorCallback(error) {
-            alert('An error occurred');
-            debugger;
-        }
-   );
+if (!_blogRepository.Any(b => b.BlogID == post.BlogID))

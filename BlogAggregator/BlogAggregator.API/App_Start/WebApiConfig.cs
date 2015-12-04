@@ -38,10 +38,10 @@ namespace BlogAggregator.API
             config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType);
 
             // Initialize AutoMapper
-            setUpAutoMapper();
+            CreateMaps();
         }
 
-        public static void setUpAutoMapper()
+        public static void CreateMaps()
         {
             Mapper.CreateMap<Blog, BlogModel>();
             Mapper.CreateMap<Post, PostModel>();            

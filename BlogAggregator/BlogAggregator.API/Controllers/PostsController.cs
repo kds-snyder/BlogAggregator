@@ -1,45 +1,42 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using BlogAggregator.Core.Domain;
 using BlogAggregator.Core.Infrastructure;
 using BlogAggregator.Core.Models;
+using BlogAggregator.Core.Repository;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using System.Data;
 
 namespace BlogAggregator.API.Controllers
 {
     public class PostsController : ApiController
     {
-        private readonly IBlogAggregatorDbContext db;
+        private readonly IBlogRepository _blogRepository;
+        private readonly IPostRepository _postRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public PostsController()
+        public PostsController(IBlogRepository blogRepository, IPostRepository postRepository, IUnitOfWork unitOfWork)
         {
-            db = new BlogAggregatorDbContext();
-        }
-
-        public PostsController(IBlogAggregatorDbContext context)
-        {
-            db = context;
-        }
+            _blogRepository = blogRepository;
+            _postRepository = postRepository;
+            _unitOfWork = unitOfWork;
+        }        
 
         // GET: api/Posts
-        public IEnumerable<PostModel> GetPosts()
+        public IQueryable<PostModel> GetPosts()
         {
-            return Mapper.Map<IEnumerable<PostModel>>(db.Posts);
+            return _postRepository.GetAll().ProjectTo<PostModel>();
         }
 
         // GET: api/Posts/5
         [ResponseType(typeof(PostModel))]
         public IHttpActionResult GetPost(int id)
         {
-            Post dbPost = db.Posts.Find(id);
+            Post dbPost = _postRepository.GetByID(id);
             if (dbPost == null)
             {
                 return NotFound();
@@ -63,24 +60,23 @@ namespace BlogAggregator.API.Controllers
                 return BadRequest();
             }
 
-            if (!PostExists(id))
-            {
-                return BadRequest();
-            }
-
             // Get the DB post, update it according to the input PostModel object,           
-            //   and then set indicator that DB post has been modified
-            var dbPost = db.Posts.Find(id);
+            //   and then update the DB post in the database
+            var dbPost = _postRepository.GetByID(id);
+            if (dbPost == null)
+            {
+                return NotFound();
+            }
             dbPost.Update(post);
-            db.Entry(dbPost).State = EntityState.Modified;
+            _postRepository.Update(dbPost);
 
             // Save database changes
             try
             {
-                db.SaveChanges();
+                _unitOfWork.Commit();
             }
-            catch (DbUpdateConcurrencyException e)
-            {
+            catch (DBConcurrencyException e)            
+            { 
                 if (!PostExists(id))
                 {
                     return NotFound();
@@ -90,7 +86,6 @@ namespace BlogAggregator.API.Controllers
                     throw new Exception("Unable to update the post in the database", e);
                 }
             }
-
             return StatusCode(HttpStatusCode.NoContent);
         }
 
@@ -102,6 +97,12 @@ namespace BlogAggregator.API.Controllers
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }           
+
+            // Check that the corresponding blog exists
+            if (!_blogRepository.Any(b => b.BlogID == post.BlogID))
+            {
+                throw new Exception("Unable to add the post to the database, as it does not correspond to a blog");
             }
 
             //Set up new Post object, populated from input post
@@ -109,16 +110,15 @@ namespace BlogAggregator.API.Controllers
             dbPost.Update(post);
 
             // Add the new Post object to the DB
-            db.Posts.Add(dbPost);
+            _postRepository.Add(dbPost);
 
             // Save the changes in the database
             try
             {
-                db.SaveChanges();
+                _unitOfWork.Commit();
             }
             catch (Exception e)
             {
-
                 throw new Exception("Unable to add the post to the database", e);
             }
 
@@ -133,18 +133,18 @@ namespace BlogAggregator.API.Controllers
         public IHttpActionResult DeletePost(int id)
         {
             // Get the DB post corresponding to the post ID
-            Post dbPost = db.Posts.Find(id);
+            Post dbPost = _postRepository.GetByID(id);
             if (dbPost == null)
             {
                 return NotFound();
             }
 
             // Remove the post
-            db.Posts.Remove(dbPost);
+            _postRepository.Delete(dbPost);
 
             try
-            {                
-                db.SaveChanges();
+            {
+                _unitOfWork.Commit();
             }
             catch (Exception e)
             {
@@ -157,16 +157,12 @@ namespace BlogAggregator.API.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
-            {
-                db.Dispose();
-            }
             base.Dispose(disposing);
         }
 
         private bool PostExists(int id)
         {
-            return db.Posts.Count(e => e.PostID == id) > 0;
+            return _postRepository.Count(e => e.PostID == id) > 0;
         }
     }
 }

@@ -85,45 +85,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlogReader\WordPress\IWordPressBlogReader.cs" />
     <Compile Include="Domain\Blog.cs" />
+    <Compile Include="Domain\Enums.cs" />
+    <Compile Include="Domain\ExternalLogin.cs" />
     <Compile Include="Domain\Post.cs" />
-    <Compile Include="Infrastructure\BlogAggregatorDbContext.cs" />
-    <Compile Include="Infrastructure\IBlogAggregatorDbContext.cs" />
-    <Compile Include="Migrations\201511262023287_CreateDatabase.cs" />
-    <Compile Include="Migrations\201511262023287_CreateDatabase.Designer.cs">
-      <DependentUpon>201511262023287_CreateDatabase.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511270411063_RemoveBlogIDFromAuthorTable.cs" />
-    <Compile Include="Migrations\201511270411063_RemoveBlogIDFromAuthorTable.Designer.cs">
-      <DependentUpon>201511270411063_RemoveBlogIDFromAuthorTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201511300321243_RemoveAuthorTable_And_AddNameAndEmailToBlogTable.cs" />
-    <Compile Include="Migrations\201511300321243_RemoveAuthorTable_And_AddNameAndEmailToBlogTable.Designer.cs">
-      <DependentUpon>201511300321243_RemoveAuthorTable_And_AddNameAndEmailToBlogTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Domain\User.cs" />
+    <Compile Include="Infrastructure\Disposable.cs" />
+    <Compile Include="BlogReader\IBlogReader.cs" />
+    <Compile Include="Infrastructure\IRepository.cs" />
+    <Compile Include="Infrastructure\IUnitOfWork.cs" />
     <Compile Include="Models\BlogModel.cs" />
     <Compile Include="Models\PostModel.cs" />
+    <Compile Include="Models\RegistrationModel.cs" />
+    <Compile Include="OAuth\BlogAggregatorAuthorizationServerProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\BlogData.cs" />
-    <Compile Include="Services\BlogWebDataWP.cs" />
+    <Compile Include="Repository\IAuthRepository.cs" />
+    <Compile Include="Repository\IBlogRepository.cs" />
+    <Compile Include="Repository\IExternalLoginRepository.cs" />
+    <Compile Include="Repository\IPostRepository.cs" />
+    <Compile Include="Repository\IUserRepository.cs" />
+    <Compile Include="BlogReader\WordPress\WordPressBlogReader.cs" />
+    <Compile Include="Services\BlogService.cs" />
+    <Compile Include="Services\IBlogService.cs" />
     <Compile Include="Services\StringExtensions.cs" />
     <Compile Include="Services\WebData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201511262023287_CreateDatabase.resx">
-      <DependentUpon>201511262023287_CreateDatabase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511270411063_RemoveBlogIDFromAuthorTable.resx">
-      <DependentUpon>201511270411063_RemoveBlogIDFromAuthorTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201511300321243_RemoveAuthorTable_And_AddNameAndEmailToBlogTable.resx">
-      <DependentUpon>201511300321243_RemoveAuthorTable_And_AddNameAndEmailToBlogTable.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
