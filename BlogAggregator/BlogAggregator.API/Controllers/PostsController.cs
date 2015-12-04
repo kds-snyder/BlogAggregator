@@ -63,6 +63,10 @@ namespace BlogAggregator.API.Controllers
             // Get the DB post, update it according to the input PostModel object,           
             //   and then update the DB post in the database
             var dbPost = _postRepository.GetByID(id);
+            if (dbPost == null)
+            {
+                return NotFound();
+            }
             dbPost.Update(post);
             _postRepository.Update(dbPost);
 
@@ -93,7 +97,7 @@ namespace BlogAggregator.API.Controllers
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
+            }           
 
             // Check that the corresponding blog exists
             if (!_blogRepository.Any(b => b.BlogID == post.BlogID))

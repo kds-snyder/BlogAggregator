@@ -93,7 +93,7 @@ namespace BlogAggregator.API.Controllers
             var dbBlog = _blogRepository.GetByID(id);
             if (dbBlog == null)
             {
-                return BadRequest();
+                return NotFound();
             }
             bool approvedBeforeUpdate = dbBlog.Approved;
 
