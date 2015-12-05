@@ -15,5 +15,10 @@ namespace BlogAggregator.Data.Repository
         {
 
         }
+
+        public override IQueryable<Post> GetAll()
+        {
+            return DbSet;
+        }
     }
 }

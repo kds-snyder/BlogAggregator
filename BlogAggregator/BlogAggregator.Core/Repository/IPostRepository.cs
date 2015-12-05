@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace BlogAggregator.Core.Repository
 {
     public interface IPostRepository : IRepository<Post>
-    {       
+    {
+       
     }
 }

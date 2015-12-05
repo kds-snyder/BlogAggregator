@@ -10,6 +10,7 @@ using BlogAggregator.Core.Repository;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using System.Data;
+using System.Web.Http.OData;
 
 namespace BlogAggregator.API.Controllers
 {
@@ -24,9 +25,10 @@ namespace BlogAggregator.API.Controllers
             _blogRepository = blogRepository;
             _postRepository = postRepository;
             _unitOfWork = unitOfWork;
-        }        
+        }
 
-        // GET: api/Posts
+        // GET: api/Posts  
+        [EnableQuery]     
         public IQueryable<PostModel> GetPosts()
         {
             return _postRepository.GetAll().ProjectTo<PostModel>();

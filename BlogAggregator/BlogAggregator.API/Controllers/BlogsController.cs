@@ -13,6 +13,7 @@ using BlogAggregator.Core.Services;
 using BlogAggregator.Core.Repository;
 using BlogAggregator.Core.Infrastructure;
 using BlogAggregator.Core.BlogReader.WordPress;
+using System.Web.Http.OData;
 
 namespace BlogAggregator.API.Controllers
 {
@@ -53,6 +54,7 @@ namespace BlogAggregator.API.Controllers
         // GET: api/blogs/5/posts
         // Get posts belonging to blog corresponding to blog ID
         [Route("api/blogs/{blogID}/posts")]
+        [EnableQuery]
         public IHttpActionResult GetPostsForBlog(int blogID)
         {
             // Validate request
