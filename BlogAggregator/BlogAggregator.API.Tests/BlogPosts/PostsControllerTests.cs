@@ -51,7 +51,7 @@ namespace BlogAggregator.API.Tests
             {
                 new Blog {
                     BlogID = _blogIDNoMockPosts,
-                    BlogType = BlogTypes.WordPress,
+                    //BlogType = BlogTypes.WordPress,
                     CreatedDate = new DateTime(2015, 12, 2, 14, 55, 32),
                     Approved = true,
                     AuthorEmail = "test@test.com",
@@ -62,7 +62,7 @@ namespace BlogAggregator.API.Tests
                 },
                 new Blog {
                     BlogID = _blogIDMockPosts,
-                    BlogType = BlogTypes.WordPress,
+                    //BlogType = BlogTypes.WordPress,
                     CreatedDate = new DateTime(2015, 12, 3, 10, 55, 32),
                     Approved = true,
                     AuthorEmail = "unit@unit.com",

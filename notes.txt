@@ -28,3 +28,5 @@ flex="85"
                 <md-divider ng-if="!$last"></md-divider>
             </md-list-item>
         </md-list>
+
+BlogType: blog.cs twice, blogmodel.cd, BlogService, Initialize in blog controller tests

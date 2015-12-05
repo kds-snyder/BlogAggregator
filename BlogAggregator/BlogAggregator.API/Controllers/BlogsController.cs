@@ -175,16 +175,16 @@ namespace BlogAggregator.API.Controllers
                 throw new Exception("Unable to add the blog to the database", e);
             }
 
+            // Set blog ID in BlogModel object with the ID 
+            //  that was placed in the DB blog after it was added to DB
+            blog.BlogID = dbBlog.BlogID;
+
             // If approved, parse the blog posts and store them in the DB
             if (blog.Approved)
             {
                 var blogService = new BlogService(wordPressBlogReader, _postRepository, _unitOfWork);
                 blogService.ExtractAndSaveBlogPosts(blog);
             }
-
-            // Set blog ID in BlogModel object with the ID 
-            //  that was set in the DB blog after db.SaveChanges
-            blog.BlogID = dbBlog.BlogID;
 
             // Return the created blog record
             return CreatedAtRoute("DefaultApi", new { id = blog.BlogID }, blog);

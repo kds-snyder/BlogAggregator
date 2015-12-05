@@ -11,7 +11,7 @@ namespace BlogAggregator.Core.Models
     {
         public int BlogID { get; set; }
 
-        public BlogTypes BlogType { get; set; }
+        //public BlogTypes BlogType { get; set; }
 
         public DateTime CreatedDate { get; set; }
 
