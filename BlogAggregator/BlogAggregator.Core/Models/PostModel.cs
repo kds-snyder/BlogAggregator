@@ -21,5 +21,7 @@ namespace BlogAggregator.Core.Models
         public DateTime PublicationDate { get; set; }
 
         public string Title { get; set; }
+
+        //public BlogModel Blog { get; set; }
     }
 }
