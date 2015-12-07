@@ -7,13 +7,15 @@ angular.module('app').controller('PostsController', function ($scope, Post, Post
             function (data) {
             // Set posts if function returned data
             if (data.length > 0) {
-                $scope.posts = data;                               
+                $scope.posts = data;
+                $scope.loading = false;
             }
             else {
                 $scope.posts = null;
+                $scope.loading = false;
             }
         });
-        $scope.loading = false;
+        
     };
  
     
