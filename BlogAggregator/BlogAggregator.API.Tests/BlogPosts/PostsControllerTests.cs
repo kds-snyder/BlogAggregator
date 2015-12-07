@@ -22,12 +22,12 @@ namespace BlogAggregator.API.Tests
         private Mock<IUnitOfWork> _unitOfWorkMock;
         private PostsController _controller;
         private Blog[] _blogs;
-        private Post[] _posts;
-        //private PostModel[] _postModels;
+        private Post[] _posts;      
 
         // Numbers for tests
         private int _blogIDNoMockPosts = 4;
         private int _blogIDMockPosts = 5;
+        private int _blogIDMockPostsIndexInData = 1;
         private int _blogIDNonexistent = 9;
         private int _numberOfMockPosts = 3;
         private int _postIDFirst = 2;
@@ -80,7 +80,7 @@ namespace BlogAggregator.API.Tests
                 new Post {
                     PostID = _postIDFirst,
                     BlogID = _blogIDMockPosts,
-                    Blog = _blogs[1],
+                    Blog = _blogs[_blogIDMockPostsIndexInData],
                     Content = "Test content",
                     Description = "Interesting post",
                     Link = "http://testerson.wordpress.com/post/1",
@@ -90,7 +90,7 @@ namespace BlogAggregator.API.Tests
                 new Post {
                     PostID = _postIDSecond,
                     BlogID = _blogIDMockPosts,
-                    Blog = _blogs[1],
+                    Blog = _blogs[_blogIDMockPostsIndexInData],
                     Content = "More test content",
                     Description = "More interesting post",
                     Link = "http://testerson.wordpress.com/post/2",
@@ -100,7 +100,7 @@ namespace BlogAggregator.API.Tests
                 new Post {
                     PostID = _postIDThird,
                     BlogID = _blogIDMockPosts,
-                    Blog = _blogs[1],
+                    Blog = _blogs[_blogIDMockPostsIndexInData],
                     Content = "Even more test content",
                     Description = "Even more interesting post",
                     Link = "http://testerson.wordpress.com/post/3",
@@ -108,41 +108,7 @@ namespace BlogAggregator.API.Tests
                     Title = "Even More Interesting Title"
                 }
             };
-/*
-            _postModels = new[]
-{
-                new PostModel {
-                    PostID = _postIDFirst,
-                    BlogID = _blogIDMockPosts,
-                    Content = "Test content",
-                    Description = "Interesting post",
-                    Link = "http://testerson.wordpress.com/post/1",
-                    PublicationDate = new DateTime(2015, 11, 2, 9, 55, 32),
-                    Title = "Interesting Title",
-                    BlogAuthorName = "Unit Testerson"
-               },
-                new PostModel {
-                    PostID = _postIDSecond,
-                    BlogID = _blogIDMockPosts,
-                    Content = "More test content",
-                    Description = "More interesting post",
-                    Link = "http://testerson.wordpress.com/post/2",
-                    PublicationDate = new DateTime(2015, 11, 3, 9, 55, 32),
-                    Title = "More Interesting Title",
-                    BlogAuthorName = "Unit Testerson"
-                },
-                new PostModel {
-                    PostID = _postIDThird,
-                    BlogID = _blogIDMockPosts,
-                    Content = "Even more test content",
-                    Description = "Even more interesting post",
-                    Link = "http://testerson.wordpress.com/post/3",
-                    PublicationDate = new DateTime(2015, 11, 5, 9, 55, 32),
-                    Title = "Even More Interesting Title",
-                    BlogAuthorName = "Unit Testerson"
-                }
-            };
-*/
+
             _blogRepositoryMock.Setup(br => br.GetAll()).Returns(_blogs.AsQueryable());
             _blogRepositoryMock.Setup(br => br.Any(b => b.BlogID == _blogIDMockPosts)).Returns(true);
             _blogRepositoryMock.Setup(br => br.Any(b => b.BlogID == _blogIDNoMockPosts)).Returns(true);

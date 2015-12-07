@@ -97,7 +97,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
                 new Post {
                     PostID = _postIDFirst,
                     BlogID = _blogIDApprovedMockPosts,
-                    Blog = _blogs[1],
+                    Blog = _blogs[_blogIDApprovedMockPostsIndexInData],
                     Content = "Test content",
                     Description = "Interesting post",
                     Link = "http://testerson.wordpress.com/post/1",
@@ -107,7 +107,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
                 new Post {
                     PostID = _postIDSecond,
                     BlogID = _blogIDApprovedMockPosts,
-                    Blog = _blogs[1],
+                    Blog = _blogs[_blogIDApprovedMockPostsIndexInData],
                     Content = "More test content",
                     Description = "More interesting post",
                     Link = "http://testerson.wordpress.com/post/2",
@@ -117,7 +117,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
                 new Post {
                     PostID = _postIDThird,
                     BlogID = _blogIDApprovedMockPosts,
-                    Blog = _blogs[1],
+                    Blog = _blogs[_blogIDApprovedMockPostsIndexInData],
                     Content = "Even more test content",
                     Description = "Even more interesting post",
                     Link = "http://testerson.wordpress.com/post/3",
