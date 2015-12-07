@@ -37,13 +37,13 @@ namespace BlogAggregator.Core.Services
 
         public IEnumerable<Post> ExtractBlogPosts(BlogModel blog)
         {
-            //switch (blog.BlogType)
-            //{
-             //   case BlogTypes.WordPress:
+            switch (blog.BlogType)
+            {
+                case BlogTypes.WordPress:
                     return extractBlogPosts(_wordPressBlogReader, blog);
-            //    default:
-             //       throw new ArgumentException(nameof(blog));
-            //}
+                default:
+                    throw new ArgumentException(nameof(blog));
+            }
         }
 
         public void SaveBlogPosts(int blogId, IEnumerable<Post> posts)

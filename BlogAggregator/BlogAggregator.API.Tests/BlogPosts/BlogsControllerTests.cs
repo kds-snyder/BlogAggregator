@@ -57,7 +57,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
             {
                 new Blog {
                     BlogID = _blogIDApprovedNoMockPosts,
-                    //BlogType = BlogTypes.WordPress,
+                    BlogType = BlogTypes.WordPress,
                     CreatedDate = new DateTime(2015, 12, 2, 14, 55, 32),
                     Approved = true,
                     AuthorEmail = "test@test.com",
@@ -68,7 +68,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
                 },
                 new Blog {
                     BlogID = _blogIDApprovedMockPosts,
-                    //BlogType = BlogTypes.WordPress,
+                    BlogType = BlogTypes.WordPress,
                     CreatedDate = new DateTime(2015, 12, 3, 10, 55, 32),
                     Approved = true,
                     AuthorEmail = "unit@unit.com",
@@ -80,7 +80,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
                 // This entry has the URL of a real blog
                 new Blog {
                     BlogID = _blogIDNotApproved,
-                    //BlogType = BlogTypes.WordPress,
+                    BlogType = BlogTypes.WordPress,
                     CreatedDate = new DateTime(2015, 12, 1, 10, 55, 32),
                     Approved = false,
                     AuthorEmail = "k@s.com",
@@ -256,7 +256,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
                      new BlogModel
                      {
                          BlogID = _blogIDApprovedNoMockPosts,
-                         //BlogType = BlogTypes.WordPress,
+                         BlogType = BlogTypes.WordPress,
                          CreatedDate = new DateTime(2015, 12, 2, 14, 55, 32),
                          Approved = false,
                          AuthorEmail = "test@test.com",
@@ -294,7 +294,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
                      new BlogModel
                      {
                          BlogID = _blogIDNotApproved,
-                         //BlogType = BlogTypes.WordPress,
+                         BlogType = BlogTypes.WordPress,
                          CreatedDate = new DateTime(2015, 12, 1, 10, 55, 32),
                          Approved = false,
                          AuthorEmail = "k@s.com",
@@ -331,7 +331,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
                      new BlogModel
                      {
                          BlogID = _blogIDApprovedMockPosts,
-                         //BlogType = BlogTypes.WordPress,
+                         BlogType = BlogTypes.WordPress,
                          CreatedDate = new DateTime(2015, 12, 3, 10, 55, 32),
                          Approved = true,
                          AuthorEmail = "unit@unit.com",
@@ -368,7 +368,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
                      new BlogModel
                      {
                          BlogID = _blogIDNotApproved,
-                         //BlogType = BlogTypes.WordPress,
+                         BlogType = BlogTypes.WordPress,
                          CreatedDate = new DateTime(2015, 12, 1, 10, 55, 32),
                          Approved = true,
                          AuthorEmail = "k@s.com",
@@ -408,7 +408,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
                      new BlogModel
                      {
                          BlogID = _blogIDApprovedMockPosts,
-                         //BlogType = BlogTypes.WordPress,
+                         BlogType = BlogTypes.WordPress,
                          CreatedDate = new DateTime(2015, 12, 3, 10, 55, 32),
                          Approved = false,
                          AuthorEmail = "unit@unit.com",
@@ -448,7 +448,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
                      new BlogModel
                      {
                          BlogID = _blogIDNonexistent,
-                         //BlogType = BlogTypes.WordPress,
+                         BlogType = BlogTypes.WordPress,
                          CreatedDate = new DateTime(2015, 12, 2, 14, 55, 32),
                          Approved = false,
                          AuthorEmail = "test@test.com",
@@ -478,7 +478,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
                     new BlogModel
                     {
                         BlogID = 0,
-                        //BlogType = BlogTypes.WordPress,
+                        BlogType = BlogTypes.WordPress,
                         CreatedDate = new DateTime(2015, 12, 2, 14, 55, 32),
                         Approved = false,
                         AuthorEmail = "test@test.com",
@@ -514,7 +514,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
                      new BlogModel
                      {
                          BlogID = _blogIDNotApproved,
-                         //BlogType = BlogTypes.WordPress,
+                         BlogType = BlogTypes.WordPress,
                          CreatedDate = new DateTime(2015, 12, 1, 10, 55, 32),
                          Approved = true,
                          AuthorEmail = "k@s.com",
