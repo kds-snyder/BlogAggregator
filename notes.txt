@@ -30,3 +30,5 @@ flex="85"
         </md-list>
 
 BlogType: blog.cs twice, blogmodel.cd, BlogService, Initialize in blog controller tests
+
+                                document.getElementById("postDescription").innerHTML = post.Description;

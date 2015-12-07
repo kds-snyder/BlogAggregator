@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace BlogAggregator.Core.Services
 {
@@ -11,12 +8,22 @@ namespace BlogAggregator.Core.Services
     {
         public static WebData Instance => new WebData();
 
+        // Read data from input webUrl,
+        //  adding schema to webUrl if necessary
+        // Return result of read as string
+        // If read is unsuccessful, return empty string
+        public string GetWebDataFixUrl(string webUrl)
+        {
+            return GetWebData(FixWebUrl(webUrl));
+        }
+
+
         // Read data from input webUrl
         // Return result of read as string
         // If read is unsuccessful, return empty string
         public string GetWebData(string webUrl)
         {
-            string webData;
+            string webData = "";
 
             try
             {
@@ -25,6 +32,7 @@ namespace BlogAggregator.Core.Services
                 {
                     webData = webClient.DownloadString(webUrl);
                 }
+                
             }
             catch (Exception e)
             {
@@ -34,6 +42,15 @@ namespace BlogAggregator.Core.Services
 
             return webData;
             
+        }
+
+        // Return the full form of the input web Url,
+        //  by adding scheme (e.g. http) if it is missing
+        public string FixWebUrl (string webUrl)
+        {
+            // Insert scheme if missing
+            Uri fullWebUri = new UriBuilder(webUrl).Uri;
+            return fullWebUri.AbsoluteUri;
         }
        
     }

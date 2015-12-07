@@ -57,7 +57,7 @@ namespace BlogAggregator.Core.BlogReader.WordPress
         private string getBlogXML(BlogModel blog)
         {
             string xmlUrl = getXMLUrl(blog.Link);
-            string xmlData = WebData.Instance.GetWebData(xmlUrl);
+            string xmlData = WebData.Instance.GetWebDataFixUrl(xmlUrl);
             return xmlData;
         }
 
@@ -97,6 +97,7 @@ namespace BlogAggregator.Core.BlogReader.WordPress
 
                     // Get the blog information and store it in the blog record  
                     blog.Description = blogInfoXML.Element("description").Value;
+                    blog.Link = blogInfoXML.Element("link").Value;
                     blog.Title = blogInfoXML.Element("title").Value;
                 }
             }

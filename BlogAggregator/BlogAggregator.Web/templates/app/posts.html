@@ -22,7 +22,13 @@
                             <div class="spacer5"></div>
                             <div class="md-subhead">Published: {{post.PublicationDate | date: 'mediumDate'}}</div>
                             <div class="spacer5"></div>
-                            <div id="postDescription"> {{post.Description}}<a href="#" target="_blank"> More...</a></div>
+                            <div id="postDescription">{{post.Description}} </div>
+                            <div><a href="#" target="_blank"> More...</a></div>
+                            <script type="text/javascript">
+                                var div = document.getElementById("postDescription");
+                                div.textContent = post.Description;
+                                var text = div.textContent;
+                            </script>
                         </div>
                         <div class="spacer10"></div>
                     </div>

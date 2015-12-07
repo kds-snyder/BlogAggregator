@@ -154,7 +154,7 @@ namespace BlogAggregator.API.Controllers
 
             // Get the blog information from the blog website 
             // If unable to get the information, do not create the blog record
-            var wordPressBlogReader = new WordPressBlogReader();
+             var wordPressBlogReader = new WordPressBlogReader();
             if (!wordPressBlogReader.VerifyBlog(blog))
             {
                 return NotFound();
