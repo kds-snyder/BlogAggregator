@@ -196,7 +196,8 @@ namespace BlogAggregator.API.Tests.BlogPosts
         {
             // Arrange
             _blogRepositoryMock.Setup(br => br.Count(It.IsAny<Expression<Func<Blog, bool>>>())).Returns(1);
-            //_postRepositoryMock.Setup(pr => pr.Where((It.IsAny<Expression<Func<Post, bool>>>()).Returns(_posts.AsQueryable());
+            _postRepositoryMock.Setup(pr => pr.Where(It.IsAny<Expression<Func<Post, bool>>>()))
+                                                             .Returns(_posts.AsQueryable());
 
             // Act
             IHttpActionResult actionResult = _controller.GetPostsForBlog(_blogIDApprovedMockPosts);
@@ -205,7 +206,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
             // Verify that Where is called just once
             // Verify that HTTP status code is OK
             // Verify that the correct number of posts are returned
-            _postRepositoryMock.Verify(p => p.Where(bp => bp.BlogID == _blogIDApprovedMockPosts), Times.Once);
+            _postRepositoryMock.Verify(p => p.Where(It.IsAny<Expression<Func<Post,bool>>>()), Times.Once);
             Assert.IsInstanceOfType(actionResult,
                     typeof(OkNegotiatedContentResult<IQueryable<PostModel>>));
             var contentResult = actionResult as OkNegotiatedContentResult<IQueryable<PostModel>>;
