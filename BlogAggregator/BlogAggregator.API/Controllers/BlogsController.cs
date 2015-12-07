@@ -228,7 +228,7 @@ namespace BlogAggregator.API.Controllers
 
         private bool BlogExists(int id)
         {
-            return _blogRepository.Count(e => e.BlogID == id) > 0;
+             return _blogRepository.Count(b => b.BlogID == id) > 0;
         }
 
         // Remove posts corresponding to blog

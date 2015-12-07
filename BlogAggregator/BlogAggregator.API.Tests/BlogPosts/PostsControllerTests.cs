@@ -104,14 +104,14 @@ namespace BlogAggregator.API.Tests
                 }
             };
 
-            _blogRepositoryMock.Setup(b => b.GetAll()).Returns(_blogs.AsQueryable());
-            _blogRepositoryMock.Setup(b => b.Any(bl => bl.BlogID == _blogIDMockPosts)).Returns(true);
-            _blogRepositoryMock.Setup(b => b.Any(bl => bl.BlogID == _blogIDNoMockPosts)).Returns(true);
+            _blogRepositoryMock.Setup(br => br.GetAll()).Returns(_blogs.AsQueryable());
+            _blogRepositoryMock.Setup(br => br.Any(b => b.BlogID == _blogIDMockPosts)).Returns(true);
+            _blogRepositoryMock.Setup(br => br.Any(b => b.BlogID == _blogIDNoMockPosts)).Returns(true);
 
-            _postRepositoryMock.Setup(p => p.GetAll()).Returns(_posts.AsQueryable());
-            _postRepositoryMock.Setup(p => p.GetByID(_postIDFirst)).Returns(_posts[_postIDFirstIndexInData]);
-            _postRepositoryMock.Setup(p => p.GetByID(_postIDSecond)).Returns(_posts[_postIDSecondIndexInData]);
-            _postRepositoryMock.Setup(p => p.GetByID(_postIDThird)).Returns(_posts[_postIDThirdIndexInData]);
+            _postRepositoryMock.Setup(pr => pr.GetAll()).Returns(_posts.AsQueryable());
+            _postRepositoryMock.Setup(pr => pr.GetByID(_postIDFirst)).Returns(_posts[_postIDFirstIndexInData]);
+            _postRepositoryMock.Setup(pr => pr.GetByID(_postIDSecond)).Returns(_posts[_postIDSecondIndexInData]);
+            _postRepositoryMock.Setup(pr => pr.GetByID(_postIDThird)).Returns(_posts[_postIDThirdIndexInData]);
 
             // Set up unit of work and controller
             _unitOfWorkMock = new Mock<IUnitOfWork>();
