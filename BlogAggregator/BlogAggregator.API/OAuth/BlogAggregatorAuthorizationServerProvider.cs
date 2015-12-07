@@ -1,14 +1,11 @@
 ﻿using BlogAggregator.Core.Domain;
-using BlogAggregator.Core.Repository;
+using BlogAggregator.Data.Repository;
 using Microsoft.Owin.Security.OAuth;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace BlogAggregator.Core.OAuth
+namespace BlogAggregator.API.OAuth
 {
     public class BlogAggregatorAuthorizationServerProvider : OAuthAuthorizationServerProvider
     {

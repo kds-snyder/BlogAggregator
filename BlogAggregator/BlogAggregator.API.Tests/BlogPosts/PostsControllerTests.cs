@@ -23,7 +23,7 @@ namespace BlogAggregator.API.Tests
         private PostsController _controller;
         private Blog[] _blogs;
         private Post[] _posts;
-        private PostModel[] _postModels;
+        //private PostModel[] _postModels;
 
         // Numbers for tests
         private int _blogIDNoMockPosts = 4;
