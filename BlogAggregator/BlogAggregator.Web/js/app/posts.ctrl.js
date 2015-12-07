@@ -3,14 +3,21 @@ angular.module('app').controller('PostsController', function ($scope, Post, Post
     // Function to load posts, setting loading indicator while loading
     $scope.load = function () {
         $scope.loading = true;
-        $scope.posts = Post.query(function () {
-            $scope.loading = false;          
+        PostService.getAllPostsByDateDesc().then(
+            function (data) {
+            // Set posts if function returned data
+            if (data.length > 0) {
+                $scope.posts = data;                               
+            }
+            else {
+                $scope.posts = null;
+            }
         });
+        $scope.loading = false;
     };
-
-   // $scope.posts = PostService.getAllPostsByDateDesc();
+ 
     
     // After all definitions, load the posts
     $scope.load();
-    
+
 });
