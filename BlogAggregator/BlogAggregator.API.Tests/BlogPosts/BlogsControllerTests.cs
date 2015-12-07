@@ -195,60 +195,6 @@ namespace BlogAggregator.API.Tests.BlogPosts
         }
 
         [TestMethod]
-        public void GetPostsForBlogReturnsPosts()
-        {
-            // Arrange
-            _blogRepositoryMock.Setup(br => br.Count(It.IsAny<Expression<Func<Blog, bool>>>())).Returns(1);
-            _postRepositoryMock.Setup(pr => pr.Where(It.IsAny<Expression<Func<Post, bool>>>()))
-                                                             .Returns(_posts.AsQueryable());
-
-            // Act
-            IHttpActionResult actionResult = _controller.GetPostsForBlog(_blogIDApprovedMockPosts);
-
-            // Assert
-            // Verify that Where is called just once
-            // Verify that HTTP status code is OK
-            // Verify that the correct number of posts are returned
-            _postRepositoryMock.Verify(p => p.Where(It.IsAny<Expression<Func<Post,bool>>>()), Times.Once);
-            Assert.IsInstanceOfType(actionResult,
-                    typeof(OkNegotiatedContentResult<IQueryable<PostModel>>));
-            var contentResult = actionResult as OkNegotiatedContentResult<IQueryable<PostModel>>;
-            Assert.IsNotNull(contentResult);
-            Assert.IsNotNull(contentResult.Content);
-            Assert.AreEqual(contentResult.Content.Count(), _numberOfMockPosts);
-        }
-
-        [TestMethod]
-        public void GetPostsForBlogNonExistentReturnsBadRequest()
-        {
-            // Arrange
-
-            // Act
-            IHttpActionResult actionResult = _controller.GetPostsForBlog(_blogIDNonexistent);
-
-            // Assert
-            // Verify that HTTP status code is BadRequest
-            Assert.IsInstanceOfType(actionResult,
-                    typeof(BadRequestResult));
-        }
-
-
-        [TestMethod]
-        public void GetPostsForBlogNoPostsReturnsNotFound()
-        {
-            // Arrange
-            _blogRepositoryMock.Setup(br => br.Count(It.IsAny<Expression<Func<Blog, bool>>>())).Returns(1);
-
-            // Act
-            IHttpActionResult actionResult = _controller.GetPostsForBlog(_blogIDApprovedNoMockPosts);
-
-            // Assert
-            // Verify that HTTP status code is Not Found
-            Assert.IsInstanceOfType(actionResult,
-                    typeof(NotFoundResult));
-        }
-
-        [TestMethod]
         public void PutBlogNoPostsApprovedChangedtoFalseReturnsHttpStatusCodeNoContent()
         {
             // Arrange

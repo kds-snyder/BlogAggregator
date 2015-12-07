@@ -52,31 +52,6 @@ namespace BlogAggregator.API.Controllers
             return Ok(Mapper.Map<BlogModel>(dbBlog));
         }
 
-        // GET: api/blogs/5/posts
-        // Get posts belonging to blog corresponding to blog ID
-        [Route("api/blogs/{blogID}/posts")]
-        [EnableQuery]
-        public IHttpActionResult GetPostsForBlog(int blogID)
-        {
-            // Validate request
-            if (!BlogExists(blogID))
-            {
-                return BadRequest();
-            }
-
-            // Get list of posts where the blog ID
-            //  matches the blog IDs belonging to the blog            
-            var dbPosts = _postRepository.Where(p => p.BlogID == blogID);
-
-            if (dbPosts.Count() == 0)
-            {
-                return NotFound();
-            }
-
-            // Return list of PostModel objects            
-            return Ok(dbPosts.ProjectTo<PostModel>());
-        }
-
         // PUT: api/Blogs/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutBlog(int id, BlogModel blog)
