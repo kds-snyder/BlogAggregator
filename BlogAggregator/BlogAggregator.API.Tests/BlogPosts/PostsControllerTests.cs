@@ -10,6 +10,7 @@ using BlogAggregator.Core.Domain;
 using System.Web.Http.Results;
 using BlogAggregator.Core.Models;
 using System.Net;
+using System.Linq.Expressions;
 
 namespace BlogAggregator.API.Tests
 {
@@ -237,6 +238,7 @@ namespace BlogAggregator.API.Tests
         public void PostPostAddsPost()
         {
             // Arrange
+            _blogRepositoryMock.Setup(br => br.Any(It.IsAny<Expression<Func<Blog, bool>>>())).Returns(true);
 
             // Act
             IHttpActionResult actionResult =

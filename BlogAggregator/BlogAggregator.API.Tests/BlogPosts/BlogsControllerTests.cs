@@ -11,6 +11,7 @@ using System.Web.Http.Results;
 using BlogAggregator.Core.Models;
 using System.Net;
 using BlogAggregator.Core.Services;
+using System.Linq.Expressions;
 
 namespace BlogAggregator.API.Tests.BlogPosts
 {
@@ -126,13 +127,9 @@ namespace BlogAggregator.API.Tests.BlogPosts
             _blogRepositoryMock.Setup(br => br.GetByID(_blogIDApprovedMockPosts)).Returns(_blogs[_blogIDApprovedMockPostsIndexInData]);
             _blogRepositoryMock.Setup(br => br.GetByID(_blogIDApprovedNoMockPosts)).Returns(_blogs[_blogIDApprovedNoMockPostsIndexInData]);
             _blogRepositoryMock.Setup(br => br.GetByID(_blogIDNotApproved)).Returns(_blogs[_blogIDNotApprovedIndexInData]);
-            _blogRepositoryMock.Setup(br => br.Count(b => b.BlogID == _blogIDApprovedMockPosts)).Returns(1);
-            _blogRepositoryMock.Setup(br => br.Count(b => b.BlogID == _blogIDApprovedNoMockPosts)).Returns(1);
-            _blogRepositoryMock.Setup(br => br.Count(b => b.BlogID == _blogIDApprovedNoMockPosts)).Returns(1);
 
             _postRepositoryMock.Setup(pr => pr.GetAll()).Returns(_posts.AsQueryable());
-            _postRepositoryMock.Setup(pr => pr.Where(p => p.BlogID == _blogIDApprovedMockPosts)).Returns(_posts.AsQueryable());
-            _postRepositoryMock.Setup(pr => pr.GetByID(_postIDFirst)).Returns(_posts[_postIDFirstIndexInData]);
+             _postRepositoryMock.Setup(pr => pr.GetByID(_postIDFirst)).Returns(_posts[_postIDFirstIndexInData]);
             _postRepositoryMock.Setup(pr => pr.GetByID(_postIDSecond)).Returns(_posts[_postIDSecondIndexInData]);
             _postRepositoryMock.Setup(pr => pr.GetByID(_postIDThird)).Returns(_posts[_postIDThirdIndexInData]);           
 
@@ -198,6 +195,8 @@ namespace BlogAggregator.API.Tests.BlogPosts
         public void GetPostsForBlogReturnsPosts()
         {
             // Arrange
+            _blogRepositoryMock.Setup(br => br.Count(It.IsAny<Expression<Func<Blog, bool>>>())).Returns(1);
+            //_postRepositoryMock.Setup(pr => pr.Where((It.IsAny<Expression<Func<Post, bool>>>()).Returns(_posts.AsQueryable());
 
             // Act
             IHttpActionResult actionResult = _controller.GetPostsForBlog(_blogIDApprovedMockPosts);
@@ -234,6 +233,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
         public void GetPostsForBlogNoPostsReturnsNotFound()
         {
             // Arrange
+            _blogRepositoryMock.Setup(br => br.Count(It.IsAny<Expression<Func<Blog, bool>>>())).Returns(1);
 
             // Act
             IHttpActionResult actionResult = _controller.GetPostsForBlog(_blogIDApprovedNoMockPosts);
@@ -320,7 +320,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
         }
 
         [TestMethod]
-        public void PutBlogPostsApprovedReturnsHttpStatusCodeNoContent()
+        public void PutBlogWithPostsApprovedNotChangedReturnsHttpStatusCodeNoContent()
         {
             // Arrange
 
@@ -400,6 +400,8 @@ namespace BlogAggregator.API.Tests.BlogPosts
         public void PutBlogWithPostsApprovedChangedtoFalseReturnsHttpStatusCodeNoContentAndDeletesPosts()
         {
             // Arrange
+            _postRepositoryMock.Setup(pr => pr.Where(It.IsAny<Expression<Func<Post, bool>>>()))
+                                                                        .Returns(_posts.AsQueryable());
 
             // Act
             IHttpActionResult actionResult =
@@ -570,6 +572,8 @@ namespace BlogAggregator.API.Tests.BlogPosts
         public void DeleteBlogWithPostsReturnsOkAndDeletesPosts()
         {
             // Arrange
+            _postRepositoryMock.Setup(pr => pr.Where(It.IsAny<Expression<Func<Post, bool>>>()))
+                                                                        .Returns(_posts.AsQueryable());
 
             // Act
             IHttpActionResult actionResult = _controller.DeleteBlog(_blogIDApprovedMockPosts);

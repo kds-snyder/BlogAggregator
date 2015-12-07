@@ -1,7 +1,7 @@
 ﻿<md-content class="md-padding">
     <div ng-class="{hide: !loading}">
         <!-- loading mask -->
-        <md-progress-circular md-mode="indeterminate"></md-progress-circular> 
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
     </div>
     <div ng-class="{hide: loading}">
         <div class="alert alert-info" ng-hide="posts.length">
@@ -12,7 +12,10 @@
                 <md-list-item class="md-3-line" ng-repeat="post in posts">
                     <div>
                         <div class="spacer10"></div>
-                        <div class="md-title">By: XXXX XXXXX</div>
+                        <div class="md-title">
+                            By:
+                            <div>{{post.BlogAuthorName}}</div>
+                        </div>
                     </div>
                     <span flex="5"></span>
                     <div>

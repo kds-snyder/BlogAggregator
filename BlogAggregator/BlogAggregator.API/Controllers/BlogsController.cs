@@ -33,6 +33,7 @@ namespace BlogAggregator.API.Controllers
         }
 
         // GET: api/Blogs
+        [EnableQuery]
         public IQueryable<BlogModel> GetBlogs()
         {
             return _blogRepository.GetAll().ProjectTo<BlogModel>();
