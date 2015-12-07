@@ -106,7 +106,7 @@
     <Compile Include="BlogReader\WordPress\WordPressBlogReader.cs" />
     <Compile Include="Services\BlogService.cs" />
     <Compile Include="Services\IBlogService.cs" />
-    <Compile Include="Services\StringExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Services\WebData.cs" />
   </ItemGroup>
   <ItemGroup>

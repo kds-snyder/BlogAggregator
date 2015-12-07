@@ -10,30 +10,26 @@
         <div ng-show="posts.length">
             <md-list>
                 <md-list-item class="md-3-line" ng-repeat="post in posts">
-                    <div>
-                        <div class="spacer10"></div>
-                        <div class="md-title">
-                            By:
-                            <div>{{post.BlogAuthorName}}</div>
+                    <div layout="row" style="width: 100%">
+                        <div flex="none" style="width: 125px;">
+                            <div class="spacer10"></div>
+                            <div class="md-subhead">
+                                By:
+                                <div>{{post.BlogAuthorName}}</div>
+                            </div>
                         </div>
-                    </div>
-                    <span flex="5"></span>
-                    <div>
-                        <div class="spacer10"></div>
-                        <div layout="column">
-                            <div class="md-title"> {{post.Title}}</div>
-                            <div class="spacer5"></div>
-                            <div class="md-subhead">Published: {{post.PublicationDate | date: 'mediumDate'}}</div>
-                            <div class="spacer5"></div>
-                            <div id="postDescription">{{post.Description}} </div>
-                            <div><a href="#" target="_blank"> More...</a></div>
-                            <script type="text/javascript">
-                                var div = document.getElementById("postDescription");
-                                div.textContent = post.Description;
-                                var text = div.textContent;
-                            </script>
+                        <div flex="grow" style="padding-left: 24px;">
+                            <div class="spacer10"></div>
+                            <div layout="column">
+                                <div class="md-title"> {{post.Title}}</div>
+                                <div class="spacer5"></div>
+                                <div class="md-subhead">Published: {{post.PublicationDate | date: 'mediumDate'}}</div>
+                                <div class="spacer5"></div>
+                                <div ng-bind-html="post.Description"></div>
+                                <div><a href="{{post.Link}}" target="_blank"> More...</a></div>
+                            </div>
+                            <div class="spacer10"></div>
                         </div>
-                        <div class="spacer10"></div>
                     </div>
                     <md-divider ng-if="!$last"></md-divider>
                 </md-list-item>

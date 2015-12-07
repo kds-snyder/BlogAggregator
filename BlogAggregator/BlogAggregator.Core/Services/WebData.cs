@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Net;
-
+using System.Text;
 
 namespace BlogAggregator.Core.Services
 {
@@ -30,6 +30,7 @@ namespace BlogAggregator.Core.Services
                 // Read the data at the input URL
                 using (WebClient webClient = new WebClient())
                 {
+                    webClient.Encoding = Encoding.UTF8;
                     webData = webClient.DownloadString(webUrl);
                 }
                 

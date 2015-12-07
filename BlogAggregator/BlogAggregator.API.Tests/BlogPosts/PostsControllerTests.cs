@@ -80,6 +80,7 @@ namespace BlogAggregator.API.Tests
                 new Post {
                     PostID = _postIDFirst,
                     BlogID = _blogIDMockPosts,
+                    Blog = _blogs[1],
                     Content = "Test content",
                     Description = "Interesting post",
                     Link = "http://testerson.wordpress.com/post/1",
@@ -89,6 +90,7 @@ namespace BlogAggregator.API.Tests
                 new Post {
                     PostID = _postIDSecond,
                     BlogID = _blogIDMockPosts,
+                    Blog = _blogs[1],
                     Content = "More test content",
                     Description = "More interesting post",
                     Link = "http://testerson.wordpress.com/post/2",
@@ -98,6 +100,7 @@ namespace BlogAggregator.API.Tests
                 new Post {
                     PostID = _postIDThird,
                     BlogID = _blogIDMockPosts,
+                    Blog = _blogs[1],
                     Content = "Even more test content",
                     Description = "Even more interesting post",
                     Link = "http://testerson.wordpress.com/post/3",

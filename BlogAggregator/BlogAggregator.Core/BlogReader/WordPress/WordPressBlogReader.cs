@@ -96,9 +96,9 @@ namespace BlogAggregator.Core.BlogReader.WordPress
                     var blogInfoXML = xmlDoc.Element("rss").Element("channel");
 
                     // Get the blog information and store it in the blog record  
-                    blog.Description = blogInfoXML.Element("description").Value;
+                    blog.Description = blogInfoXML.Element("description").Value.ScrubHtml();
                     blog.Link = blogInfoXML.Element("link").Value;
-                    blog.Title = blogInfoXML.Element("title").Value;
+                    blog.Title = blogInfoXML.Element("title").Value.ScrubHtml();
                 }
             }
             catch (Exception e)
@@ -129,11 +129,11 @@ namespace BlogAggregator.Core.BlogReader.WordPress
                     posts =
                        xmlDoc.Element("rss").Element("channel").Descendants("item").Select(post => new Post
                        {
-                           Content = post.Element(contentNameSpace + "encoded").Value,
-                           Description = post.Element("description").Value,
+                           Content = post.Element(contentNameSpace + "encoded").Value.ScrubHtml(),
+                           Description = post.Element("description").Value.ScrubHtml(),
                            Link = post.Element("link").Value,
                            PublicationDate = Convert.ToDateTime(post.Element("pubDate").Value),
-                           Title = post.Element("title").Value
+                           Title = post.Element("title").Value.ScrubHtml()
                        }).ToList();                             
                 }
             }

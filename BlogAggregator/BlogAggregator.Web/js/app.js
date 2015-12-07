@@ -1,4 +1,4 @@
-angular.module('app', ['ui.router', 'ngMaterial', 'ngMessages', 'ngResource']).config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider) {
+angular.module('app', ['ui.router', 'ngMaterial', 'ngMessages', 'ngResource', 'ngSanitize']).config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider) {
 
     $mdThemingProvider.theme('default')
         .primaryPalette('cyan')
