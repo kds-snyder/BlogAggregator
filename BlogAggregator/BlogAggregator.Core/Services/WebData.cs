@@ -14,7 +14,7 @@ namespace BlogAggregator.Core.Services
         // If read is unsuccessful, return empty string
         public string GetWebDataFixUrl(string webUrl)
         {
-            return GetWebData(FixWebUrl(webUrl));
+            return GetWebData(webUrl.FixWebUrl());
         }
 
 
@@ -43,15 +43,6 @@ namespace BlogAggregator.Core.Services
 
             return webData;
             
-        }
-
-        // Return the full form of the input web Url,
-        //  by adding scheme (e.g. http) if it is missing
-        public string FixWebUrl (string webUrl)
-        {
-            // Insert scheme if missing
-            Uri fullWebUri = new UriBuilder(webUrl).Uri;
-            return fullWebUri.AbsoluteUri;
         }
        
     }

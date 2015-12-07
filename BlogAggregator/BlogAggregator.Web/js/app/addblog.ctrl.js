@@ -19,7 +19,7 @@ angular.module('app').controller('AddBlogController', function (Blog, $mdToast, 
             //  Clear loading indicator and display success message
             $scope.loading = false;
             $mdToast.show($mdToast.simple().content('Blog was added successfully')
-                            .position('top right').theme("toast-success"));
+                            .position('top center').theme("toast-success"));
 
             // Clear the blog object and input form
             $scope.clearInputBlog();

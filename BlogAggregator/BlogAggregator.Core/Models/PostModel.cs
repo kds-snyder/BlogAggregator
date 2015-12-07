@@ -22,7 +22,7 @@ namespace BlogAggregator.Core.Models
 
         public string Title { get; set; }
 
-        public string BlogAuthorName { get; set; }
+        public  BlogModel Blog { get; set; }
        
     }
 }

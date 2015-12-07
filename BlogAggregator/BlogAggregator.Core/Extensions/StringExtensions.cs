@@ -21,11 +21,19 @@ namespace System
             return stream;
         }
 
-        public static string ScrubHtml(this string value)
+        // Remove HTML from input string
+        public static string ScrubHtml(this string str)
         {
-            var step1 = Regex.Replace(value, @"<[^>]+>|&nbsp;", "").Trim();
+            var step1 = Regex.Replace(str, @"<[^>]+>|&nbsp;", "").Trim();
             var step2 = Regex.Replace(step1, @"\s{2,}", " ");
             return step2;
+        }
+
+        // Add scheme (e.g. http) to input Web URL if it is missing
+        public static string FixWebUrl(this string webUrl)
+        {
+             Uri fullWebUri = new UriBuilder(webUrl).Uri;
+            return fullWebUri.AbsoluteUri;
         }
     }
 }

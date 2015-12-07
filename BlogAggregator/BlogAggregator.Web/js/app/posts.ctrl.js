@@ -5,20 +5,21 @@ angular.module('app').controller('PostsController', function ($scope, Post, Post
         $scope.loading = true;
         PostService.getAllPostsByDateDesc().then(
             function (data) {
-            // Set posts if function returned data
-            if (data.length > 0) {
-                $scope.posts = data;
-                $scope.loading = false;
-            }
-            else {
-                $scope.posts = null;
-                $scope.loading = false;
-            }
-        });
-        
+                // Set posts if function returned data
+                debugger;
+                if (data.length > 0) {
+                    $scope.posts = data;
+                    $scope.loading = false;
+                }
+                else {
+                    $scope.posts = null;
+                    $scope.loading = false;
+                }
+            });
+
     };
- 
-    
+
+
     // After all definitions, load the posts
     $scope.load();
 
