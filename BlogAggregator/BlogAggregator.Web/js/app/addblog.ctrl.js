@@ -5,6 +5,9 @@ angular.module('app').controller('AddBlogController', function (Blog, $mdToast, 
 
     $scope.addBlog = function () {
 
+        // Set blog type to Word Press
+        $scope.blog.BlogType = 1;
+
         // TODO: remove when blog moderation is ready
         $scope.blog.Approved = true;
 
@@ -35,6 +38,7 @@ angular.module('app').controller('AddBlogController', function (Blog, $mdToast, 
     // Clear blog object and input form
     $scope.clearInputBlog = function () {
         $scope.blog.BlogID = 0;
+        $scope.blog.BlogType = 0;
         $scope.blog.Approved = false;
         $scope.blog.AuthorEmail = '';
         $scope.blog.AuthorName = '';

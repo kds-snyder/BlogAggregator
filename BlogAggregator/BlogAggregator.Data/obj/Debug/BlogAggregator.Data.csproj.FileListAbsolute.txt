@@ -25,4 +25,3 @@ C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Data\obj\Debug\BlogAggregato
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Data\obj\Debug\BlogAggregator.Data.pdb
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Data\obj\Debug\BlogAggregator.Data.Migrations.CreateDatabase.resources
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Data\obj\Debug\BlogAggregator.Data.csproj.GenerateResource.Cache
-C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Data\obj\Debug\BlogAggregator.Data.Migrations.AddBlogType.resources

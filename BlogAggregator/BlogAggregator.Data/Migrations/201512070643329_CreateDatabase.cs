@@ -12,6 +12,7 @@ namespace BlogAggregator.Data.Migrations
                 c => new
                     {
                         BlogID = c.Int(nullable: false, identity: true),
+                        BlogType = c.Int(nullable: false),
                         CreatedDate = c.DateTime(nullable: false),
                         Approved = c.Boolean(nullable: false),
                         AuthorEmail = c.String(),

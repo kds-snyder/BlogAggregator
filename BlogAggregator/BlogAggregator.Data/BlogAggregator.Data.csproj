@@ -63,13 +63,9 @@
     <Compile Include="Infrastructure\Repository.cs" />
     <Compile Include="Infrastructure\UnitOfWork.cs" />
     <Compile Include="Infrastructure\UserStore.cs" />
-    <Compile Include="Migrations\201512030325308_CreateDatabase.cs" />
-    <Compile Include="Migrations\201512030325308_CreateDatabase.Designer.cs">
-      <DependentUpon>201512030325308_CreateDatabase.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201512032015460_AddBlogType.cs" />
-    <Compile Include="Migrations\201512032015460_AddBlogType.Designer.cs">
-      <DependentUpon>201512032015460_AddBlogType.cs</DependentUpon>
+    <Compile Include="Migrations\201512070643329_CreateDatabase.cs" />
+    <Compile Include="Migrations\201512070643329_CreateDatabase.Designer.cs">
+      <DependentUpon>201512070643329_CreateDatabase.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OAuth\AuthRepository.cs" />
@@ -80,14 +76,6 @@
     <Compile Include="Repository\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201512030325308_CreateDatabase.resx">
-      <DependentUpon>201512030325308_CreateDatabase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201512032015460_AddBlogType.resx">
-      <DependentUpon>201512032015460_AddBlogType.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -96,6 +84,11 @@
       <Project>{e7c923ff-bf49-4867-8dbc-b42734024d83}</Project>
       <Name>BlogAggregator.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201512070643329_CreateDatabase.resx">
+      <DependentUpon>201512070643329_CreateDatabase.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
