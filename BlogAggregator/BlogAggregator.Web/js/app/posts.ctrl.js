@@ -6,7 +6,6 @@ angular.module('app').controller('PostsController', function ($scope, Post, Post
         PostService.getAllPostsByDateDesc().then(
             function (data) {
                 // Set posts if function returned data
-                debugger;
                 if (data.length > 0) {
                     $scope.posts = data;
                     $scope.loading = false;
@@ -16,7 +15,6 @@ angular.module('app').controller('PostsController', function ($scope, Post, Post
                     $scope.loading = false;
                 }
             });
-
     };
 
 

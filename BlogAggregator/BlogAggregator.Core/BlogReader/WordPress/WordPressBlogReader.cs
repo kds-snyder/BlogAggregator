@@ -47,7 +47,7 @@ namespace BlogAggregator.Core.BlogReader.WordPress
             // and store in the blog record
             if (xmlData != "")
             {
-                blogPosts = parseBlogPosts(xmlData, blog.BlogID);
+                blogPosts = parseBlogPosts(xmlData);
             }
 
             return blogPosts;
@@ -111,7 +111,7 @@ namespace BlogAggregator.Core.BlogReader.WordPress
 
         // Get the blog posts from the input XML data,
         //  and return as list of Post objects        
-        private List<Post> parseBlogPosts(string xmlData, int blogID)
+        private List<Post> parseBlogPosts(string xmlData)
         {           
             var posts = new List<Post>();
 
@@ -130,7 +130,7 @@ namespace BlogAggregator.Core.BlogReader.WordPress
                        xmlDoc.Element("rss").Element("channel").Descendants("item").Select(post => new Post
                        {
                            Content = post.Element(contentNameSpace + "encoded").Value.ScrubHtml(),
-                           Description = post.Element("description").Value.ScrubHtml(),
+                           Description = post.Element("description").Value.ScrubHtml().AdjustContent(),
                            Link = post.Element("link").Value,
                            PublicationDate = Convert.ToDateTime(post.Element("pubDate").Value),
                            Title = post.Element("title").Value.ScrubHtml()
@@ -144,7 +144,7 @@ namespace BlogAggregator.Core.BlogReader.WordPress
                 {
                     posts = new List<Post>();
                 }
-            }
+            }           
 
             return posts;
         }

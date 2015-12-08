@@ -91,6 +91,7 @@
     <Compile Include="Domain\ExternalLogin.cs" />
     <Compile Include="Domain\Post.cs" />
     <Compile Include="Domain\User.cs" />
+    <Compile Include="Extensions\WordPress\WordPressStringExtensions.cs" />
     <Compile Include="Infrastructure\Disposable.cs" />
     <Compile Include="BlogReader\IBlogReader.cs" />
     <Compile Include="Infrastructure\IRepository.cs" />
