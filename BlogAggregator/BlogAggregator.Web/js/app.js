@@ -14,8 +14,7 @@ angular.module('app', ['ui.router', 'ngMaterial', 'ngMessages', 'ngResource', 'n
          .state('admin', { url: '/admin', templateUrl: '/templates/administration/admin.html', controller: 'AdminController' })
             .state('admin.blogs', { url: '/blogs', templateUrl: '/templates/administration/blogs.html', controller: 'AdminBlogsController' })
             .state('admin.users', { url: '/users', templateUrl: '/templates/administration/users.html', controller: 'AdminUsersController' })
-            .state('admin.adduser', { url: '/adduser', templateUrl: '/templates/administration/adduser.html', controller: 'AdminAddUserController' })
-
+ 
         .state('app', { url: '/app', templateUrl: '/templates/app/app.html', controller: 'AppController' })
 
          .state('app.posts', { url: '/posts', templateUrl: '/templates/app/posts.html', controller: 'PostsController' })

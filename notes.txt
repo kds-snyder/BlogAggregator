@@ -11,3 +11,8 @@ ng-class = {md-primary: color-mode}
 
 google+ client secret:
 AmTWc3UFoBBsD6HewS3VPtUL
+
+
+http://portal.azure.com
+Username: azure@origincodeacademy.com
+Password: OCA_azur3
