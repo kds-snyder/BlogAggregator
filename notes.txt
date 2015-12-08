@@ -8,3 +8,6 @@ load
             // Assert
 
 ng-class = {md-primary: color-mode}
+
+google+ client secret:
+AmTWc3UFoBBsD6HewS3VPtUL
