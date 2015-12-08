@@ -12,7 +12,7 @@ namespace BlogAggregator.Core.Test.BlogReader
     public class WordPressBlogReaderTests
     {
         [TestMethod]
-        public void parseBlogPostsReturnsPosts()
+        public void GetBlogPostsReturnsPosts()
         {
             //Arrange
             int blogIDForTest = 1;
@@ -36,7 +36,7 @@ namespace BlogAggregator.Core.Test.BlogReader
 
             //Assert
             Assert.IsTrue(posts.Count > 0);
-            Assert.IsTrue(posts[0].Link.Contains("zakdietzen.com/2015"));
+            Assert.IsTrue(posts[0].Link.Contains("zakdietzen.com"));
         }
     }
 }
