@@ -25,3 +25,16 @@ Password: OCA_azur3
     <md-tab-label>User Management</md-tab-label>
 </md-tab>
 </md-tabs>
+
+ <md-tabs md-align-tabs="top" md-border-bottom>
+        <md-tab md-active="$state.is('admin.blogs')">
+            <md-tab-label>
+                <span ui-sref="admin.blogs">Blog Moderation</span>
+            </md-tab-label>
+        </md-tab>
+        <md-tab md-active="$state.is('admin.users')">
+            <md-tab-label>
+                <span ui-sref="admin.users">User Management</span>
+            </md-tab-label>
+        </md-tab>
+    </md-tabs>

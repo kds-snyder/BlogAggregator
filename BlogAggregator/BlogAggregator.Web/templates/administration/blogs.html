@@ -1,3 +1,47 @@
 
-<h1>Blog Moderation</h1>
+<md-content class="md-padding">
+    <h3>Blog Moderation</h3>
+    <div ng-class="{hide: !loading}">
+        <!-- loading mask -->
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        <span class="md-primary" id="loading-text">Loading blogs...</span>
+    </div>
+    <div ng-class="{hide: loading}">
+        <div ng-hide="blogs.length">
+            There are no blogs to display - please add a blog
+        </div>
+        <table class="table table-bordered table-condensed table-striped table-hover" ng-show="blogs.length">
+            <thead class="table-header">
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Link</th>
+                    <th>Author</th>
+                    <th>Email</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="blog in blogs">
+                    <td>{{blog.Title}}</td>
+                    <td>{{blog.Description}}</td>
+                    <td>{{blog.Link}}</td>
+                    <td>{{blog.AuthorName}}</td>
+                    <td>{{blog.AuthorEmail}}</td>
+                    <td>
+                        <md-button class="md-raised md-accent" ng-click="approveBlog(blog)" ng-class="{hide: blog.Approved}">
+                            Approve
+                        </md-button>
+                        <md-button class="md-raised md-warn md-hue-1" ng-click="rejectBlog(blog)" ng-class="{hide: !blog.Approved}">
+                            Reject
+                        </md-button>
+                        <md-button class="md-raised md-warn md-hue-2" ng-click="deleteBlog(blog)">
+                            Delete
+                        </md-button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div><!-- end ng-class="{hide: loading}"-->
+</md-content>
 

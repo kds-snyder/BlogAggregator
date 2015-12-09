@@ -1,4 +1,4 @@
-angular.module('app').controller('PostsController', function ($scope, Post, PostService) {
+angular.module('app').controller('PostsController', function ($scope, PostService) {
 
     // Function to load posts, setting loading indicator while loading
     $scope.load = function () {
@@ -16,7 +16,6 @@ angular.module('app').controller('PostsController', function ($scope, Post, Post
                 }
             });
     };
-
 
     // After all definitions, load the posts
     $scope.load();
