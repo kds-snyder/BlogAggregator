@@ -125,8 +125,7 @@ namespace BlogAggregator.Core.BlogReader.WordPress
                     XNamespace contentNameSpace = getContentNameSpace(xmlDoc);
 
                     // Get the blog posts from the XML document
-                    // They are in <item> tags, which are under <channel> under <rss> 
-                    /*          
+                    // They are in <item> tags, which are under <channel> under <rss>                               
                     posts =
                        xmlDoc.Element("rss").Element("channel").Descendants("item").Select(post => new Post
                        {
@@ -135,21 +134,7 @@ namespace BlogAggregator.Core.BlogReader.WordPress
                            Link = post.Element("link").Value,
                            PublicationDate = Convert.ToDateTime(post.Element("pubDate").Value),
                            Title = post.Element("title").Value.ScrubHtml()
-                       }).ToList();  
-                       */
-                    var blogPosts = xmlDoc.Element("rss").Element("channel").Descendants("item");
-                    foreach (var post in blogPosts)
-                    {
-                        var newPost = new Post();
-
-                        newPost.Content = post.Element(contentNameSpace + "encoded").Value.ScrubHtml();
-                        newPost.Description = post.Element("description").Value.ScrubHtml().AdjustContent();
-                        newPost.Link = post.Element("link").Value;
-                        newPost.PublicationDate = Convert.ToDateTime(post.Element("pubDate").Value);
-                        newPost.Title = post.Element("title").Value.ScrubHtml();
-                                                                                               
-                        posts.Add(newPost);
-                    }
+                       }).ToList();                                           
                 }
             }
             catch (Exception e)
