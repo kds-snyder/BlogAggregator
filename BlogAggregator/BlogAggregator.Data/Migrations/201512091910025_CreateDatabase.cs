@@ -57,9 +57,10 @@ namespace BlogAggregator.Data.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        UserName = c.String(),
+                        Authorized = c.Boolean(nullable: false),
                         PasswordHash = c.String(),
                         SecurityStamp = c.String(),
+                        UserName = c.String(),
                     })
                 .PrimaryKey(t => t.Id);
             

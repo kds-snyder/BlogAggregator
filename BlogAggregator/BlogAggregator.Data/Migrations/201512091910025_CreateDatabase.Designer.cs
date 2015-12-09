@@ -13,7 +13,7 @@ namespace BlogAggregator.Data.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201512070643329_CreateDatabase"; }
+            get { return "201512091910025_CreateDatabase"; }
         }
         
         string IMigrationMetadata.Source

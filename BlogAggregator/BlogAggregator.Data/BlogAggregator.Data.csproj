@@ -63,9 +63,9 @@
     <Compile Include="Infrastructure\Repository.cs" />
     <Compile Include="Infrastructure\UnitOfWork.cs" />
     <Compile Include="Infrastructure\UserStore.cs" />
-    <Compile Include="Migrations\201512070643329_CreateDatabase.cs" />
-    <Compile Include="Migrations\201512070643329_CreateDatabase.Designer.cs">
-      <DependentUpon>201512070643329_CreateDatabase.cs</DependentUpon>
+    <Compile Include="Migrations\201512091910025_CreateDatabase.cs" />
+    <Compile Include="Migrations\201512091910025_CreateDatabase.Designer.cs">
+      <DependentUpon>201512091910025_CreateDatabase.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OAuth\AuthRepository.cs" />
@@ -88,8 +88,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201512070643329_CreateDatabase.resx">
-      <DependentUpon>201512070643329_CreateDatabase.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201512091910025_CreateDatabase.resx">
+      <DependentUpon>201512091910025_CreateDatabase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
