@@ -1,0 +1,20 @@
+{
+  "name": "angular-google-signin",
+  "version": "0.0.1",
+  "description": "Angular module to integrate google signin button.",
+  "author": "https://github.com/manuelmazzuola/angular-google-signin/graphs/contributors",
+  "license": "WTFPL",
+  "main": [
+    "./src/js/angular-google-signin.js",
+    "./src/css/angular-google-signin.css"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components",
+    "bower_components",
+    "test",
+    "tests",
+    "vendor"
+  ]
+}

@@ -1,19 +1,14 @@
-<h3>Login</h3>
-
 <div layout="row" flex layout-fill layout-align="center center">
     <div class="signup">
         <md-card>
             <div class="header">
-                <div>
-                    <img src="img/origin.png" alt="">
-                </div>
                 <h1 class="md-headline">Login with a provider</h1>
             </div>
-
             <md-card-content class="md-padding">
                 <form name="login">                   
-                    <google-plus-signin clientid="620597621300-kl2s8olb1teeu5nrcmuitkvtn59i1ogu.apps.googleusercontent.com">
-                    </google-plus-signin>
+                    <google-sign-in client-id="620597621300-kl2s8olb1teeu5nrcmuitkvtn59i1ogu.apps.googleusercontent.com" 
+                                    scope="profile" text="Login with Google Plus" callback="googleLoginCallback(token)">
+                    </google-sign-in>
                 </form>
             </md-card-content>
         </md-card>

@@ -1,0 +1,33 @@
+#gSignInButton {
+  display: inline-block;
+  background: #dd4b39;
+  color: white;
+  border-radius: 5px;
+  white-space: nowrap;
+}
+
+#gSignInButton span.label {
+  font-weight: bold;
+}
+
+#gSignInButton span.icon {
+  background: url('https://google-developers.appspot.com/+/images/branding/btn_red_32.png') transparent 5px 50% no-repeat;
+  display: inline-block;
+  vertical-align: middle;
+  width: 42px;
+  height: 35px;
+  border-right: #bb3f30 1px solid;
+}
+#gSignInButton span.buttonText {
+  display: inline-block;
+  vertical-align: middle;
+  padding-left: 35px;
+  padding-right: 35px;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: 'Roboto',arial,sans-serif;
+}
+#gSignInButton:hover {
+  background: #e74b37;
+  cursor: pointer;
+}

@@ -11,3 +11,52 @@ ng-class = {md-primary: color-mode}
 
 google+ client secret:
 AmTWc3UFoBBsD6HewS3VPtUL
+
+
+http://portal.azure.com
+Username: azure@origincodeacademy.com
+Password: OCA_azur3
+
+
+    1) angular#~1.2.0 which resolved to 1.2.29 and is required by angular-directive.g-signin#0.1.2
+    2) angular#^1.3.0 || >1.4.0-beta.0 which resolved to 1.4.8 and is required by angular-material#0.11.4
+    3) angular#>= 1.0.8 which resolved to 1.4.8 and is required by angular-ui-router#0.2.15
+    4) angular#1.4.8 which resolved to 1.4.8 and is required by angular-animate#1.4.8
+
+angular-directive.g-signin
+
+       <script src="bower_components/angular-directive.g-signin/google-plus-signin.js"></script>
+
+<div layout="row" flex layout-fill layout-align="center center">
+    <div class="signup">
+        <md-card>
+            <div class="header">
+                <div>
+                    <img src="img/origin.png" alt="">
+                </div>
+                <h1 class="md-headline">Login with a provider</h1>
+            </div>
+
+            <md-card-content class="md-padding">
+                <form name="login">                   
+                    <google-plus-signin clientid="620597621300-kl2s8olb1teeu5nrcmuitkvtn59i1ogu.apps.googleusercontent.com">
+                    </google-plus-signin>
+                </form>
+            </md-card-content>
+        </md-card>
+    </div>
+</div>
+
+angular.module('app').controller('LoginController', function ($scope) {
+   
+    $scope.$on('event:google-plus-signin-success', function (event, authResult) {
+        // Send login to server or save into cookie
+        alert('Google+ signin success');
+    });
+
+    $scope.$on('event:google-plus-signin-failure', function (event, authResult) {
+        // Auth failure or signout detected
+        alert('Google+ signin failure');
+    });
+
+});
