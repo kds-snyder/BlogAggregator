@@ -4,21 +4,16 @@
         <span flex></span>
         <md-button class="md-raised md-accent">
             <a ui-sref="app.posts">Home</a>
-        </md-button>        
+        </md-button>
     </div>
-</md-toolbar> 
+</md-toolbar>
 
-<md-content>
-    <md-tabs md-align-tabs="top" md-border-bottom>
-        <md-tab md-active="$state.is('admin.blogs')">
-            <md-tab-label>
-                <span ui-sref="admin.blogs">Blog Moderation</span>
-            </md-tab-label>
-        </md-tab>
-        <md-tab md-active="$state.is('admin.users')">
-            <md-tab-label>
-                <span ui-sref="admin.users">User Management</span>
-            </md-tab-label>
+<md-content class="md-padding">
+    <md-tabs md-border-bottom>
+        <md-tab ng-repeat="tab in tabs"
+                label="{{tab.heading}}"
+                data-ui-sref="{{tab.state}}"
+                md-active="$state.is(tab.state)">
         </md-tab>
     </md-tabs>
 </md-content>
