@@ -2,10 +2,11 @@
     <div ng-class="{hide: !loading}">
         <!-- loading mask -->
         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        <span class="md-primary" id="loading-text">Loading posts...</span>  
     </div>
     <div ng-class="{hide: loading}">
-        <div class="alert alert-info" ng-hide="posts.length">
-            There are no blog posts to display - please add a blog
+        <div ng-hide="posts.length">
+                There are no blog posts to display - please add a blog
         </div>
         <div ng-show="posts.length">
             <md-list>

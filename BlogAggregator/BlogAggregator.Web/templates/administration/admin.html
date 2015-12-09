@@ -1,5 +1,26 @@
-    ﻿<div>
-    <h1>Administration</h1>
-</div>
+<md-toolbar class="md-primary">
+    <div class="md-toolbar-tools">
+        <h1>Blog Aggregator Administration</h1>
+        <span flex></span>
+        <md-button class="md-raised md-accent">
+            <a ui-sref="app.posts">Home</a>
+        </md-button>        
+    </div>
+</md-toolbar> 
 
-<div ui-view />
+<md-content>
+    <md-tabs md-align-tabs="top" md-border-bottom>
+        <md-tab md-active="$state.is('admin.blogs')">
+            <md-tab-label>
+                <span ui-sref="admin.blogs">Blog Moderation</span>
+            </md-tab-label>
+        </md-tab>
+        <md-tab md-active="$state.is('admin.users')">
+            <md-tab-label>
+                <span ui-sref="admin.users">User Management</span>
+            </md-tab-label>
+        </md-tab>
+    </md-tabs>
+</md-content>
+
+<div ui-view></div>
