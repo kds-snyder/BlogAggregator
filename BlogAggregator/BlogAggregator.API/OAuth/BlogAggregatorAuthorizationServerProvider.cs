@@ -1,7 +1,9 @@
 ﻿using BlogAggregator.Core.Domain;
 using BlogAggregator.Data.Repository;
+using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -43,11 +45,22 @@ namespace BlogAggregator.API.OAuth
                 return;
             }
 
+            var props = new AuthenticationProperties(new Dictionary<string, string>
+            {
+                {
+                    "username", user.UserName
+                },
+                //{
+                //    "authorized", user.Authorized
+                //}
+            });
+
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
             identity.AddClaim(new Claim("sub", context.UserName));
             identity.AddClaim(new Claim("role", "user"));
 
-            context.Validated(identity);
+            var ticket = new AuthenticationTicket(identity, props);
+            context.Validated(ticket);
         }
     }
 }

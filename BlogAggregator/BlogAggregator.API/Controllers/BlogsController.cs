@@ -21,6 +21,7 @@ namespace BlogAggregator.API.Controllers
     {
         private readonly IBlogRepository _blogRepository;
         private readonly IPostRepository _postRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IBlogService _blogService;
 
@@ -36,7 +37,16 @@ namespace BlogAggregator.API.Controllers
         [EnableQuery]
         public IQueryable<BlogModel> GetBlogs()
         {
-            return _blogRepository.GetAll().ProjectTo<BlogModel>();
+            var user = _userRepository.FirstOrDefault(u => u.UserName == User.Identity.Name);
+
+            if(user.IsAuthenticated)
+            {
+                return _blogRepository.GetAll().ProjectTo<BlogModel>();
+            }
+            else
+            {
+                return null;
+            }
         }
 
         // GET: api/Blogs/5
