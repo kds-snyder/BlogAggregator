@@ -10,38 +10,42 @@
         <div ng-hide="blogs.length">
             There are no blogs to display - please add a blog
         </div>
-        <table class="table table-bordered table-condensed table-striped table-hover" ng-show="blogs.length">
-            <thead class="table-header">
-                <tr>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Link</th>
-                    <th>Author</th>
-                    <th>Email</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="blog in blogs">
-                    <td>{{blog.Title}}</td>
-                    <td>{{blog.Description}}</td>
-                    <td>{{blog.Link}}</td>
-                    <td>{{blog.AuthorName}}</td>
-                    <td>{{blog.AuthorEmail}}</td>
-                    <td>
-                        <md-button class="md-raised md-accent" ng-click="approveBlog(blog)" ng-class="{hide: blog.Approved}">
-                            Approve
-                        </md-button>
-                        <md-button class="md-raised md-warn md-hue-1" ng-click="rejectBlog(blog)" ng-class="{hide: !blog.Approved}">
-                            Reject
-                        </md-button>
-                        <md-button class="md-raised md-warn md-hue-2" ng-click="deleteBlog(blog)">
-                            Delete
-                        </md-button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div ng-show="blogs.length">
+            <table id="table" class="md-table md-colresize">
+                <thead>
+                    <tr class="md-table-headers-row">
+                        <th class="md-table-header">Title</th>
+                        <th class="md-table-header">Description</th>
+                        <th class="md-table-header">Link</th>
+                        <th class="md-table-header">Author</th>
+                        <th class="md-table-header">Email</th>
+                        <th class="md-table-header">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="md-table-content-row" ng-repeat="blog in blogs">
+                        <td class="md-table-content">{{blog.Title}}</td>
+                        <td class="md-table-content">{{blog.Description}}</td>
+                        <td class="md-table-content">
+                            <a href="{{blog.Link}}" target="_blank">{{blog.Link}}</a>                       
+                        </td>
+                        <td class="md-table-content">{{blog.AuthorName}}</td>
+                        <td class="md-table-content">{{blog.AuthorEmail}}</td>
+                        <td class="md-table-content">
+                            <md-button class="md-raised md-accent" ng-click="approveBlog(blog)" ng-class="{hide: blog.Approved}">
+                                Approve
+                            </md-button>
+                            <md-button class="md-raised md-warn md-hue-1" ng-click="rejectBlog(blog)" ng-class="{hide: !blog.Approved}">
+                                Reject
+                            </md-button>
+                            <md-button class="md-raised md-warn md-hue-2" ng-click="deleteBlog(blog)">
+                                Delete
+                            </md-button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div><!-- end ng-show="blogs.length" -->
     </div><!-- end ng-class="{hide: loading}"-->
 </md-content>
 

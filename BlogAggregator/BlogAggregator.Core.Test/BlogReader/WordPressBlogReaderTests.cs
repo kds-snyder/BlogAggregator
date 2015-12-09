@@ -27,7 +27,7 @@ namespace BlogAggregator.Core.Test.BlogReader
                 Approved = true,
                 CreatedDate = DateTime.Now,
                 Description = "Great Blog",
-                Link = "zakdietzen.com",  // Must be real blog link
+                Link = "bracken.design",  // Must be real blog link
                 Title = "Stupendous Blog"
             };
 
@@ -36,7 +36,7 @@ namespace BlogAggregator.Core.Test.BlogReader
 
             //Assert
             Assert.IsTrue(posts.Count > 0);
-            Assert.IsTrue(posts[0].Link.Contains("zakdietzen.com"));
+            Assert.IsTrue(posts[0].Link.Contains("bracken.design"));
         }
     }
 }
