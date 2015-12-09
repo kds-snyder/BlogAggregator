@@ -20,8 +20,7 @@ namespace BlogAggregator.API.Controllers
     public class BlogsController : ApiController
     {
         private readonly IBlogRepository _blogRepository;
-        private readonly IPostRepository _postRepository;
-        private readonly IUserRepository _userRepository;
+        private readonly IPostRepository _postRepository;       
         private readonly IUnitOfWork _unitOfWork;
         private readonly IBlogService _blogService;
 
@@ -37,16 +36,8 @@ namespace BlogAggregator.API.Controllers
         [EnableQuery]
         public IQueryable<BlogModel> GetBlogs()
         {
-            var user = _userRepository.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            return _blogRepository.GetAll().ProjectTo<BlogModel>();
 
-            if(user.IsAuthenticated)
-            {
-                return _blogRepository.GetAll().ProjectTo<BlogModel>();
-            }
-            else
-            {
-                return null;
-            }
         }
 
         // GET: api/Blogs/5
@@ -214,7 +205,7 @@ namespace BlogAggregator.API.Controllers
 
         private bool BlogExists(int id)
         {
-             return _blogRepository.Count(b => b.BlogID == id) > 0;
+            return _blogRepository.Count(b => b.BlogID == id) > 0;
         }
 
         // Remove posts corresponding to blog

@@ -17,6 +17,8 @@ http://portal.azure.com
 Username: azure@origincodeacademy.com
 Password: OCA_azur3
 
+private readonly IUserRepository _userRepository;
+
 // GET: api/Blogs
         [EnableQuery]
         public IQueryable<BlogModel> GetBlogs()
