@@ -157,9 +157,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\BlogsController.cs" />
-    <Compile Include="Controllers\PostsController.cs" />
+    <Compile Include="Controllers\BlogsPosts\BlogsController.cs" />
+    <Compile Include="Controllers\BlogsPosts\PostsController.cs" />
+    <Compile Include="Controllers\OAuth\RefreshTokensController.cs" />
     <Compile Include="OAuth\BlogAggregatorAuthorizationServerProvider.cs" />
+    <Compile Include="OAuth\BlogAggregatorRefreshTokenProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

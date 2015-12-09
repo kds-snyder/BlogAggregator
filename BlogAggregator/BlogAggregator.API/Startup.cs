@@ -1,12 +1,15 @@
-﻿using BlogAggregator.Core.BlogReader.WordPress;
+﻿using BlogAggregator.API.OAuth;
+using BlogAggregator.Core.BlogReader.WordPress;
 using BlogAggregator.Core.Domain;
 using BlogAggregator.Core.Infrastructure;
 using BlogAggregator.Core.Repository;
 using BlogAggregator.Core.Services;
 using BlogAggregator.Data.Infrastructure;
+using BlogAggregator.Data.OAuth;
 using BlogAggregator.Data.Repository;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
+using Microsoft.Owin.Security.OAuth;
 using Owin;
 using SimpleInjector;
 using SimpleInjector.Extensions.ExecutionContextScoping;
@@ -33,10 +36,29 @@ namespace BlogAggregator.API
 
             WebApiConfig.Register(config);
 
+            ConfigureOAuth(app, container);
+
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
 
             app.UseWebApi(config);
 
+        }
+
+        public void ConfigureOAuth(IAppBuilder app, Container container)
+        {
+            Func<IAuthRepository> authRepositoryFactory = container.GetInstance<IAuthRepository>;
+
+            var oAuthServerOptions = new OAuthAuthorizationServerOptions()
+            {
+                AllowInsecureHttp = true,
+                TokenEndpointPath = new PathString("/token"),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
+                Provider = new BlogAggregatorAuthorizationServerProvider(authRepositoryFactory)
+            };
+
+            // Token Generation
+            app.UseOAuthAuthorizationServer(oAuthServerOptions);
+            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
         }
 
         // Register containers for classes that use dependency injection

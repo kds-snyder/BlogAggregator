@@ -87,9 +87,11 @@
   <ItemGroup>
     <Compile Include="BlogReader\WordPress\IWordPressBlogReader.cs" />
     <Compile Include="Domain\Blog.cs" />
+    <Compile Include="Domain\Client.cs" />
     <Compile Include="Domain\Enums.cs" />
     <Compile Include="Domain\ExternalLogin.cs" />
     <Compile Include="Domain\Post.cs" />
+    <Compile Include="Domain\RefreshToken.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Extensions\WordPress\WordPressStringExtensions.cs" />
     <Compile Include="Infrastructure\Disposable.cs" />
