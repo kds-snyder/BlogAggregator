@@ -24,3 +24,4 @@ C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core\bin\Debug\Microsoft.Owi
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core\bin\Debug\Newtonsoft.Json.xml
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core\obj\Debug\BlogAggregator.Core.dll
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core\obj\Debug\BlogAggregator.Core.pdb
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core\obj\Debug\BlogAggregator.Core.csprojResolveAssemblyReference.cache
