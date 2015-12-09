@@ -6,3 +6,4 @@ C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core.Test\bin\Debug\BlogAggr
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core.Test\bin\Debug\Microsoft.AspNet.Identity.Core.xml
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core.Test\obj\Debug\BlogAggregator.Core.Test.dll
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core.Test\obj\Debug\BlogAggregator.Core.Test.pdb
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core.Test\obj\Debug\BlogAggregator.Core.Test.csprojResolveAssemblyReference.cache

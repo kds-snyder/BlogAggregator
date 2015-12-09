@@ -3,9 +3,9 @@
     // Function to load posts, setting loading indicator while loading
     $scope.load = function () {
         $scope.loading = true;
-        $scope.blogs = Blog.query(function () {           
-        });
-        $scope.loading = false;
+        $scope.blogs = Blog.query(function () {
+            $scope.loading = false;
+        });      
     };
 
     $scope.approveBlog = function (blog) {

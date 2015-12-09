@@ -159,6 +159,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BlogsPosts\BlogsController.cs" />
     <Compile Include="Controllers\BlogsPosts\PostsController.cs" />
+    <Compile Include="Controllers\OAuth\AccountController.cs" />
     <Compile Include="Controllers\OAuth\RefreshTokensController.cs" />
     <Compile Include="OAuth\BlogAggregatorAuthorizationServerProvider.cs" />
     <Compile Include="OAuth\BlogAggregatorRefreshTokenProvider.cs" />

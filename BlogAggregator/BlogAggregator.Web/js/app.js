@@ -1,4 +1,4 @@
-angular.module('app', ['googleSignIn', 'ngMaterial', 'ngMessages', 'ngResource', 'ngSanitize', 'ui.router'])
+angular.module('app', ['googleSignIn', 'LocalStorageModule', 'ngMaterial', 'ngMessages', 'ngResource', 'ngSanitize', 'ui.router'])
                 .config(function ($stateProvider, $urlRouterProvider, $mdThemingProvider) {
 
     $mdThemingProvider.theme('default')

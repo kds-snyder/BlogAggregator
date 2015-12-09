@@ -67,6 +67,10 @@
     <Compile Include="Migrations\201512091910025_CreateDatabase.Designer.cs">
       <DependentUpon>201512091910025_CreateDatabase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512092153297_AddClientAndRefreshTokenTables.cs" />
+    <Compile Include="Migrations\201512092153297_AddClientAndRefreshTokenTables.Designer.cs">
+      <DependentUpon>201512092153297_AddClientAndRefreshTokenTables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OAuth\AuthRepository.cs" />
     <Compile Include="OAuth\IAuthRepository.cs" />
@@ -89,6 +93,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201512091910025_CreateDatabase.resx">
       <DependentUpon>201512091910025_CreateDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512092153297_AddClientAndRefreshTokenTables.resx">
+      <DependentUpon>201512092153297_AddClientAndRefreshTokenTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
