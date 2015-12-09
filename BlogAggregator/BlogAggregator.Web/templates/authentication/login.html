@@ -1,16 +1,13 @@
-<div layout="row" flex layout-fill layout-align="center center">
-    <div class="signup">
-        <md-card>
-            <div class="header">
-                <h1 class="md-headline">Login with a provider</h1>
+<div class="spacer5"></div>
+<div flex layout="row" layout-align="center center">
+    <div class="md-whiteframe-z2">
+        <md-content class="md-padding">
+            <div flex-sm="100" flex-gt-sm="80" layout-sm="column">
+                <h1 class="md-title">Login with a provider</h1>
+                <google-sign-in client-id="620597621300-kl2s8olb1teeu5nrcmuitkvtn59i1ogu.apps.googleusercontent.com"
+                                scope="profile" text="Login with Google Plus" callback="googleLoginCallback(token)">
+                </google-sign-in>
             </div>
-            <md-card-content class="md-padding">
-                <form name="login">                   
-                    <google-sign-in client-id="620597621300-kl2s8olb1teeu5nrcmuitkvtn59i1ogu.apps.googleusercontent.com" 
-                                    scope="profile" text="Login with Google Plus" callback="googleLoginCallback(token)">
-                    </google-sign-in>
-                </form>
-            </md-card-content>
-        </md-card>
+        </md-content>
     </div>
 </div>
