@@ -1,6 +1,6 @@
 ﻿angular.module('app').controller('AdminBlogsController', function (Blog, $mdToast, $scope) {
 
-    // Function to load posts, setting loading indicator while loading
+    // Function to load blogs, setting loading indicator while loading
     $scope.load = function () {
         $scope.loading = true;
         $scope.blogs = Blog.query(function () {
@@ -31,8 +31,7 @@
                              .position('top left').theme("toast-success"));
             },
             function (error) {
-                debugger;
-                 $mdToast.show($mdToast.simple()
+                  $mdToast.show($mdToast.simple()
                            .content('Unable to delete blog')
                            .position('top left').theme("toast-error"));           
             });
