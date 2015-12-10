@@ -4,4 +4,7 @@
         alert('Google login callback');
     };
 
+    $scope.onGoogleSignIn = function (googleUser) {
+        alert('Google sign in');
+    };
 });

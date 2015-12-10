@@ -9,13 +9,27 @@ load
 
 ng-class = {md-primary: color-mode}
 
-google+ client secret:
-AmTWc3UFoBBsD6HewS3VPtUL
-
-
 http://portal.azure.com
 Username: azure@origincodeacademy.com
 Password: OCA_azur3
+
+google+ client secret:
+AmTWc3UFoBBsD6HewS3VPtUL
+client ID:
+620597621300-kl2s8olb1teeu5nrcmuitkvtn59i1ogu.apps.googleusercontent.com
+Project ID
+blogaggregator-1153
+Project number
+620597621300
+
+Front end:
+Is register controller needed?
+Does login controller need to all authService.login?
+What is callback function for google signin supposed to do?
+
+Back end:
+How does externalLogin table get updated?
+Does _userManager.AddLoginAsync in AuthRepository.AddLoginAsync attempt to write to table UserLogins?
 
 private readonly IUserRepository _userRepository;
 

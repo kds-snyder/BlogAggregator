@@ -99,6 +99,7 @@
     <Compile Include="Infrastructure\IRepository.cs" />
     <Compile Include="Infrastructure\IUnitOfWork.cs" />
     <Compile Include="Models\BlogModel.cs" />
+    <Compile Include="Models\ExternalLoginModel.cs" />
     <Compile Include="Models\PostModel.cs" />
     <Compile Include="Models\RegistrationModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

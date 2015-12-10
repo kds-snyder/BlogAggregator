@@ -93,3 +93,11 @@ C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Debug\ko\Syste
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Debug\ru\System.Spatial.resources.dll
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Debug\zh-Hans\System.Spatial.resources.dll
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Debug\zh-Hant\System.Spatial.resources.dll
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Debug\Microsoft.Owin.Security.Google.dll
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Debug\Microsoft.Owin.Security.Facebook.dll
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Debug\Microsoft.AspNet.Identity.Owin.dll
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Debug\Microsoft.Owin.Security.Cookies.dll
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Debug\Microsoft.Owin.Security.Google.xml
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Debug\Microsoft.Owin.Security.Facebook.xml
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Debug\Microsoft.AspNet.Identity.Owin.xml
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Debug\Microsoft.Owin.Security.Cookies.xml

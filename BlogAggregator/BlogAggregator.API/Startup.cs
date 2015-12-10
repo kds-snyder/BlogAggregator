@@ -9,15 +9,14 @@ using BlogAggregator.Data.OAuth;
 using BlogAggregator.Data.Repository;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
+using Microsoft.Owin.Security.Facebook;
+using Microsoft.Owin.Security.Google;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using SimpleInjector;
 using SimpleInjector.Extensions.ExecutionContextScoping;
 using SimpleInjector.Integration.WebApi;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Http;
 
 [assembly: OwinStartup(typeof(BlogAggregator.API.Startup))]
@@ -25,6 +24,10 @@ namespace BlogAggregator.API
 {
     public class Startup
     {
+        public static OAuthBearerAuthenticationOptions OAuthBearerOptions { get; private set; }
+        public static GoogleOAuth2AuthenticationOptions googleAuthOptions { get; private set; }
+        public static FacebookAuthenticationOptions facebookAuthOptions { get; private set; }
+
         public void Configuration(IAppBuilder app)
         {
             Container container = ConfigureSimpleInjector(app);
@@ -47,6 +50,27 @@ namespace BlogAggregator.API
         public void ConfigureOAuth(IAppBuilder app, Container container)
         {
             Func<IAuthRepository> authRepositoryFactory = container.GetInstance<IAuthRepository>;
+
+            //Use a cookie to temporarily store information about a user logging in with a third party login provider
+            app.UseExternalSignInCookie(Microsoft.AspNet.Identity.DefaultAuthenticationTypes.ExternalCookie);
+            OAuthBearerOptions = new OAuthBearerAuthenticationOptions();
+
+            // Set third-party login provider options
+            googleAuthOptions = new GoogleOAuth2AuthenticationOptions
+            {
+                ClientId = "620597621300-kl2s8olb1teeu5nrcmuitkvtn59i1ogu.apps.googleusercontent.com",
+                ClientSecret = "AmTWc3UFoBBsD6HewS3VPtUL",
+                Provider = new GoogleAuthProvider()
+            };
+            app.UseGoogleAuthentication(googleAuthOptions);
+
+            //facebookAuthOptions = new FacebookAuthenticationOptions()
+            //{
+            //    AppId = "xxx",
+            //    AppSecret = "xxx",
+            //    Provider = new FacebookAuthProvider()
+            //};
+            //app.UseFacebookAuthentication(facebookAuthOptions);
 
             var oAuthServerOptions = new OAuthAuthorizationServerOptions()
             {
