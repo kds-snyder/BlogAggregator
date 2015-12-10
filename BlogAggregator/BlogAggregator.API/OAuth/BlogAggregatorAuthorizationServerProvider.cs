@@ -67,8 +67,8 @@ namespace BlogAggregator.API.OAuth
                     "authorized", user.Authorized.ToString()
                 },
                 {
-                        "as:client_id", (context.ClientId == null) ? string.Empty : context.ClientId
-                    }
+                     "as:client_id", (context.ClientId == null) ? string.Empty : context.ClientId
+                 }
             });
 
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
@@ -78,7 +78,7 @@ namespace BlogAggregator.API.OAuth
 
             var ticket = new AuthenticationTicket(identity, props);
             context.Validated(ticket);
-        }      
+        }
 
         public override Task TokenEndpoint(OAuthTokenEndpointContext context)
         {
