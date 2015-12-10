@@ -9,19 +9,6 @@ load
 
 ng-class = {md-primary: color-mode}
 
-http://portal.azure.com
-Username: azure@origincodeacademy.com
-Password: OCA_azur3
-
-google+ client secret:
-AmTWc3UFoBBsD6HewS3VPtUL
-client ID:
-620597621300-kl2s8olb1teeu5nrcmuitkvtn59i1ogu.apps.googleusercontent.com
-Project ID
-blogaggregator-1153
-Project number
-620597621300
-
 Front end:
 Is register controller needed?
 Does login controller need to all authService.login?

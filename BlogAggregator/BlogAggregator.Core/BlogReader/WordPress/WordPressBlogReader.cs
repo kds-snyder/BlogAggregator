@@ -96,8 +96,7 @@ namespace BlogAggregator.Core.BlogReader.WordPress
                     var blogInfoXML = xmlDoc.Element("rss").Element("channel");
 
                     // Get the blog information and store it in the blog record  
-                    blog.Description = blogInfoXML.Element("description").Value.ScrubHtml();
-                    blog.Link = blogInfoXML.Element("link").Value;
+                    blog.Description = blogInfoXML.Element("description").Value.ScrubHtml();                   
                     blog.Title = blogInfoXML.Element("title").Value.ScrubHtml();
                 }
             }

@@ -6,5 +6,6 @@
 
     $scope.onGoogleSignIn = function (googleUser) {
         alert('Google sign in');
+        var id_token = googleUser.getAuthResponse().id_token;
     };
 });
