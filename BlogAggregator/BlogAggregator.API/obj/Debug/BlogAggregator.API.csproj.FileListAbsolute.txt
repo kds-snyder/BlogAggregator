@@ -101,3 +101,5 @@ C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API\bin\Microsoft.AspNet.Ide
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API\bin\Microsoft.Owin.Security.Cookies.xml
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API\bin\Microsoft.Owin.Security.Facebook.xml
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API\bin\Microsoft.Owin.Security.Google.xml
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API\bin\EntityFramework.SqlServer.dll
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API\bin\EntityFramework.SqlServer.xml

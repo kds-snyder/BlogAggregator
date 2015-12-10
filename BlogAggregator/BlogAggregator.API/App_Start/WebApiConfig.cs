@@ -44,7 +44,8 @@ namespace BlogAggregator.API
         public static void CreateMaps()
         {
             Mapper.CreateMap<Blog, BlogModel>();
-            Mapper.CreateMap<Post, PostModel>();            
+            Mapper.CreateMap<Post, PostModel>();
+            Mapper.CreateMap<User, UserModel>();
         }
     }
 }
