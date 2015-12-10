@@ -9,6 +9,8 @@ load
 
 ng-class = {md-primary: color-mode}
 
+https://microsoft-apiappc17fc6a308404673b96dabcfab653613.azurewebsites.net/api/
+
 Front end:
 Is register controller needed?
 Does login controller need to all authService.login?
