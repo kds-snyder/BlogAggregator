@@ -25,8 +25,11 @@ angular.module('app', ['directive.g+signin', 'LocalStorageModule', 'ngMaterial',
 });
 
 //API link
-//angular.module('app').value('apiUrl', 'https://microsoft-apiappc17fc6a308404673b96dabcfab653613.azurewebsites.net/');
-angular.module('app').value('apiUrl', 'http://localhost:3000/');
+angular.module('app').value('apiUrl', 'https://microsoft-apiappc17fc6a308404673b96dabcfab653613.azurewebsites.net/');
+//angular.module('app').value('apiUrl', 'http://localhost:3000/');
+
+// Application client ID
+angular.module('app').value('appClientID', '620597621300-lt136jc3pa1i94v0cbqgtjvpsjda00hd.apps.googleusercontent.com');
 
 // Load authentication data
 angular.module('app').run(function ($rootScope, authService, $state) {

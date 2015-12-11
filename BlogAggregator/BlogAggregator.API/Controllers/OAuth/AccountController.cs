@@ -94,30 +94,36 @@ namespace BlogAggregator.API.Controllers.OAuth
         [Route("ObtainLocalAccessToken")]
         public async Task<IHttpActionResult> ObtainLocalAccessToken(string provider, string externalAccessToken)
         {
+            Console.WriteLine("ObtainLocalAccessToken provider = " + 
+                provider + " externalAccessToken = " + externalAccessToken); 
 
             if (string.IsNullOrWhiteSpace(provider) || string.IsNullOrWhiteSpace(externalAccessToken))
             {
-                return BadRequest("Provider or external access token is not sent");
+                Console.WriteLine("Provider or external access token is not sent");
+                return BadRequest("Provider or external access token is not sent");                
             }
 
             var verifiedAccessToken = await verifyExternalAccessToken(provider, externalAccessToken);
             if (verifiedAccessToken == null)
             {
+                Console.WriteLine("Invalid Provider or External Access Token ");
                 return BadRequest("Invalid Provider or External Access Token");
             }
 
             User user = await _authRepository.FindAsync(new UserLoginInfo(provider, verifiedAccessToken.user_id));
 
             bool hasRegistered = user != null;
+            Console.WriteLine("User ID: " + user.Id + " name: " + user.UserName);
 
             if (!hasRegistered)
             {
+                Console.WriteLine("External user is not registered");
                 return BadRequest("External user is not registered");
             }
 
             //generate access token response
             var accessTokenResponse = generateLocalAccessTokenResponse(user.UserName);
-
+            Console.WriteLine("accessTokenResponse: " + accessTokenResponse);
             return Ok(accessTokenResponse);
         }
 

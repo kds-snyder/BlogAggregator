@@ -17,3 +17,4 @@ C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Data\obj\Release\BlogAggrega
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Data\obj\Release\BlogAggregator.Data.csproj.GenerateResource.Cache
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Data\obj\Release\BlogAggregator.Data.dll
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Data\obj\Release\BlogAggregator.Data.pdb
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Data\obj\Release\BlogAggregator.Data.Migrations.AddGuidToPostTable.resources

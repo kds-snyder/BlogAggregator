@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SimpleInjector, Version=3.1.1.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.3.1.1\lib\net45\SimpleInjector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -72,6 +76,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlogAggregatorJobActivator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Functions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -79,6 +84,16 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BlogAggregator.Core\BlogAggregator.Core.csproj">
+      <Project>{e7c923ff-bf49-4867-8dbc-b42734024d83}</Project>
+      <Name>BlogAggregator.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BlogAggregator.Data\BlogAggregator.Data.csproj">
+      <Project>{2e54c393-a777-48f8-8f2f-58b86b89a4d4}</Project>
+      <Name>BlogAggregator.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

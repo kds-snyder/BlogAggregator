@@ -1,0 +1,9 @@
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core.Test\bin\Release\BlogAggregator.Core.Test.dll
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core.Test\bin\Release\BlogAggregator.Core.Test.pdb
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core.Test\bin\Release\BlogAggregator.Core.dll
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core.Test\bin\Release\Microsoft.AspNet.Identity.Core.dll
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core.Test\bin\Release\BlogAggregator.Core.pdb
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core.Test\bin\Release\Microsoft.AspNet.Identity.Core.xml
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core.Test\obj\Release\BlogAggregator.Core.Test.csprojResolveAssemblyReference.cache
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core.Test\obj\Release\BlogAggregator.Core.Test.dll
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core.Test\obj\Release\BlogAggregator.Core.Test.pdb

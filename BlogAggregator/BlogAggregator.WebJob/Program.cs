@@ -4,6 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
+using SimpleInjector;
+using BlogAggregator.Core.Services;
+using BlogAggregator.Core.BlogReader.WordPress;
+using BlogAggregator.Data.Infrastructure;
+using BlogAggregator.Core.Infrastructure;
+using BlogAggregator.Core.Repository;
+using BlogAggregator.Data.Repository;
 
 namespace BlogAggregator.WebJob
 {
@@ -14,9 +21,35 @@ namespace BlogAggregator.WebJob
         // AzureWebJobsDashboard and AzureWebJobsStorage
         static void Main()
         {
-            var host = new JobHost();
+
+            // Configure SimpleInjector.
+            var container = new Container();
+            configureSimpleInjector(container);
+            
+            // Configure JobHost.
+            var jobHostConfiguration = new JobHostConfiguration
+            {
+                JobActivator = new BlogAggregatorJobActivator(container)
+            };
+            var jobHost = new JobHost(jobHostConfiguration);
+            
             // The following code ensures that the WebJob will be running continuously
-            host.RunAndBlock();
+            //jobHost.Call(UpdateBlogPosts);
+        }
+
+        // Configure Simple Injector dependencies
+        private static void configureSimpleInjector(Container container)
+        {
+ 
+            container.Register<IDatabaseFactory, DatabaseFactory>(Lifestyle.Scoped);
+
+            container.Register<IUnitOfWork, UnitOfWork>();
+
+            container.Register<IBlogRepository, BlogRepository>();
+            container.Register<IPostRepository, PostRepository>();
+
+            container.Register<IBlogService, BlogService>();
+            container.Register<IWordPressBlogReader, WordPressBlogReader>();
         }
     }
 }
