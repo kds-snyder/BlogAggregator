@@ -16,6 +16,8 @@ namespace BlogAggregator.Core.Models
 
         public string Description { get; set; }
 
+        public string Guid { get; set; }
+
         public string Link { get; set; }
 
         public DateTime PublicationDate { get; set; }

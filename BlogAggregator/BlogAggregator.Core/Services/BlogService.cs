@@ -55,6 +55,7 @@ namespace BlogAggregator.Core.Services
                     BlogID = blogId,
                     Content = post.Content,
                     Description = post.Description,
+                    Guid = post.Guid,
                     Link = post.Link,
                     PublicationDate = post.PublicationDate,
                     Title = post.Title
