@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogAggregator.Data", "Blog
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogAggregator.Core.Test", "BlogAggregator.Core.Test\BlogAggregator.Core.Test.csproj", "{92D84634-094E-4A4B-9B83-DAD169440569}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogAggregator.WebJob", "..\BlogAggregator.WebJob\BlogAggregator.WebJob.csproj", "{9456B2C6-4396-4131-ADD2-D64B28D2754C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +66,10 @@ Global
 		{92D84634-094E-4A4B-9B83-DAD169440569}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92D84634-094E-4A4B-9B83-DAD169440569}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92D84634-094E-4A4B-9B83-DAD169440569}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9456B2C6-4396-4131-ADD2-D64B28D2754C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9456B2C6-4396-4131-ADD2-D64B28D2754C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9456B2C6-4396-4131-ADD2-D64B28D2754C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9456B2C6-4396-4131-ADD2-D64B28D2754C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
