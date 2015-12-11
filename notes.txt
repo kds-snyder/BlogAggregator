@@ -59,3 +59,4 @@ private readonly IUserRepository _userRepository;
 
                         posts.Add(newPost);
 }
+
