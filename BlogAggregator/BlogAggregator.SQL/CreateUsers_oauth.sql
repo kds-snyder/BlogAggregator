@@ -13,6 +13,6 @@ INSERT INTO Users
 VALUES (0,
 		'XXXXXX',
 		'XXXXX',
-		'testerson');
+		'testuser');
 
 SELECT * FROM Users;

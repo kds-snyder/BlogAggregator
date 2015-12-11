@@ -25,7 +25,7 @@ angular.module('app', ['googleSignIn', 'LocalStorageModule', 'ngMaterial', 'ngMe
 });
 
 //API link
-angular.module('app').value('apiUrl', 'http://localhost:3000/');
+angular.module('app').value('apiUrl', 'https://microsoft-apiappc17fc6a308404673b96dabcfab653613.azurewebsites.net/');
 
 // Load authentication data
 angular.module('app').run(function ($rootScope, authService, $state) {

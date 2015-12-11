@@ -9,7 +9,14 @@ load
 
 ng-class = {md-primary: color-mode}
 
+if (confirm('Are you sure you want to delete this blog?'))
+
 https://microsoft-apiappc17fc6a308404673b96dabcfab653613.azurewebsites.net/api/
+
+ $scope.onGoogleSignIn = function (googleUser) {
+        alert('Google sign in');
+        var id_token = googleUser.getAuthResponse().id_token;
+    };
 
 Front end:
 Is register controller needed?

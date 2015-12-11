@@ -3,9 +3,12 @@
     // Function to load blogs, setting loading indicator while loading
     $scope.load = function () {
         $scope.loading = true;
+        console.log('Loading set to true');
         $scope.blogs = Blog.query(function () {
             $scope.loading = false;
+            console.log('Loading set to false');
         });
+        console.log('Finished blog query');
     };
 
     $scope.approveBlog = function (blog) {
@@ -23,6 +26,15 @@
     };
 
     $scope.deleteBlog = function (blog) {
+        /*
+        $mdToast.show($mdToast.simple()
+                           .content('Are you sure you want to delete this blog?')
+                           .position('top left').theme("toast-error"))
+                           .action('')
+                           .highlightAction(true)
+                           .action('Cancel')
+          .highlightAction(false)
+*/
         if (confirm('Are you sure you want to delete this blog?')) {
             Blog.delete({ id: blog.BlogID }, function (data) {
                 var index = $scope.blogs.indexOf(blog);

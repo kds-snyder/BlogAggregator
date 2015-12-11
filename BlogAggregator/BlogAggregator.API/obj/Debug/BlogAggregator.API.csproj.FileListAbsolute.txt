@@ -103,3 +103,6 @@ C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API\bin\Microsoft.Owin.Secur
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API\bin\Microsoft.Owin.Security.Google.xml
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API\bin\EntityFramework.SqlServer.dll
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API\bin\EntityFramework.SqlServer.xml
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API\bin\Microsoft.Azure.AppService.ApiApps.Service.dll
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API\bin\System.IdentityModel.Tokens.Jwt.dll
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API\bin\System.IdentityModel.Tokens.Jwt.xml

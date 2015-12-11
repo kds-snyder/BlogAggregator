@@ -2,10 +2,8 @@
    
     $scope.googleLoginCallback = function (token) {
         alert('Google login callback');
+        console.log('token = ' + token);
+        debugger;
     };
-
-    $scope.onGoogleSignIn = function (googleUser) {
-        alert('Google sign in');
-        var id_token = googleUser.getAuthResponse().id_token;
-    };
+  
 });
