@@ -1,4 +1,4 @@
-angular.module('app', ['googleSignIn', 'LocalStorageModule', 'ngMaterial', 'ngMessages', 'ngResource', 'ngSanitize', 'ui.router'])
+angular.module('app', ['directive.g+signin', 'LocalStorageModule', 'ngMaterial', 'ngMessages', 'ngResource', 'ngSanitize', 'ui.router'])
                 .config(function ($httpProvider, $mdThemingProvider, $stateProvider, $urlRouterProvider) {
 
     $httpProvider.interceptors.push('authInterceptorService');

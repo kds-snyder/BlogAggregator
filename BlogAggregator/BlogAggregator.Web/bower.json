@@ -22,7 +22,6 @@
     "angular-resource": "~1.4.8",
     "angular-messages": "~1.4.8",
     "angular-sanitize": "~1.4.8",
-    "angular-local-storage": "~0.2.3",
-    "angular-google-signin": "~0.0.1"
+    "angular-local-storage": "~0.2.3"
   }
 }

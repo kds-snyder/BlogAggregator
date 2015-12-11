@@ -1,9 +1,16 @@
 ﻿angular.module('app').controller('LoginController', function ($scope) {
-   
-    $scope.googleLoginCallback = function (token) {
-        alert('Google login callback');
-        console.log('token = ' + token);
+
+    $scope.$on('event:google-plus-signin-success', function (event, authResult) {
+        // Send login to server or save into cookie
+        alert('Google signin success');
         debugger;
-    };
+    });
+
+    $scope.$on('event:google-plus-signin-failure', function (event, authResult) {
+        // Auth failure or signout detected
+        alert('Google signin failure');        
+        debugger;
+    });
+     
   
 });
