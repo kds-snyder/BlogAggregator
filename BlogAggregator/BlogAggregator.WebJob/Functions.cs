@@ -13,16 +13,16 @@ using BlogAggregator.Core.BlogReader.WordPress;
 
 namespace BlogAggregator.WebJob
 {
-    public class BlogPostUpdater
+    public class Functions
     {
         private readonly IBlogRepository _blogRepository;
         private readonly IPostRepository _postRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IBlogService _blogService;
         private readonly IWordPressBlogReader _wordPressBlogReader;
-          
-        public BlogPostUpdater(IBlogRepository blogRepository, IPostRepository postRepository,
-                                      IUnitOfWork unitOfWork, IBlogService blogService, 
+
+        public Functions(IBlogRepository blogRepository, IPostRepository postRepository,
+                                      IUnitOfWork unitOfWork, IBlogService blogService,
                                                     IWordPressBlogReader wordPressBlogReader)
         {
             _blogRepository = blogRepository;
@@ -33,17 +33,15 @@ namespace BlogAggregator.WebJob
         }
 
         [NoAutomaticTrigger]
-        // Update blog posts in Post table for approved blogs
-        public void UpdateBlogPosts()
+        // Save new blog posts in Post table for approved blogs
+        public void SaveNewBlogPosts()
         {
-            IQueryable<Blog> blogs = _blogRepository.GetAll();
 
-            foreach (var blog in blogs)
-            {               
-                var wordPressBlogReader = new WordPressBlogReader();
-                var blogService = new BlogService(wordPressBlogReader, _postRepository, _unitOfWork);
-               // var blogPosts = _blogService.ExtractBlogPosts(blog);
-            }
+            var wordPressBlogReader = new WordPressBlogReader();
+            var blogService = new BlogService(_blogRepository, _postRepository,
+                                                    _unitOfWork, wordPressBlogReader);
+            _blogService.ExtractAndSaveAllNewBlogPosts();
+
         }
 
         // This function will get triggered/executed when a new message is written 

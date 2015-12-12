@@ -49,7 +49,7 @@ private readonly IUserRepository _userRepository;
                 return null;
             }
 
-	string emailInfo = "PostBlog";
+string emailInfo = "PostBlog";
             var emailLog = new EmailLog();
             string emailLogSentTo = "kds_snyder@yahoo.com";
             string emailLogSubject = "PostBlog Email Log";            
@@ -70,3 +70,31 @@ private readonly IUserRepository _userRepository;
                         posts.Add(newPost);
 }
 
+UpdateBlogPosts
+
+authResult: Object
+access_token: "ya29.RwL6n0lrTM7d51u6dDEwoMhXdKqeI2zf6CV5nzNKzFbNhaMnWYLKne_b3FwrvJeVXm1u"
+authuser: "0"
+client_id: "620597621300-lt136jc3pa1i94v0cbqgtjvpsjda00hd.apps.googleusercontent.com"
+code: "4/ZOE9sRW8xp4eHz0OKk00DeLtS1BHHG4ZE3RWIG5ECUM"
+cookie_policy: "single_host_origin"
+expires_at: "1449869672"
+expires_in: "3600"
+g-oauth-window: Window
+g_user_cookie_policy: "single_host_origin"
+id_token: "eyJhbGciOiJSUzI1NiIsImtpZCI6IjYzMWY0ZmJkNGVlMTg3YWNjYmI3MDhkYmM5MTcxYWRkOTUyZDc0ZTcifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXRfaGFzaCI6InVQbzNIU041Mmg2c3Z4YVQzdm50a3ciLCJhdWQiOiI2MjA1OTc2MjEzMDAtbHQxMzZqYzNwYTFpOTR2MGNicWd0anZwc2pkYTAwaGQuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJjX2hhc2giOiJxT19JVjlGSU8tai1mTUZPVFJPUm9RIiwic3ViIjoiMTE0MTQyMzk5MTIyMTE1NDM2MDA3IiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF6cCI6IjYyMDU5NzYyMTMwMC1sdDEzNmpjM3BhMWk5NHYwY2JxZ3RqdnBzamRhMDBoZC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsImVtYWlsIjoidG92YWhrc0BnbWFpbC5jb20iLCJpYXQiOjE0NDk4NjYwNzIsImV4cCI6MTQ0OTg2OTY3Mn0.X4h_Hvynz1XLnaax1bvZ1W-YaXFpeKJWSv9LOEcl-e_14F3mJ7XFJjsIn2aISpKA8ZV2uEPSkWPWcXrDzQzuhw94vEbrtBhp8brz0QtHLFG1hegQBiZIDX32SLfR6DakoC9BL4KMiXGZorlPevShQTBFUfNEQclSEL0jMRiDoDqp3zkf3PmEpoXJ-Rs2rcbZQra57_dwi3hzK_XBt3IFHtPMoLXehq4RNKx_VNcnnO711_cm2q1NU3k41mjvIJKotp2kVbj6LFwBw70Zhu64EO0K_F0Y6TWtI8EFgK2M_PbVpKKHDPLmHTLVaPKyvMLCWaOHdBkOwIGqlTcJzMdImw"
+issued_at: "1449866072"
+prompt: "none"
+response_type: "code token id_token gsession"
+scope: "https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/plus.moments.write https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/plus.profile.agerange.read https://www.googleapis.com/auth/plus.profile.language.read https://www.googleapis.com/auth/plus.circles.members.read https://www.googleapis.com/auth/userinfo.profile"
+session_state: "43290cf58dd79d57efed72f34a12e3f0bf749c07..3dc4"
+state: ""
+status: Object
+token_type: "Bearer"
+event: Object
+currentScope: ChildScope
+defaultPrevented: false
+name: "event:google-plus-signin-success"
+preventDefault: ()
+targetScope: Scope
+__proto__: Object

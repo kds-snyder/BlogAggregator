@@ -34,7 +34,7 @@ namespace BlogAggregator.WebJob
             var jobHost = new JobHost(jobHostConfiguration);
 
             // Call the scheduled blog post updating method
-            jobHost.Call(typeof(BlogPostUpdater).GetMethod("UpdateBlogPosts"));
+            jobHost.Call(typeof(Functions).GetMethod("SaveNewBlogPosts"));
         }
 
         // Configure Simple Injector dependencies

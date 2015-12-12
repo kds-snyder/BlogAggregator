@@ -111,7 +111,8 @@ namespace BlogAggregator.API.Controllers
             if (!approvedBeforeUpdate && blog.Approved)
             {
                 var wordPressBlogReader = new WordPressBlogReader();
-                var blogService = new BlogService(wordPressBlogReader, _postRepository, _unitOfWork);
+                var blogService = new BlogService(_blogRepository, _postRepository, 
+                                                        _unitOfWork, wordPressBlogReader);
                 blogService.ExtractAndSaveBlogPosts(blog);
             }
 
@@ -160,8 +161,10 @@ namespace BlogAggregator.API.Controllers
             // If approved, parse the blog posts and store them in the DB
             if (blog.Approved)
             {
-                var blogService = new BlogService(wordPressBlogReader, _postRepository, _unitOfWork);
+                var blogService = new BlogService(_blogRepository, _postRepository, 
+                                                        _unitOfWork, wordPressBlogReader);
                 blogService.ExtractAndSaveBlogPosts(blog);
+               
             }
 
             // Return the created blog record

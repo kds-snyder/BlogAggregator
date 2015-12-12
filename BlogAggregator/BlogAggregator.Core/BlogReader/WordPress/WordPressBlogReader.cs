@@ -49,7 +49,6 @@ namespace BlogAggregator.Core.BlogReader.WordPress
             {
                 blogPosts = parseBlogPosts(xmlData);
             }
-
             return blogPosts;
         }
 

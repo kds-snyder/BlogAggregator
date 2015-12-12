@@ -53,6 +53,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="BlogReader\WordPressBlogReaderTests.cs" />
+    <Compile Include="BlogServices\BlogServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
