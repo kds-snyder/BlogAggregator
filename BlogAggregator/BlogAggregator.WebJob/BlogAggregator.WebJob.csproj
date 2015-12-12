@@ -82,7 +82,7 @@
   <ItemGroup>
     <Compile Include="BlogAggregatorJobActivator.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Functions.cs" />
+    <Compile Include="BlogPostUpdater.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

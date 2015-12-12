@@ -49,6 +49,12 @@ private readonly IUserRepository _userRepository;
                 return null;
             }
 
+	string emailInfo = "PostBlog";
+            var emailLog = new EmailLog();
+            string emailLogSentTo = "kds_snyder@yahoo.com";
+            string emailLogSubject = "PostBlog Email Log";            
+            emailLog.SendEmail(emailLogSentTo, emailLogSubject, emailInfo);
+
  var blogPosts = xmlDoc.Element("rss").Element("channel").Descendants("item");
                     foreach (var post in blogPosts)
                     {
