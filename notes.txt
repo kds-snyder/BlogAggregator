@@ -14,15 +14,19 @@ posts?$orderby=PublicationDate desc
 http://originblogs.azurewebsites.net/
 https://microsoft-apiappc17fc6a308404673b96dabcfab653613.azurewebsites.net/api/
 
- $scope.onGoogleSignIn = function (googleUser) {
-        alert('Google sign in');
-        var id_token = googleUser.getAuthResponse().id_token;
-    };
+https://microsoft-apiappc17fc6a308404673b96dabcfab653613.azurewebsites.net/api/account/ObtainLocalAccessToken?externalAccessToken=ya29.RwI3lIJSklooGQjRSlbOHyXFR_D_Nf5DmR-s7P4o-5pA-6to3q-ikL7e2vXtjasa-123&provider=Google",
+
+Additional information: Microsoft Azure WebJobs SDK Dashboard connection string is missing or empty. The Microsoft Azure Storage account connection string can be set in the following ways:
+
+1. Set the connection string named 'AzureWebJobsDashboard' in the connectionStrings section of the .config file in the following format <add name="AzureWebJobsDashboard" connectionString="DefaultEndpointsProtocol=http|https;AccountName=NAME;AccountKey=KEY" />, or
+
+2. Set the environment variable named 'AzureWebJobsDashboard', or
+
+3. Set corresponding property of JobHostConfiguration.
 
 Front end:
 Is register controller needed?
-Does login controller need to all authService.login?
-What is callback function for google signin supposed to do?
+Does login controller need to call authService.login?
 
 Back end:
 How does externalLogin table get updated?

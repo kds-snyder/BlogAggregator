@@ -76,6 +76,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -110,6 +111,7 @@
     <Compile Include="Repository\IUserRepository.cs" />
     <Compile Include="BlogReader\WordPress\WordPressBlogReader.cs" />
     <Compile Include="Services\BlogService.cs" />
+    <Compile Include="Services\EmailLog.cs" />
     <Compile Include="Services\IBlogService.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Services\WebData.cs" />

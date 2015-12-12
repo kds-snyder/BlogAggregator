@@ -11,6 +11,7 @@ using BlogAggregator.Data.Infrastructure;
 using BlogAggregator.Core.Infrastructure;
 using BlogAggregator.Core.Repository;
 using BlogAggregator.Data.Repository;
+using SimpleInjector.Extensions.ExecutionContextScoping;
 
 namespace BlogAggregator.WebJob
 {
@@ -22,34 +23,49 @@ namespace BlogAggregator.WebJob
         static void Main()
         {
 
-            // Configure SimpleInjector.
-            var container = new Container();
-            configureSimpleInjector(container);
-            
+            // Configure SimpleInjector                     
+            Container container = configureSimpleInjector();
+
             // Configure JobHost.
             var jobHostConfiguration = new JobHostConfiguration
             {
                 JobActivator = new BlogAggregatorJobActivator(container)
             };
             var jobHost = new JobHost(jobHostConfiguration);
-            
-            // The following code ensures that the WebJob will be running continuously
-            //jobHost.Call(UpdateBlogPosts);
+
+            // Call the scheduled blog post updating method
+            jobHost.Call(typeof(BlogPostUpdater).GetMethod("UpdateBlogPosts"));
         }
 
         // Configure Simple Injector dependencies
-        private static void configureSimpleInjector(Container container)
+        private static Container configureSimpleInjector()
         {
- 
-            container.Register<IDatabaseFactory, DatabaseFactory>(Lifestyle.Scoped);
+            var container = new Container();
+          
+            container.RegisterSingleton<IDatabaseFactory, DatabaseFactory>();
 
-            container.Register<IUnitOfWork, UnitOfWork>();
+            container.RegisterSingleton<IUnitOfWork, UnitOfWork>();
 
-            container.Register<IBlogRepository, BlogRepository>();
-            container.Register<IPostRepository, PostRepository>();
+            container.RegisterSingleton<IBlogRepository, BlogRepository>();
+            container.RegisterSingleton<IPostRepository, PostRepository>();
 
-            container.Register<IBlogService, BlogService>();
-            container.Register<IWordPressBlogReader, WordPressBlogReader>();
+            container.RegisterSingleton<IBlogService, BlogService>();
+            container.RegisterSingleton<IWordPressBlogReader, WordPressBlogReader>();
+
+            //container.Options.DefaultScopedLifestyle = new ExecutionContextScopeLifestyle();
+            //container.Register<IDatabaseFactory, DatabaseFactory>(Lifestyle.Scoped);
+
+            //container.Register<IUnitOfWork, UnitOfWork>(Lifestyle.Scoped);
+
+            //container.Register<IBlogRepository, BlogRepository>(Lifestyle.Scoped);
+            //container.Register<IPostRepository, PostRepository>(Lifestyle.Scoped);
+
+            //container.Register<IBlogService, BlogService>(Lifestyle.Scoped);
+            //container.Register<IWordPressBlogReader, WordPressBlogReader>(Lifestyle.Scoped);
+
+            container.Verify();
+
+            return container;
         }
     }
 }

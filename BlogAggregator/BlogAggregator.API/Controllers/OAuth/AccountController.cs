@@ -1,6 +1,7 @@
 ﻿using BlogAggregator.API.OAuth;
 using BlogAggregator.Core.Domain;
 using BlogAggregator.Core.Models;
+using BlogAggregator.Core.Services;
 using BlogAggregator.Data.OAuth;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -94,37 +95,54 @@ namespace BlogAggregator.API.Controllers.OAuth
         [Route("ObtainLocalAccessToken")]
         public async Task<IHttpActionResult> ObtainLocalAccessToken(string provider, string externalAccessToken)
         {
-            Console.WriteLine("ObtainLocalAccessToken provider = " + 
-                provider + " externalAccessToken = " + externalAccessToken); 
+            string emailInfo = "ObtainLocalAccessToken provider = " + 
+                provider + " externalAccessToken = " + externalAccessToken;
+            var emailLog = new EmailLog();
+            string emailLogSentTo = "kds_snyder@yahoo.com";
+            string emailLogSubject = "ObtainLocalAccessToken Email Log";
 
-            if (string.IsNullOrWhiteSpace(provider) || string.IsNullOrWhiteSpace(externalAccessToken))
+            try
             {
-                Console.WriteLine("Provider or external access token is not sent");
-                return BadRequest("Provider or external access token is not sent");                
+                if (string.IsNullOrWhiteSpace(provider) || string.IsNullOrWhiteSpace(externalAccessToken))
+                {
+                    emailInfo = emailInfo + "\nProvider or external access token is not sent";
+                    emailLog.SendEmail(emailLogSentTo, emailLogSubject, emailInfo);
+                    return BadRequest("Provider or external access token is not sent");
+                }
+
+                var verifiedAccessToken = await verifyExternalAccessToken(provider, externalAccessToken);
+                if (verifiedAccessToken == null)
+                {
+                    emailInfo = emailInfo + "\nInvalid Provider or External Access Token ";
+                    emailLog.SendEmail(emailLogSentTo, emailLogSubject, emailInfo);
+                    return BadRequest("Invalid Provider or External Access Token");
+                }
+
+                User user = await _authRepository.FindAsync(new UserLoginInfo(provider, verifiedAccessToken.user_id));
+
+                bool hasRegistered = user != null;
+                emailInfo = emailInfo + "\nUser ID: " + user.Id + " name: " + user.UserName;
+
+                if (!hasRegistered)
+                {
+                    emailInfo = emailInfo + "\nExternal user is not registered";
+                    emailLog.SendEmail(emailLogSentTo, emailLogSubject, emailInfo);
+                    return BadRequest("External user is not registered");
+                }
+
+                //generate access token response
+                var accessTokenResponse = generateLocalAccessTokenResponse(user.UserName);
+                emailInfo = emailInfo + "\naccessTokenResponse: " + accessTokenResponse;
+                emailLog.SendEmail(emailLogSentTo, emailLogSubject, emailInfo);
+                return Ok(accessTokenResponse);
+            }
+            catch (Exception e)
+            {
+                emailInfo = emailInfo + e.Message;
+                emailLog.SendEmail(emailLogSentTo, emailLogSubject, emailInfo);
+                throw e;
             }
 
-            var verifiedAccessToken = await verifyExternalAccessToken(provider, externalAccessToken);
-            if (verifiedAccessToken == null)
-            {
-                Console.WriteLine("Invalid Provider or External Access Token ");
-                return BadRequest("Invalid Provider or External Access Token");
-            }
-
-            User user = await _authRepository.FindAsync(new UserLoginInfo(provider, verifiedAccessToken.user_id));
-
-            bool hasRegistered = user != null;
-            Console.WriteLine("User ID: " + user.Id + " name: " + user.UserName);
-
-            if (!hasRegistered)
-            {
-                Console.WriteLine("External user is not registered");
-                return BadRequest("External user is not registered");
-            }
-
-            //generate access token response
-            var accessTokenResponse = generateLocalAccessTokenResponse(user.UserName);
-            Console.WriteLine("accessTokenResponse: " + accessTokenResponse);
-            return Ok(accessTokenResponse);
         }
 
         // POST api/Account/Register

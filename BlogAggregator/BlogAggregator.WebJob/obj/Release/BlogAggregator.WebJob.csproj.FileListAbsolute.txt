@@ -68,3 +68,5 @@ C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.WebJob\bin\Release\zh-Hant\M
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.WebJob\obj\Release\BlogAggregator.WebJob.csprojResolveAssemblyReference.cache
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.WebJob\obj\Release\BlogAggregator.WebJob.exe
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.WebJob\obj\Release\BlogAggregator.WebJob.pdb
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.WebJob\bin\Release\SimpleInjector.Extensions.ExecutionContextScoping.dll
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.WebJob\bin\Release\SimpleInjector.Extensions.ExecutionContextScoping.xml

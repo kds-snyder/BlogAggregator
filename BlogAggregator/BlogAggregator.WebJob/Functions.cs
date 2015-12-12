@@ -11,13 +11,14 @@ using BlogAggregator.Core.Services;
 
 namespace BlogAggregator.WebJob
 {
-    public class Functions
+    public class BlogPostUpdater
     {
         private readonly IBlogRepository _blogRepository;
         private readonly IPostRepository _postRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IBlogService _blogService;   
-        public Functions(IBlogRepository blogRepository, IPostRepository postRepository,
+        private readonly IBlogService _blogService; 
+          
+        public BlogPostUpdater(IBlogRepository blogRepository, IPostRepository postRepository,
                                                     IUnitOfWork unitOfWork, IBlogService blogService)
         {
             _blogRepository = blogRepository;
@@ -26,11 +27,18 @@ namespace BlogAggregator.WebJob
             _blogService = blogService;
         }
 
+        [NoAutomaticTrigger]
+        public void UpdateBlogPosts()
+        {
+            Console.WriteLine("Update blog posts");
+            Console.ReadLine();
+        }
+
         // This function will get triggered/executed when a new message is written 
         // on an Azure Queue called queue.
-        public static void ProcessQueueMessage([QueueTrigger("queue")] string message, TextWriter log)
-        {
-            log.WriteLine(message);
-        }
+        //public static void ProcessQueueMessage([QueueTrigger("queue")] string message, TextWriter log)
+        //{
+        //    log.WriteLine(message);
+        //}
     }
 }

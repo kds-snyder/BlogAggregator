@@ -16,9 +16,9 @@ angular.module('app').controller('AddBlogController', function (Blog, $mdToast, 
         $scope.blog.$save(function () {
             
             // Blog saved successfully: 
-            //  Clear loading indicator and display success message
+            //  Clear loading indicator and display success message            
             $scope.loading = false;
-            $mdToast.show($mdToast.simple().content('Blog was added successfully')
+           $mdToast.show($mdToast.simple().content('Blog was added successfully')
                             .position('top left').theme("toast-success"));
 
             // Clear the blog object and input form
