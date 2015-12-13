@@ -22,6 +22,6 @@ C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core\bin\Release\Microsoft.O
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core\bin\Release\Microsoft.Owin.Security.Cookies.xml
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core\bin\Release\Microsoft.Owin.Security.OAuth.xml
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core\bin\Release\Newtonsoft.Json.xml
-C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core\obj\Release\BlogAggregator.Core.csprojResolveAssemblyReference.cache
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core\obj\Release\BlogAggregator.Core.dll
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core\obj\Release\BlogAggregator.Core.pdb
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Core\obj\Release\BlogAggregator.Core.csprojResolveAssemblyReference.cache

@@ -94,11 +94,12 @@ namespace BlogAggregator.API
             container.Options.DefaultScopedLifestyle = new ExecutionContextScopeLifestyle();
 
             container.Register<IUserStore<User, int>, UserStore>(Lifestyle.Scoped);
+            container.Register<IAuthRepository, AuthRepository>(Lifestyle.Scoped);
 
             container.Register<IDatabaseFactory, DatabaseFactory>(Lifestyle.Scoped);
 
             container.Register<IUnitOfWork, UnitOfWork>();
-
+          
             container.Register<IBlogRepository, BlogRepository>();
             container.Register<IPostRepository, PostRepository>();
             container.Register<IUserRepository, UserRepository>();

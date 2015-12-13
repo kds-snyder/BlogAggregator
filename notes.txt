@@ -14,15 +14,9 @@ posts?$orderby=PublicationDate desc
 http://originblogs.azurewebsites.net/
 https://microsoft-apiappc17fc6a308404673b96dabcfab653613.azurewebsites.net/api/
 
+https://YOURSITE.scm.azurewebsites.net/azurejobs
+
 https://microsoft-apiappc17fc6a308404673b96dabcfab653613.azurewebsites.net/api/account/ObtainLocalAccessToken?externalAccessToken=ya29.RwI3lIJSklooGQjRSlbOHyXFR_D_Nf5DmR-s7P4o-5pA-6to3q-ikL7e2vXtjasa-123&provider=Google",
-
-Additional information: Microsoft Azure WebJobs SDK Dashboard connection string is missing or empty. The Microsoft Azure Storage account connection string can be set in the following ways:
-
-1. Set the connection string named 'AzureWebJobsDashboard' in the connectionStrings section of the .config file in the following format <add name="AzureWebJobsDashboard" connectionString="DefaultEndpointsProtocol=http|https;AccountName=NAME;AccountKey=KEY" />, or
-
-2. Set the environment variable named 'AzureWebJobsDashboard', or
-
-3. Set corresponding property of JobHostConfiguration.
 
 Front end:
 Is register controller needed?
@@ -70,7 +64,6 @@ string emailInfo = "PostBlog";
                         posts.Add(newPost);
 }
 
-UpdateBlogPosts
 
 authResult: Object
 access_token: "ya29.RwL6n0lrTM7d51u6dDEwoMhXdKqeI2zf6CV5nzNKzFbNhaMnWYLKne_b3FwrvJeVXm1u"

@@ -131,11 +131,11 @@ namespace BlogAggregator.API.Controllers
         [ResponseType(typeof(BlogModel))]
         public IHttpActionResult PostBlog(BlogModel blog)
         {
-            //string emailInfo = "PostBlog" + DateTime.Now;
-            //var emailLog = new EmailLog();
-            //string emailLogSentTo = "kds_snyder@yahoo.com";
-            //string emailLogSubject = "PostBlog Email Log";
-            //emailLog.SendEmail(emailLogSentTo, emailLogSubject, emailInfo);
+            string emailInfo = "PostBlog" + DateTime.Now;
+            var emailLog = new EmailLog();
+            string emailLogSentTo = "kds_snyder@yahoo.com";
+            string emailLogSubject = "PostBlog Email Log";
+            emailLog.SendEmail(emailLogSentTo, emailLogSubject, emailInfo);
 
             // Validate request
             if (!ModelState.IsValid)

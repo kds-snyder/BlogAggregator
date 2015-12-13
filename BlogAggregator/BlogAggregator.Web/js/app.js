@@ -21,7 +21,6 @@ angular.module('app', ['directive.g+signin', 'LocalStorageModule', 'ngMaterial',
         .state('app', { url: '/app', templateUrl: '/templates/app/app.html', controller: 'AppController' })
             .state('app.posts', { url: '/posts', templateUrl: '/templates/app/posts.html', controller: 'PostsController', authenticate: false })
             .state('app.addblog', { url: '/addblog', templateUrl: '/templates/app/addblog.html', controller: 'AddBlogController', authenticate: false })
-
 });
 
 //API link

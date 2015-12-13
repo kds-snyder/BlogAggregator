@@ -1,9 +1,2 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<parameters>
-  <parameter name="BlogAggregator_oauth-Web.config Connection String" description="BlogAggregator_oauth Connection String used in web.config by the application to access the database." defaultValue="BlogAggregator_oauth_ConnectionString" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="C:\\dev\\BlogAggregator\\BlogAggregator\\BlogAggregator\.API\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='BlogAggregator_oauth']/@connectionString" />
-  </parameter>
-  <parameter name="BlogAggregator_oauth_DatabasePublish-Web.config Connection String" description="BlogAggregator_oauth_DatabasePublish Connection String used in web.config by the application to access the database." defaultValue="BlogAggregator_oauth_DatabasePublish.ConnetionString" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="C:\\dev\\BlogAggregator\\BlogAggregator\\BlogAggregator\.API\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='BlogAggregator_oauth_DatabasePublish']/@connectionString" />
-  </parameter>
-</parameters>
+<parameters />

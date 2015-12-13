@@ -9,7 +9,8 @@ namespace BlogAggregator.Core.Services
         {
             var mm = new MailMessage
             {
-                From = new MailAddress("azure@origincodeacademy.com", "Origin Blog Errors"),
+                //From = new MailAddress("azure@origincodeacademy.com", "Origin Blog Errors"),
+                From = new MailAddress("kds_snyder@yahoo.com", "Origin Blog Errors"),
                 Subject = subject
             };
 
