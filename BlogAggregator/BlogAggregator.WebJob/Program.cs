@@ -22,7 +22,6 @@ namespace BlogAggregator.WebJob
         // AzureWebJobsDashboard and AzureWebJobsStorage
         static void Main()
         {
-
             // Configure SimpleInjector                     
             Container container = configureSimpleInjector();
 
@@ -34,31 +33,33 @@ namespace BlogAggregator.WebJob
             var jobHost = new JobHost(jobHostConfiguration);
 
             // Call the scheduled blog post updating method
+            Console.WriteLine("Calling SaveNewBlogPosts");
             jobHost.Call(typeof(Functions).GetMethod("SaveNewBlogPosts"));
+            Console.ReadLine();
         }
 
         // Configure Simple Injector dependencies
         private static Container configureSimpleInjector()
         {
             var container = new Container();
-          
-            container.RegisterSingleton<IDatabaseFactory, DatabaseFactory>();
 
-            container.RegisterSingleton<IUnitOfWork, UnitOfWork>();
+            //container.RegisterSingleton<IDatabaseFactory, DatabaseFactory>();
 
-            container.RegisterSingleton<IBlogRepository, BlogRepository>();
-            container.RegisterSingleton<IPostRepository, PostRepository>();
+            //container.RegisterSingleton<IUnitOfWork, UnitOfWork>();
 
-            container.RegisterSingleton<IBlogService, BlogService>();
-            container.RegisterSingleton<IWordPressBlogReader, WordPressBlogReader>();
+            //container.RegisterSingleton<IBlogRepository, BlogRepository>();
+            //container.RegisterSingleton<IPostRepository, PostRepository>();
 
-            //container.Options.DefaultScopedLifestyle = new ExecutionContextScopeLifestyle();
-            //container.Register<IDatabaseFactory, DatabaseFactory>(Lifestyle.Scoped);
+            container.Options.DefaultScopedLifestyle = new ExecutionContextScopeLifestyle();
+            container.Register<IDatabaseFactory, DatabaseFactory>(Lifestyle.Scoped);
 
-            //container.Register<IUnitOfWork, UnitOfWork>(Lifestyle.Scoped);
+            container.Register<IUnitOfWork, UnitOfWork>(Lifestyle.Scoped);
 
-            //container.Register<IBlogRepository, BlogRepository>(Lifestyle.Scoped);
-            //container.Register<IPostRepository, PostRepository>(Lifestyle.Scoped);
+            container.Register<IBlogRepository, BlogRepository>(Lifestyle.Scoped);
+            container.Register<IPostRepository, PostRepository>(Lifestyle.Scoped);
+
+            //container.RegisterSingleton<IBlogService, BlogService>();
+            //container.RegisterSingleton<IWordPressBlogReader, WordPressBlogReader>();
 
             //container.Register<IBlogService, BlogService>(Lifestyle.Scoped);
             //container.Register<IWordPressBlogReader, WordPressBlogReader>(Lifestyle.Scoped);

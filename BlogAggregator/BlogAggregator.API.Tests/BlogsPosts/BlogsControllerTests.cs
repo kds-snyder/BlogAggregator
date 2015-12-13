@@ -12,6 +12,7 @@ using BlogAggregator.Core.Models;
 using System.Net;
 using BlogAggregator.Core.Services;
 using System.Linq.Expressions;
+using BlogAggregator.Core.BlogReader.WordPress;
 
 namespace BlogAggregator.API.Tests.BlogPosts
 {
@@ -22,6 +23,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
         private Mock<IPostRepository> _postRepositoryMock;
         private Mock<IUnitOfWork> _unitOfWorkMock;
         private Mock<IBlogService> _blogServiceMock;
+        private Mock<IWordPressBlogReader> _wordPressBlogReaderMock;
         private BlogsController _controller;
         private Blog[] _blogs;
         private Post[] _posts;
@@ -139,8 +141,10 @@ namespace BlogAggregator.API.Tests.BlogPosts
             // Set up unit of work and controller
             _unitOfWorkMock = new Mock<IUnitOfWork>();
             _blogServiceMock = new Mock<IBlogService>();
+            _wordPressBlogReaderMock = new Mock<IWordPressBlogReader>();
             _controller = new BlogsController(_blogRepositoryMock.Object, _postRepositoryMock.Object,
-                                                _unitOfWorkMock.Object, _blogServiceMock.Object);
+                                                _unitOfWorkMock.Object, _blogServiceMock.Object, 
+                                                 _wordPressBlogReaderMock.Object);
         }
 
         [TestMethod]

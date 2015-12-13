@@ -23,13 +23,17 @@ namespace BlogAggregator.API.Controllers
         private readonly IPostRepository _postRepository;       
         private readonly IUnitOfWork _unitOfWork;
         private readonly IBlogService _blogService;
+        private readonly IWordPressBlogReader _wordPressBlogReader;
 
-        public BlogsController(IBlogRepository blogRepository, IPostRepository postRepository, IUnitOfWork unitOfWork, IBlogService blogService)
+        public BlogsController(IBlogRepository blogRepository, IPostRepository postRepository, 
+                                    IUnitOfWork unitOfWork, IBlogService blogService, 
+                                    IWordPressBlogReader wordPressBlogReader)
         {
             _blogRepository = blogRepository;
             _postRepository = postRepository;
             _unitOfWork = unitOfWork;
             _blogService = blogService;
+            _wordPressBlogReader = wordPressBlogReader;
         }
 
         // GET: api/Blogs
@@ -131,12 +135,14 @@ namespace BlogAggregator.API.Controllers
 
             // Get the blog information from the blog website 
             // If unable to get the information, do not create the blog record
-            var wordPressBlogReader = new WordPressBlogReader();
-            if (!wordPressBlogReader.VerifyBlog(blog))
+            //var wordPressBlogReader = new WordPressBlogReader();
+            //if (!wordPressBlogReader.VerifyBlog(blog))
+            if (!_wordPressBlogReader.VerifyBlog(blog))
             {
                 return NotFound();
             }
 
+ 
             //Set up new Blog object, populated from input blog
             Blog dbBlog = new Blog();
             dbBlog.Update(blog);
@@ -161,10 +167,11 @@ namespace BlogAggregator.API.Controllers
             // If approved, parse the blog posts and store them in the DB
             if (blog.Approved)
             {
-                var blogService = new BlogService(_blogRepository, _postRepository, 
-                                                        _unitOfWork, wordPressBlogReader);
-                blogService.ExtractAndSaveBlogPosts(blog);
-               
+                //var blogService = new BlogService(_blogRepository, _postRepository, 
+                //                                        _unitOfWork, wordPressBlogReader);
+                //blogService.ExtractAndSaveBlogPosts(blog);
+                _blogService.ExtractAndSaveBlogPosts(blog);
+
             }
 
             // Return the created blog record
