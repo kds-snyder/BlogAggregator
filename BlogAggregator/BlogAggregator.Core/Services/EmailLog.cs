@@ -1,6 +1,4 @@
-﻿using System;
-using System.Configuration;
-using System.Net;
+﻿using System.Net;
 using System.Net.Mail;
 
 namespace BlogAggregator.Core.Services
@@ -11,7 +9,7 @@ namespace BlogAggregator.Core.Services
         {
             var mm = new MailMessage
             {
-                From = new MailAddress("kds_snyder@yahoo.com", "Origin Blog Errors"),
+                From = new MailAddress("azure@origincodeacademy.com", "Origin Blog Errors"),
                 Subject = subject
             };
 
@@ -22,7 +20,7 @@ namespace BlogAggregator.Core.Services
             var client = new SmtpClient
             {
                 Credentials = new NetworkCredential("soldityesterday@gmail.com", "gI6F_zbQVNZYQjXomr9s3g"),
-                Port = Convert.ToInt32(ConfigurationManager.AppSettings["SMTPPort"]),
+                Port = 587,
                 EnableSsl = true,
                 Host = "smtp.mandrillapp.com"
             };
