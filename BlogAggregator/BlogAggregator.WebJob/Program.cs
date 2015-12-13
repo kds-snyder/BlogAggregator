@@ -43,26 +43,24 @@ namespace BlogAggregator.WebJob
         {
             var container = new Container();
 
-            //container.RegisterSingleton<IDatabaseFactory, DatabaseFactory>();
-
-            //container.RegisterSingleton<IUnitOfWork, UnitOfWork>();
-
-            //container.RegisterSingleton<IBlogRepository, BlogRepository>();
-            //container.RegisterSingleton<IPostRepository, PostRepository>();
-
             container.Options.DefaultScopedLifestyle = new ExecutionContextScopeLifestyle();
             container.Register<IDatabaseFactory, DatabaseFactory>(Lifestyle.Scoped);
 
-            container.Register<IUnitOfWork, UnitOfWork>(Lifestyle.Scoped);
+            //container.RegisterSingleton<IBlogRepository, BlogRepository>();
+            //container.RegisterSingleton<IPostRepository, PostRepository>();
+            //container.RegisterSingleton<IUnitOfWork, UnitOfWork>();
 
-            container.Register<IBlogRepository, BlogRepository>(Lifestyle.Scoped);
-            container.Register<IPostRepository, PostRepository>(Lifestyle.Scoped);
+            container.Register<IBlogRepository, BlogRepository>(Lifestyle.Singleton);
+            container.Register<IPostRepository, PostRepository>(Lifestyle.Singleton);
+            container.Register<IUnitOfWork, UnitOfWork>(Lifestyle.Singleton);
 
-            //container.RegisterSingleton<IBlogService, BlogService>();
-            //container.RegisterSingleton<IWordPressBlogReader, WordPressBlogReader>();
+            //container.Register<IBlogRepository, BlogRepository>(Lifestyle.Scoped);
+            //container.Register<IPostRepository, PostRepository>(Lifestyle.Scoped);
+            //container.Register<IUnitOfWork, UnitOfWork>(Lifestyle.Scoped);
 
-            //container.Register<IBlogService, BlogService>(Lifestyle.Scoped);
-            //container.Register<IWordPressBlogReader, WordPressBlogReader>(Lifestyle.Scoped);
+            //container.Register<IBlogRepository, BlogRepository>();
+            //container.Register<IPostRepository, PostRepository>();
+            //container.Register<IUnitOfWork, UnitOfWork>();
 
             container.Verify();
 

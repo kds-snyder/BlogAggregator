@@ -14,6 +14,8 @@ namespace BlogAggregator.Core.BlogReader.WordPress
     // Handle Word Press blogs
     public class WordPressBlogReader : IWordPressBlogReader
     {
+        public static WordPressBlogReader Instance => new WordPressBlogReader();
+
         // Retrieve blog description and title from blog Website
         //  according to blog link, and store in the blog record
         // Return true if able to get the info, otherwise return false

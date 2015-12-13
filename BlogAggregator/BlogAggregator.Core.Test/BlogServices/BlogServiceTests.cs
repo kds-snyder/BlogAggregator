@@ -35,7 +35,9 @@ namespace BlogAggregator.Core.Test.BlogServices
 
             // Act
             var blogService = new BlogService(_blogRepository, _postRepository,
-                                                        _unitOfWork, _wordPressBlogReader);
+            //                                            _unitOfWork, _wordPressBlogReader);
+                                                                   _unitOfWork);
+
             blogService.ExtractAndSaveAllNewBlogPosts();
 
             // Assert

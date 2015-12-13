@@ -5,7 +5,7 @@ namespace BlogAggregator.WebJob
 {
     class BlogAggregatorJobActivator : IJobActivator
     {
-        private Container _container;
+        private readonly Container _container;
 
         public BlogAggregatorJobActivator(Container container)
         {
