@@ -95,7 +95,7 @@ namespace BlogAggregator.API.Controllers.OAuth
         [Route("ObtainLocalAccessToken")]
         public async Task<IHttpActionResult> ObtainLocalAccessToken(string provider, string externalAccessToken)
         {
-            string emailInfo = "ObtainLocalAccessToken provider = " + 
+            string emailInfo = "ObtainLocalAccessToken " + DateTime.Now + " provider = " + 
                 provider + " externalAccessToken = " + externalAccessToken;
             var emailLog = new EmailLog();
             string emailLogSentTo = "kds_snyder@yahoo.com";
