@@ -13,17 +13,7 @@
         provider: "",
         userName: "",
         externalAccessToken: ""
-    };
-
-    var _saveRegistration = function (registration) {
-
-        _logOut();
-
-        return $http.post(apiUrl + 'api/account/register', registration).then(function (response) {
-            return response;
-        });
-
-    };
+    };  
 
     var _login = function (loginData) {
 
@@ -87,40 +77,20 @@
             _authentication.useRefreshTokens = authData.useRefreshTokens;
             _authentication.userName = authData.userName;
         }
-    }
+    };
 
-    var _refreshToken = function () {
+    var _getUserInfoFromGoogle = function (external_access_token) {
         var deferred = $q.defer();
 
-        var authData = localStorageService.get('authenticationData');
-
-        if (authData) {
-
-            if (authData.useRefreshTokens) {
-
-                var data = "grant_type=refresh_token&refresh_token=" +
-                    authData.refreshToken + "&client_id=" + appClientID;
-
-                localStorageService.remove('authenticationData');
-
-                $http.post(apiUrl + 'token', data,
-                    { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } })
-                    .success(function (response) {
-
-                        localStorageService.set('authenticationData',
-                            {
-                                token: response.access_token, userName: response.userName,
-                                refreshToken: response.refresh_token, useRefreshTokens: true
-                            });
-
-                        deferred.resolve(response);
-
-                    }).error(function (err, status) {
-                        _logOut();
-                        deferred.reject(err);
-                    });
+        $http.get('https://www.googleapis.com/oauth2/v1/userinfo?alt=json', {
+            headers: {
+                'Authorization': 'Bearer ' + external_access_token
             }
-        }
+        }).then(function (response) {
+            deferred.resolve(response.data);
+        }, function (error) {
+            deferred.reject(error);
+        });
 
         return deferred.promise;
     };
@@ -159,6 +129,42 @@
         return deferred.promise;
     };
 
+    var _refreshToken = function () {
+        var deferred = $q.defer();
+
+        var authData = localStorageService.get('authenticationData');
+
+        if (authData) {
+
+            if (authData.useRefreshTokens) {
+
+                var data = "grant_type=refresh_token&refresh_token=" +
+                    authData.refreshToken + "&client_id=" + appClientID;
+
+                localStorageService.remove('authenticationData');
+
+                $http.post(apiUrl + 'token', data,
+                    { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } })
+                    .success(function (response) {
+
+                        localStorageService.set('authenticationData',
+                            {
+                                token: response.access_token, userName: response.userName,
+                                refreshToken: response.refresh_token, useRefreshTokens: true
+                            });
+
+                        deferred.resolve(response);
+
+                    }).error(function (err, status) {
+                        _logOut();
+                        deferred.reject(err);
+                    });
+            }
+        }
+
+        return deferred.promise;
+    };
+   
     var _registerExternal = function (registerExternalData) {
 
         var deferred = $q.defer();
@@ -186,9 +192,20 @@
 
         return deferred.promise;
     };
+
+    var _saveRegistration = function (registration) {
+
+        _logOut();
+
+        return $http.post(apiUrl + 'api/account/register', registration).then(function (response) {
+            return response;
+        });
+
+    };
     
     authServiceFactory.authentication = _authentication;
     authServiceFactory.externalAuthData = _externalAuthData;
+    authServiceFactory.getUserInfoFromGoogle = _getUserInfoFromGoogle;
     authServiceFactory.loadAuthData = _loadAuthData;
     authServiceFactory.login = _login;
     authServiceFactory.logOut = _logOut;

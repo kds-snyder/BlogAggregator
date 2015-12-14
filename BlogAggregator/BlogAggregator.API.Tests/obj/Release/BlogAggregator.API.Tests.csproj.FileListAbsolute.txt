@@ -103,3 +103,5 @@ C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\obj\Release\BlogAg
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\obj\Release\BlogAggregator.API.Tests.pdb
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Release\EntityFramework.SqlServer.dll
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Release\EntityFramework.SqlServer.xml
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Release\Microsoft.ApplicationInsights.dll
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Release\Microsoft.ApplicationInsights.xml

@@ -30,6 +30,7 @@ namespace BlogAggregator.Core.Models
         {
             public string user_id { get; set; }
             public string app_id { get; set; }
+            //public string errorDetails { get; set; }
         }
     }
 }

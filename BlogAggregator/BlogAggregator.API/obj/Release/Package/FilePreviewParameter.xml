@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="BlogAggregator" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\dev\\BlogAggregator\\BlogAggregator\\BlogAggregator\.API\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\dev\\BlogAggregator\\BlogAggregator\\BlogAggregator\.API\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="BlogAggregator_oauth-Web.config Connection String" description="" value="Data Source=tcp:originstudents.database.windows.net,1433;Initial Catalog=BlogAggregator_oauth;User Id=azure@originstudents;Password=OCA_azur3" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\dev\\BlogAggregator\\BlogAggregator\\BlogAggregator\.API\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='BlogAggregator_oauth']/@connectionString" />
+  </parameter>
+</parameters>

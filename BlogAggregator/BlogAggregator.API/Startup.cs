@@ -58,8 +58,8 @@ namespace BlogAggregator.API
             // Set third-party login provider options
             googleAuthOptions = new GoogleOAuth2AuthenticationOptions
             {
-                ClientId = "620597621300-kl2s8olb1teeu5nrcmuitkvtn59i1ogu.apps.googleusercontent.com",
-                ClientSecret = "AmTWc3UFoBBsD6HewS3VPtUL",
+                ClientId = "620597621300-lt136jc3pa1i94v0cbqgtjvpsjda00hd.apps.googleusercontent.com",
+                ClientSecret = "ZpcLG1Ri-TlpmTiRcEFUEQ6q",
                 Provider = new GoogleAuthProvider()
             };
             app.UseGoogleAuthentication(googleAuthOptions);

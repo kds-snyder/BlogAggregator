@@ -106,3 +106,5 @@ C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API\bin\zh-Hant\System.Spati
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API\obj\Release\BlogAggregator.API.csprojResolveAssemblyReference.cache
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API\obj\Release\BlogAggregator.API.dll
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API\obj\Release\BlogAggregator.API.pdb
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API\bin\Microsoft.ApplicationInsights.dll
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API\bin\Microsoft.ApplicationInsights.xml
