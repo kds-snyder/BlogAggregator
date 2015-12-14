@@ -143,9 +143,9 @@ namespace BlogAggregator.API.Tests.BlogPosts
             _blogServiceMock = new Mock<IBlogService>();
             _wordPressBlogReaderMock = new Mock<IWordPressBlogReader>();
             _controller = new BlogsController(_blogRepositoryMock.Object, _postRepositoryMock.Object,
-                                                _unitOfWorkMock.Object);
-                                                //_unitOfWorkMock.Object, _blogServiceMock.Object, 
-                                                // _wordPressBlogReaderMock.Object);
+                                                //_unitOfWorkMock.Object);
+                                                _unitOfWorkMock.Object, _blogServiceMock.Object,
+                                                 _wordPressBlogReaderMock.Object);
         }
 
         [TestMethod]

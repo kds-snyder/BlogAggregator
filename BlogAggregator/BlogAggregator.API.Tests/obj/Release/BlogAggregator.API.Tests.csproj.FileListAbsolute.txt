@@ -101,3 +101,5 @@ C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Release\zh-Han
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\obj\Release\BlogAggregator.API.Tests.csprojResolveAssemblyReference.cache
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\obj\Release\BlogAggregator.API.Tests.dll
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\obj\Release\BlogAggregator.API.Tests.pdb
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Release\EntityFramework.SqlServer.dll
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Release\EntityFramework.SqlServer.xml

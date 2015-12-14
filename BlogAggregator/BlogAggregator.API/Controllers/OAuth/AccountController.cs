@@ -356,7 +356,7 @@ namespace BlogAggregator.API.Controllers.OAuth
             if (provider == googleProviderName)
             {
                 verifyTokenEndPoint = 
-                    string.Format("https://www.googleapis.com/oauth2/v1/tokeninfo?access_token={0}", accessToken);
+                    string.Format("https://www.googleapis.com/oauth2/v3/tokeninfo?access_token={0}", accessToken);
             }
             else
             {

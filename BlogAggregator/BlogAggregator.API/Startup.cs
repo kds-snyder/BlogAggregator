@@ -105,8 +105,8 @@ namespace BlogAggregator.API
             container.Register<IUserRepository, UserRepository>();
             container.Register<IExternalLoginRepository, ExternalLoginRepository>();
 
-            //container.Register<IBlogService, BlogService>();
-            //container.Register<IWordPressBlogReader, WordPressBlogReader>();
+            container.Register<IBlogService, BlogService>();
+            container.Register<IWordPressBlogReader, WordPressBlogReader>();
 
             app.Use(async (context, next) => {
                 using (container.BeginExecutionContextScope())

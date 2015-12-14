@@ -22,19 +22,19 @@ namespace BlogAggregator.API.Controllers
         private readonly IBlogRepository _blogRepository;
         private readonly IPostRepository _postRepository;       
         private readonly IUnitOfWork _unitOfWork;
-        //private readonly IBlogService _blogService;
-        //private readonly IWordPressBlogReader _wordPressBlogReader;
+        private readonly IBlogService _blogService;
+        private readonly IWordPressBlogReader _wordPressBlogReader;
 
         public BlogsController(IBlogRepository blogRepository, IPostRepository postRepository,
-                                                IUnitOfWork unitOfWork)
-                                    //IUnitOfWork unitOfWork, IBlogService blogService, 
-                                    //IWordPressBlogReader wordPressBlogReader)
+                                                //IUnitOfWork unitOfWork)
+                                    IUnitOfWork unitOfWork, IBlogService blogService, 
+                                    IWordPressBlogReader wordPressBlogReader)
         {
             _blogRepository = blogRepository;
             _postRepository = postRepository;
             _unitOfWork = unitOfWork;
-            //_blogService = blogService;
-            //_wordPressBlogReader = wordPressBlogReader;
+            _blogService = blogService;
+            _wordPressBlogReader = wordPressBlogReader;
         }
 
         // GET: api/Blogs
@@ -115,13 +115,13 @@ namespace BlogAggregator.API.Controllers
             //  parse the blog posts and store them in DB
             if (!approvedBeforeUpdate && blog.Approved)
             {
-                //_blogService.ExtractAndSaveBlogPosts(blog);
+                _blogService.ExtractAndSaveBlogPosts(blog);
                 //var wordPressBlogReader = new WordPressBlogReader();
                 //var blogService = new BlogService(_blogRepository, _postRepository,
                 //                                        _unitOfWork, wordPressBlogReader);
-                var blogService = new BlogService(_blogRepository, _postRepository,
-                                                       _unitOfWork);
-                blogService.ExtractAndSaveBlogPosts(blog);
+                //var blogService = new BlogService(_blogRepository, _postRepository,
+                //                                       _unitOfWork);
+                //blogService.ExtractAndSaveBlogPosts(blog);
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -146,8 +146,8 @@ namespace BlogAggregator.API.Controllers
             // Get the blog information from the blog website 
             // If unable to get the information, do not create the blog record
             //var wordPressBlogReader = new WordPressBlogReader();
-            if (!WordPressBlogReader.Instance.VerifyBlog(blog))
-            //if (!_wordPressBlogReader.VerifyBlog(blog))
+            //if (!WordPressBlogReader.Instance.VerifyBlog(blog))
+            if (!_wordPressBlogReader.VerifyBlog(blog))
             {
                 return NotFound();
             }
@@ -176,12 +176,12 @@ namespace BlogAggregator.API.Controllers
             // If approved, parse the blog posts and store them in the DB
             if (blog.Approved)
             {
-                //_blogService.ExtractAndSaveBlogPosts(blog);
+                _blogService.ExtractAndSaveBlogPosts(blog);
                 //var blogService = new BlogService(_blogRepository, _postRepository,
                 //                                        _unitOfWork, wordPressBlogReader);
-                var blogService = new BlogService(_blogRepository, _postRepository,
-                                                       _unitOfWork);
-                blogService.ExtractAndSaveBlogPosts(blog);
+                //var blogService = new BlogService(_blogRepository, _postRepository,
+                //                                       _unitOfWork);
+                //blogService.ExtractAndSaveBlogPosts(blog);
             }
 
             // Return the created blog record
