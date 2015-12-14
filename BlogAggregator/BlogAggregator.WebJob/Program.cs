@@ -43,24 +43,13 @@ namespace BlogAggregator.WebJob
         {
             var container = new Container();
 
-            container.Options.DefaultScopedLifestyle = new ExecutionContextScopeLifestyle();
-            container.Register<IDatabaseFactory, DatabaseFactory>(Lifestyle.Scoped);
+            container.Register<IDatabaseFactory, DatabaseFactory>(Lifestyle.Singleton);
 
-            //container.RegisterSingleton<IBlogRepository, BlogRepository>();
-            //container.RegisterSingleton<IPostRepository, PostRepository>();
-            //container.RegisterSingleton<IUnitOfWork, UnitOfWork>();
+            container.Register<IBlogRepository, BlogRepository>();
+            container.Register<IPostRepository, PostRepository>();
+            container.Register<IUnitOfWork, UnitOfWork>();
 
-            container.Register<IBlogRepository, BlogRepository>(Lifestyle.Singleton);
-            container.Register<IPostRepository, PostRepository>(Lifestyle.Singleton);
-            container.Register<IUnitOfWork, UnitOfWork>(Lifestyle.Singleton);
-
-            //container.Register<IBlogRepository, BlogRepository>(Lifestyle.Scoped);
-            //container.Register<IPostRepository, PostRepository>(Lifestyle.Scoped);
-            //container.Register<IUnitOfWork, UnitOfWork>(Lifestyle.Scoped);
-
-            //container.Register<IBlogRepository, BlogRepository>();
-            //container.Register<IPostRepository, PostRepository>();
-            //container.Register<IUnitOfWork, UnitOfWork>();
+            container.Register<IBlogService, BlogService>();
 
             container.Verify();
 

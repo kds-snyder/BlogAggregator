@@ -11,7 +11,7 @@ namespace BlogAggregator.Core.Domain
         WordPress=1
     }
 
-    // Application types for external logins
+    // Application types for clients
     public enum ApplicationTypes
     {
         JavaScript = 0,

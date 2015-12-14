@@ -58,3 +58,17 @@ C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.WebJob\bin\Debug\zh-Hant\Mic
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.WebJob\obj\Debug\BlogAggregator.WebJob.csprojResolveAssemblyReference.cache
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.WebJob\obj\Debug\BlogAggregator.WebJob.exe
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.WebJob\obj\Debug\BlogAggregator.WebJob.pdb
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.WebJob\bin\Debug\BlogAggregator.Core.dll
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.WebJob\bin\Debug\BlogAggregator.Data.dll
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.WebJob\bin\Debug\SimpleInjector.dll
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.WebJob\bin\Debug\SimpleInjector.Extensions.ExecutionContextScoping.dll
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.WebJob\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.WebJob\bin\Debug\EntityFramework.dll
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.WebJob\bin\Debug\EntityFramework.SqlServer.dll
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.WebJob\bin\Debug\BlogAggregator.Core.pdb
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.WebJob\bin\Debug\BlogAggregator.Data.pdb
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.WebJob\bin\Debug\SimpleInjector.xml
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.WebJob\bin\Debug\SimpleInjector.Extensions.ExecutionContextScoping.xml
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.WebJob\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.WebJob\bin\Debug\EntityFramework.xml
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.WebJob\bin\Debug\EntityFramework.SqlServer.xml

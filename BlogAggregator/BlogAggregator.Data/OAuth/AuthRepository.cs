@@ -90,9 +90,11 @@ namespace BlogAggregator.Data.OAuth
             });
         }
 
-        public List<RefreshToken> GetAllRefreshTokens()
+        //public List<RefreshToken> GetAllRefreshTokens()
+        public IEnumerable<RefreshToken> GetAllRefreshTokens()
         {
-            return _dataContext.RefreshTokens.ToList();
+            //return _dataContext.RefreshTokens.ToList();
+            return _dataContext.RefreshTokens;
         }
 
         public async Task<IdentityResult> RegisterUser(RegistrationModel registrationModel)

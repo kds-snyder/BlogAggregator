@@ -24,7 +24,7 @@ angular.module('app', ['directive.g+signin', 'LocalStorageModule', 'ngMaterial',
 });
 
 //API link
-angular.module('app').value('apiUrl', 'https://microsoft-apiappc17fc6a308404673b96dabcfab653613.azurewebsites.net/');
+angular.module('app').value('apiUrl', 'http://blogaggregator.azurewebsites.net/');
 //angular.module('app').value('apiUrl', 'http://localhost:3000/');
 
 // Application client ID

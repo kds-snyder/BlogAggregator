@@ -25,7 +25,8 @@ namespace BlogAggregator.Data.OAuth
 
         Task<User> FindUser(string userName, string password);
 
-        List<RefreshToken> GetAllRefreshTokens();
+        //List<RefreshToken> GetAllRefreshTokens();
+        IEnumerable<RefreshToken> GetAllRefreshTokens();
 
         Task<IdentityResult> RegisterUser(RegistrationModel userModel);
 

@@ -7,18 +7,24 @@ namespace BlogAggregator.API.Controllers.OAuth
     [RoutePrefix("api/RefreshTokens")]
     public class RefreshTokensController : ApiController
     {
-        private Func<IAuthRepository> _authRepositoryFactory;
-        private IAuthRepository _authRepository
-        {
-            get
-            {
-                return _authRepositoryFactory.Invoke();
-            }
-        }
+        //private Func<IAuthRepository> _authRepositoryFactory;
+        //private IAuthRepository _authRepository
+        //{
+        //    get
+        //    {
+        //        return _authRepositoryFactory.Invoke();
+        //    }
+        //}
+        private readonly IAuthRepository _authRepository;
 
-        public RefreshTokensController(Func<IAuthRepository> authRepositoryFactory)
+
+        //public RefreshTokensController(Func<IAuthRepository> authRepositoryFactory)
+        //{
+        //    _authRepositoryFactory = authRepositoryFactory;
+        //}
+        public RefreshTokensController(IAuthRepository authRepository)
         {
-            _authRepositoryFactory = authRepositoryFactory;
+            _authRepository = authRepository;
         }
 
         //[Authorize(Users = "Admin")]

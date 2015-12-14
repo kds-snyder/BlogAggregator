@@ -7,26 +7,19 @@ namespace BlogAggregator.WebJob
 {
     public class Functions
     {
-        private readonly IBlogRepository _blogRepository;
-        private readonly IPostRepository _postRepository;
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IBlogService _blogService;       
 
-        public Functions(IBlogRepository blogRepository, IPostRepository postRepository,
-                                      IUnitOfWork unitOfWork)
+        public Functions(IBlogService blogService)
 
         {
-            _blogRepository = blogRepository;
-            _postRepository = postRepository;
-            _unitOfWork = unitOfWork;
+            _blogService = blogService;
        }
 
         [NoAutomaticTrigger]
         // Save new blog posts in Post table for approved blogs
         public void SaveNewBlogPosts()
-        {
-            var blogService = new BlogService(_blogRepository, _postRepository,
-                                                        _unitOfWork);
-            blogService.ExtractAndSaveAllNewBlogPosts();
+        {            
+            _blogService.ExtractAndSaveAllNewBlogPosts();
         }
 
         // This function will get triggered/executed when a new message is written 

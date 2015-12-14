@@ -48,7 +48,11 @@ namespace BlogAggregator.API.OAuth
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
+            //var allowedOrigin = context.OwinContext.Get<string>("as:clientAllowedOrigin");
+            //if (allowedOrigin == null) allowedOrigin = "*";
+            var allowedOrigin = "*";
+
+            context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { allowedOrigin });
 
             User user = await _authRepository.FindUser(context.UserName, context.Password);
 
@@ -77,7 +81,7 @@ namespace BlogAggregator.API.OAuth
             identity.AddClaim(new Claim("role", "user"));
 
             var ticket = new AuthenticationTicket(identity, props);
-            context.Validated(ticket);
+            context.Validated(ticket);           
         }
 
         public override Task TokenEndpoint(OAuthTokenEndpointContext context)

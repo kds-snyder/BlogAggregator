@@ -23,7 +23,7 @@ namespace BlogAggregator.API.OAuth
         }
 
         public async Task CreateAsync(AuthenticationTokenCreateContext context)
-        {
+        {           
             var clientid = context.Ticket.Properties.Dictionary["as:client_id"];
 
             if (string.IsNullOrEmpty(clientid))
@@ -55,13 +55,12 @@ namespace BlogAggregator.API.OAuth
             {
                 context.SetToken(refreshTokenId);
             }
-
         }
 
         public async Task ReceiveAsync(AuthenticationTokenReceiveContext context)
         {
-
-            var allowedOrigin = context.OwinContext.Get<string>("as:clientAllowedOrigin");
+            //var allowedOrigin = context.OwinContext.Get<string>("as:clientAllowedOrigin");
+            var allowedOrigin = "*";
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { allowedOrigin });
 
             string hashedTokenId = context.Token.GetHash();

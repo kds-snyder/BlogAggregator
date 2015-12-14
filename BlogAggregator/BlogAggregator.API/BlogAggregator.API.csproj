@@ -208,7 +208,7 @@
     <Content Include="packages.config" />
     <Content Include="Metadata\deploymentTemplates\apiappconfig.azureresource.json" />
     <Content Include="apiapp.json" />
-    <None Include="Properties\PublishProfiles\BlogAggregator.API%282015fallcohort%29.pubxml" />
+    <None Include="Properties\PublishProfiles\BlogAggregator - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

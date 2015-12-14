@@ -14,6 +14,8 @@ namespace BlogAggregator.Data.Infrastructure
 
         public BlogAggregatorDbContext() : base("BlogAggregator_oauth")
         {
+            var ensureDLLIsCopied =
+                System.Data.Entity.SqlServer.SqlProviderServices.Instance;
         }
 
         public IDbSet<Blog> Blogs { get; set; }

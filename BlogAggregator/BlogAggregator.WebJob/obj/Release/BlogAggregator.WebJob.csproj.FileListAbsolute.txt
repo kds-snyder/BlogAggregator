@@ -70,3 +70,5 @@ C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.WebJob\obj\Release\BlogAggre
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.WebJob\obj\Release\BlogAggregator.WebJob.pdb
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.WebJob\bin\Release\SimpleInjector.Extensions.ExecutionContextScoping.dll
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.WebJob\bin\Release\SimpleInjector.Extensions.ExecutionContextScoping.xml
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.WebJob\bin\Release\EntityFramework.SqlServer.dll
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.WebJob\bin\Release\EntityFramework.SqlServer.xml
