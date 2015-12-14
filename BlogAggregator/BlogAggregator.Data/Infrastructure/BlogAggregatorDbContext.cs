@@ -20,10 +20,8 @@ namespace BlogAggregator.Data.Infrastructure
 
         public IDbSet<Blog> Blogs { get; set; }
         public IDbSet<Post> Posts { get; set; }
-
-        public IDbSet<Client> Clients { get; set; }        
+           
         public IDbSet<ExternalLogin> ExternalLogins { get; set; }
-        public IDbSet<RefreshToken> RefreshTokens { get; set; }
         public IDbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

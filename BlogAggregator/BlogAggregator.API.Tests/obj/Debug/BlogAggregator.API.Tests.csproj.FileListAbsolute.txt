@@ -103,3 +103,5 @@ C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Debug\Microsof
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Debug\Microsoft.Owin.Security.Cookies.xml
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Debug\EntityFramework.SqlServer.dll
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Debug\EntityFramework.SqlServer.xml
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Debug\Microsoft.ApplicationInsights.dll
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.API.Tests\bin\Debug\Microsoft.ApplicationInsights.xml

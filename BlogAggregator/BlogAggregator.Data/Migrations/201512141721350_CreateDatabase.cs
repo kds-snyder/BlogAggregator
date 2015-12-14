@@ -59,7 +59,7 @@ namespace BlogAggregator.Data.Migrations
                 c => new
                     {
                         ExternalLoginID = c.Int(nullable: false, identity: true),
-                        UserID = c.String(nullable: false, maxLength: 128),
+                        UserID = c.Int(nullable: false),
                         LoginProvider = c.String(),
                         ProviderKey = c.String(),
                     })
@@ -71,7 +71,7 @@ namespace BlogAggregator.Data.Migrations
                 "dbo.Users",
                 c => new
                     {
-                        Id = c.String(nullable: false, maxLength: 128),
+                        Id = c.Int(nullable: false, identity: true),
                         Authorized = c.Boolean(nullable: false),
                         PasswordHash = c.String(),
                         SecurityStamp = c.String(),

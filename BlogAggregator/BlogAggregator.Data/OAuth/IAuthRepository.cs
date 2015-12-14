@@ -11,27 +11,15 @@ namespace BlogAggregator.Data.OAuth
 {
     public interface IAuthRepository : IDisposable
     {       
-        Task<IdentityResult> AddLoginAsync(string userId, UserLoginInfo login);
-
-        Task<bool> AddRefreshToken(RefreshToken token);
+        Task<IdentityResult> AddLoginAsync(int userId, UserLoginInfo login);
 
         Task<IdentityResult> CreateAsync(User user);
 
         Task<User> FindAsync(UserLoginInfo loginInfo);
 
-        Client FindClient(string clientId);
-
-        Task<RefreshToken> FindRefreshToken(string refreshTokenId);
-
         Task<User> FindUser(string userName, string password);
-
-        //List<RefreshToken> GetAllRefreshTokens();
-        IEnumerable<RefreshToken> GetAllRefreshTokens();
 
         Task<IdentityResult> RegisterUser(RegistrationModel userModel);
 
-        Task<bool> RemoveRefreshToken(string refreshTokenId);
-
-        Task<bool> RemoveRefreshToken(RefreshToken refreshToken);
     }
 }

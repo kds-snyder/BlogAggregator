@@ -7,13 +7,13 @@ namespace BlogAggregator.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class CreateDatabase : IMigrationMetadata
+    public sealed partial class RemoveClientAndRefreshTokens : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(CreateDatabase));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(RemoveClientAndRefreshTokens));
         
         string IMigrationMetadata.Id
         {
-            get { return "201512141107474_CreateDatabase"; }
+            get { return "201512141739376_RemoveClientAndRefreshTokens"; }
         }
         
         string IMigrationMetadata.Source

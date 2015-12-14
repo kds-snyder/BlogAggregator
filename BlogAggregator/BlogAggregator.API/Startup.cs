@@ -78,7 +78,6 @@ namespace BlogAggregator.API
                 TokenEndpointPath = new PathString("/token"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
                 Provider = new BlogAggregatorAuthorizationServerProvider(authRepositoryFactory),
-                RefreshTokenProvider = new BlogAggregatorRefreshTokenProvider(authRepositoryFactory)
             };
 
             // Token Generation
@@ -93,7 +92,7 @@ namespace BlogAggregator.API
 
             container.Options.DefaultScopedLifestyle = new ExecutionContextScopeLifestyle();
 
-            container.Register<IUserStore<User, string>, UserStore>(Lifestyle.Scoped);
+            container.Register<IUserStore<User, int>, UserStore>(Lifestyle.Scoped);
             container.Register<IAuthRepository, AuthRepository>(Lifestyle.Scoped);
 
             container.Register<IDatabaseFactory, DatabaseFactory>(Lifestyle.Scoped);

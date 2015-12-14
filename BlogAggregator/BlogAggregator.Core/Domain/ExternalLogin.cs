@@ -10,7 +10,7 @@ namespace BlogAggregator.Core.Domain
     {
         public int ExternalLoginID { get; set; }
 
-        public string UserID {get; set;}
+        public int UserID {get; set;}
 
         public string LoginProvider { get; set; }
 

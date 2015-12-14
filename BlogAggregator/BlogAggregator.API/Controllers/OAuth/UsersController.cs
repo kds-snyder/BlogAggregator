@@ -47,7 +47,7 @@ namespace BlogAggregator.API.Controllers.OAuth
 
         // PUT: api/Users/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutUser(string id, UserModel user)
+        public IHttpActionResult PutUser(int id, UserModel user)
         {
             // Validate the request
             if (!ModelState.IsValid)
@@ -154,7 +154,7 @@ namespace BlogAggregator.API.Controllers.OAuth
             base.Dispose(disposing);
         }
 
-        private bool UserExists(string id)
+        private bool UserExists(int id)
         {
             return _userRepository.Count(u => u.Id == id) > 0;
         }

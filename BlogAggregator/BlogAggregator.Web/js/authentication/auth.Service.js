@@ -1,11 +1,10 @@
-﻿angular.module('app').factory('authService', function (apiUrl, appClientID, $http, localStorageService, $q, $state) {
+﻿angular.module('app').factory('authService', function (apiUrl, $http, localStorageService, $q, $state) {
 
     var authServiceFactory = {};
 
     var _authentication = {
         isAuthenticated: false,
         isAuthorized: false,
-        useRefreshTokens: false,
         userName: ""
     };
 
@@ -13,36 +12,23 @@
         provider: "",
         userName: "",
         externalAccessToken: ""
-    };  
+    };
 
     var _login = function (loginData) {
 
         var data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password;
-
-        if (loginData.useRefreshTokens) {
-            data = data + "&client_id=" + appClientID;
-        }
 
         var deferred = $q.defer();
 
         $http.post(apiUrl + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } })
         .success(function (response) {
 
-            if (loginData.useRefreshTokens) {
-                localStorageService.set('authenticationData',
-                    {
-                        token: response.access_token, userName: loginData.userName,
-                        refreshToken: response.refresh_token, useRefreshTokens: true
-                    });
-            }
-            else {
-                localStorageService.set('authenticationData',
-                    { token: response.access_token, userName: loginData.userName });
-            }
+
+            localStorageService.set('authenticationData',
+                 { token: response.access_token, userName: loginData.userName });
 
             _authentication.isAuthenticated = true;
             _authentication.isAuthorized = response.authorized;
-            _authentication.useRefreshTokens = loginData.useRefreshTokens;
             _authentication.userName = loginData.userName;
 
             deferred.resolve(response);
@@ -62,7 +48,6 @@
         localStorageService.remove('authenticationData');
 
         _authentication.isAuthenticated = false;
-        _authentication.useRefreshTokens = false;
         _authentication.userName = "";
 
         $state.go('login');
@@ -74,7 +59,6 @@
         if (authData) {
             _authentication.isAuthenticated = true;
             _authentication.isAuthorized = authData.isAuthorized;
-            _authentication.useRefreshTokens = authData.useRefreshTokens;
             _authentication.userName = authData.userName;
         }
     };
@@ -111,7 +95,7 @@
                 localStorageService.set('authenticationData',
                     {
                         token: response.access_token, userName: response.userName,
-                        refreshToken: "", useRefreshTokens: false
+                        isAuthorized: response.isAuthorized
                     });
 
                 _authentication.isAuthenticated = true;
@@ -129,42 +113,6 @@
         return deferred.promise;
     };
 
-    var _refreshToken = function () {
-        var deferred = $q.defer();
-
-        var authData = localStorageService.get('authenticationData');
-
-        if (authData) {
-
-            if (authData.useRefreshTokens) {
-
-                var data = "grant_type=refresh_token&refresh_token=" +
-                    authData.refreshToken + "&client_id=" + appClientID;
-
-                localStorageService.remove('authenticationData');
-
-                $http.post(apiUrl + 'token', data,
-                    { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } })
-                    .success(function (response) {
-
-                        localStorageService.set('authenticationData',
-                            {
-                                token: response.access_token, userName: response.userName,
-                                refreshToken: response.refresh_token, useRefreshTokens: true
-                            });
-
-                        deferred.resolve(response);
-
-                    }).error(function (err, status) {
-                        _logOut();
-                        deferred.reject(err);
-                    });
-            }
-        }
-
-        return deferred.promise;
-    };
-   
     var _registerExternal = function (registerExternalData) {
 
         var deferred = $q.defer();
@@ -175,14 +123,13 @@
                 localStorageService.set('authenticationData',
                     {
                         token: response.access_token, userName: response.userName,
-                        refreshToken: "", useRefreshTokens: false
+                        isAuthorized: response.isAuthorized
                     });
 
                 _authentication.isAuthenticated = true;
                 _authentication.isAuthorized = response.isAuthorized;
                 _authentication.userName = response.userName;
-                _authentication.useRefreshTokens = false;
-
+ 
                 deferred.resolve(response);
 
             }).error(function (err, status) {
@@ -202,7 +149,7 @@
         });
 
     };
-    
+
     authServiceFactory.authentication = _authentication;
     authServiceFactory.externalAuthData = _externalAuthData;
     authServiceFactory.getUserInfoFromGoogle = _getUserInfoFromGoogle;
@@ -210,7 +157,6 @@
     authServiceFactory.login = _login;
     authServiceFactory.logOut = _logOut;
     authServiceFactory.obtainAccessToken = _obtainAccessToken;
-    authServiceFactory.refreshToken = _refreshToken;
     authServiceFactory.registerExternal = _registerExternal;
     authServiceFactory.saveRegistration = _saveRegistration;
 

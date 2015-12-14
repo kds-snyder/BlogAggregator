@@ -24,11 +24,8 @@ angular.module('app', ['directive.g+signin', 'LocalStorageModule', 'ngMaterial',
 });
 
 //API link
-angular.module('app').value('apiUrl', 'http://blogaggregator.azurewebsites.net/');
-//angular.module('app').value('apiUrl', 'http://localhost:3000/');
-
-// Application client ID
-angular.module('app').value('appClientID', '620597621300-lt136jc3pa1i94v0cbqgtjvpsjda00hd.apps.googleusercontent.com');
+//angular.module('app').value('apiUrl', 'http://blogaggregator.azurewebsites.net/');
+angular.module('app').value('apiUrl', 'http://localhost:3000/');
 
 // Load authentication data
 angular.module('app').run(function ($rootScope, authService, $state) {

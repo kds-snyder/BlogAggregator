@@ -329,18 +329,6 @@ namespace BlogAggregator.API.Controllers.OAuth
                 return "client_Id is required";
             }
 
-            var client = _authRepository.FindClient(clientId);
-
-            if (client == null)
-            {
-                return string.Format("Client_id '{0}' is not registered in the system.", clientId);
-            }
-
-            if (!string.Equals(client.AllowedOrigin, redirectUri.GetLeftPart(UriPartial.Authority), StringComparison.OrdinalIgnoreCase))
-            {
-                return string.Format("The given URL is not allowed by Client_id '{0}' configuration.", clientId);
-            }
-
             redirectUriOutput = redirectUri.AbsoluteUri;
 
             return string.Empty;
