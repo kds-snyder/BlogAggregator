@@ -12,8 +12,8 @@ namespace BlogAggregator.Data.OAuth
     public class AuthRepository : IAuthRepository, IDisposable
     {
         private readonly IDatabaseFactory _databaseFactory;
-        private UserManager<User, int> _userManager;
-        private readonly IUserStore<User, int> _userStore;
+        private UserManager<User, string> _userManager;
+        private readonly IUserStore<User, string> _userStore;
 
         private BlogAggregatorDbContext _dataContext;
         protected BlogAggregatorDbContext DataContext
@@ -24,14 +24,14 @@ namespace BlogAggregator.Data.OAuth
             }
         }
 
-        public AuthRepository(IDatabaseFactory databaseFactory, IUserStore<User, int> userStore)
+        public AuthRepository(IDatabaseFactory databaseFactory, IUserStore<User, string> userStore)
         {
             _userStore = userStore;
             _databaseFactory = databaseFactory;
-            _userManager = new UserManager<User, int>(userStore);
+            _userManager = new UserManager<User, string>(userStore);
         }
 
-        public async Task<IdentityResult> AddLoginAsync(int userId, UserLoginInfo login)
+        public async Task<IdentityResult> AddLoginAsync(string userId, UserLoginInfo login)
         {
             var result = await _userManager.AddLoginAsync(userId, login);
 

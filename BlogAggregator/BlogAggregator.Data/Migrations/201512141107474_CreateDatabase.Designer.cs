@@ -7,13 +7,13 @@ namespace BlogAggregator.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddClientAndRefreshTokenTables : IMigrationMetadata
+    public sealed partial class CreateDatabase : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddClientAndRefreshTokenTables));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(CreateDatabase));
         
         string IMigrationMetadata.Id
         {
-            get { return "201512092153297_AddClientAndRefreshTokenTables"; }
+            get { return "201512141107474_CreateDatabase"; }
         }
         
         string IMigrationMetadata.Source

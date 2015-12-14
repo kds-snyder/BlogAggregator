@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace BlogAggregator.Data.Infrastructure
 {
-    public class UserStore : IUserStore<User, int>,
-                             IUserLoginStore<User, int>,
-                             IUserPasswordStore<User, int>,
-                             IUserSecurityStampStore<User, int>
+    public class UserStore : IUserStore<User, string>,
+                             IUserLoginStore<User, string>,
+                             IUserPasswordStore<User, string>,
+                             IUserSecurityStampStore<User, string>
     {
         private readonly IDatabaseFactory _databaseFactory;
 
@@ -59,7 +59,7 @@ namespace BlogAggregator.Data.Infrastructure
             });
         }
 
-        public Task<User> FindByIdAsync(int userId)
+        public Task<User> FindByIdAsync(string userId)
         {
             return Task.Factory.StartNew(() => DataContext.Users.Find(userId));
         }

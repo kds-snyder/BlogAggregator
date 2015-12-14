@@ -12,9 +12,7 @@ C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Data\bin\Release\EntityFrame
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Data\bin\Release\Microsoft.AspNet.Identity.Core.xml
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Data\bin\Release\Microsoft.AspNet.Identity.EntityFramework.xml
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Data\obj\Release\BlogAggregator.Data.csprojResolveAssemblyReference.cache
-C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Data\obj\Release\BlogAggregator.Data.Migrations.CreateDatabase.resources
-C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Data\obj\Release\BlogAggregator.Data.Migrations.AddClientAndRefreshTokenTables.resources
-C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Data\obj\Release\BlogAggregator.Data.csproj.GenerateResource.Cache
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Data\obj\Release\BlogAggregator.Data.dll
 C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Data\obj\Release\BlogAggregator.Data.pdb
-C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Data\obj\Release\BlogAggregator.Data.Migrations.AddGuidToPostTable.resources
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Data\obj\Release\BlogAggregator.Data.Migrations.CreateDatabase.resources
+C:\dev\BlogAggregator\BlogAggregator\BlogAggregator.Data\obj\Release\BlogAggregator.Data.csproj.GenerateResource.Cache

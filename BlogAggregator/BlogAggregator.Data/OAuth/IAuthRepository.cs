@@ -11,7 +11,7 @@ namespace BlogAggregator.Data.OAuth
 {
     public interface IAuthRepository : IDisposable
     {       
-        Task<IdentityResult> AddLoginAsync(int userId, UserLoginInfo login);
+        Task<IdentityResult> AddLoginAsync(string userId, UserLoginInfo login);
 
         Task<bool> AddRefreshToken(RefreshToken token);
 

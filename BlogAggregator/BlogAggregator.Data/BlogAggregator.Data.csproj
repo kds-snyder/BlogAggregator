@@ -63,17 +63,9 @@
     <Compile Include="Infrastructure\Repository.cs" />
     <Compile Include="Infrastructure\UnitOfWork.cs" />
     <Compile Include="Infrastructure\UserStore.cs" />
-    <Compile Include="Migrations\201512091910025_CreateDatabase.cs" />
-    <Compile Include="Migrations\201512091910025_CreateDatabase.Designer.cs">
-      <DependentUpon>201512091910025_CreateDatabase.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201512092153297_AddClientAndRefreshTokenTables.cs" />
-    <Compile Include="Migrations\201512092153297_AddClientAndRefreshTokenTables.Designer.cs">
-      <DependentUpon>201512092153297_AddClientAndRefreshTokenTables.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201512110436543_AddGuidToPostTable.cs" />
-    <Compile Include="Migrations\201512110436543_AddGuidToPostTable.Designer.cs">
-      <DependentUpon>201512110436543_AddGuidToPostTable.cs</DependentUpon>
+    <Compile Include="Migrations\201512141107474_CreateDatabase.cs" />
+    <Compile Include="Migrations\201512141107474_CreateDatabase.Designer.cs">
+      <DependentUpon>201512141107474_CreateDatabase.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OAuth\AuthRepository.cs" />
@@ -95,14 +87,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201512091910025_CreateDatabase.resx">
-      <DependentUpon>201512091910025_CreateDatabase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201512092153297_AddClientAndRefreshTokenTables.resx">
-      <DependentUpon>201512092153297_AddClientAndRefreshTokenTables.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201512110436543_AddGuidToPostTable.resx">
-      <DependentUpon>201512110436543_AddGuidToPostTable.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201512141107474_CreateDatabase.resx">
+      <DependentUpon>201512141107474_CreateDatabase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

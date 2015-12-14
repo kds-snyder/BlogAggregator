@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace BlogAggregator.Core.Domain
 {
-    public class User : IUser<int>
+    public class User : IUser<string>
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public bool Authorized { get; set; }        
         public string PasswordHash { get; set; }
         public string SecurityStamp { get; set; }
