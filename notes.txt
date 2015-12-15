@@ -12,7 +12,10 @@ ng-class = {md-primary: color-mode}
 posts?$orderby=PublicationDate desc
 
 http://originblogs.azurewebsites.net/
-https://microsoft-apiappc17fc6a308404673b96dabcfab653613.azurewebsites.net/api/
+http://blogaggregator.azurewebsites.net/api/
+
+BlogAggregator_oauth DB:
+Server=tcp:originstudents.database.windows.net,1433;Database=BlogAggregator_oauth;User ID=azure@originstudents;Password=OCA_azur3;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
 
 https://YOURSITE.scm.azurewebsites.net/azurejobs
 
@@ -22,13 +25,18 @@ http://localhost:3000/api/account/ObtainLocalAccessToken?externalAccessToken=ya2
 
 https://accounts.google.com/o/oauth2/auth?client_id=620597621300-lt136jc3pa1i94v0cbqgtjvpsjda00hd.apps.googleusercontent.com&redirect_uri=postmessage&response_type=code%20token%20id_token%20gsession&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.login%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&request_visible_actions=http%3A%2F%2Fschemas.google.com%2FAddActivity&cookie_policy=single_host_origin&include_granted_scopes=true&proxy=oauth2relay333692115&origin=http%3A%2F%2Flocalhost%3A3200&state=604608205%7C0.979808004&&e=3100077
 
-Front end:
-Is register controller needed?
-Does login controller need to call authService.login?
+data: Object
+email: "tovahks@gmail.com"
+family_name: "Snyder"
+gender: "female"
+given_name: "Karen"
+id: "114142399122115436007"
+link: "https://plus.google.com/114142399122115436007"
+locale: "en"
+name: "Karen Snyder"
+picture: "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg"
+verified_email: true
 
-Back end:
-How does externalLogin table get updated?
-Does _userManager.AddLoginAsync in AuthRepository.AddLoginAsync attempt to write to table UserLogins?
 
 private readonly IUserRepository _userRepository;
 
@@ -95,10 +103,3 @@ name: "event:google-plus-signin-success"
 preventDefault: ()
 targetScope: Scope
 __proto__: Object
-google+ client secret:
-AmTWc3UFoBBsD6HewS3VPtUL
-
-
-http://portal.azure.com
-Username: azure@origincodeacademy.com
-Password: OCA_azur3
