@@ -15,6 +15,7 @@ angular.module('app', ['directive.g+signin', 'LocalStorageModule', 'ngMaterial',
         .state('login', { url: '/login', templateUrl: '/templates/authentication/login.html', controller: 'LoginController', authenticate: false })
 
          .state('admin', { url: '/admin', templateUrl: '/templates/administration/admin.html', controller: 'AdminController' })
+
             .state('admin.blogs', { url: '/blogs', templateUrl: '/templates/administration/blogs.html', controller: 'AdminBlogsController', authenticate: false })
             .state('admin.users', { url: '/users', templateUrl: '/templates/administration/users.html', controller: 'AdminUsersController', authenticate: false })
  
