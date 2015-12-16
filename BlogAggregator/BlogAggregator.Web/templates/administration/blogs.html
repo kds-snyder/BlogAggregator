@@ -1,9 +1,19 @@
 
 <md-content class="md-padding">
+    <div ng-class="{hide: !approvingBlog}">
+        <!-- approving blog mask -->
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        <span id="loading-text">Approving blog...</span>
+    </div>
+    <div ng-class="{hide: !rejectingBlog}">
+        <!-- approving blog mask -->
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        <span id="loading-text">Rejecting blog...</span>
+    </div>
     <div ng-class="{hide: !loading}">
         <!-- loading mask -->
         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-        <span class="md-primary" id="loading-text">Loading blogs...</span>
+        <span id="loading-text">Loading blogs...</span>
     </div>
     <div ng-class="{hide: loading}">
         <div ng-hide="blogs.length">

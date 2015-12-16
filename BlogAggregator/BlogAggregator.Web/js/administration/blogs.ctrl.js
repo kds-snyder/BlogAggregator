@@ -12,12 +12,15 @@
     };
 
     $scope.approveBlog = function (blog) {
+        $scope.approvingBlog = true;
         blog.Approved = true;
         blog.$update(function () {
+            $scope.approvingBlog = false;
             $mdToast.show($mdToast.simple().content('Blog approved successfully')
                              .position('top left').theme("toast-success"));
         },
         function (error) {
+            $scope.approvingBlog = false;
             $mdToast.show($mdToast.simple()
                            .content('Unable to approve blog')
                            .position('top left').theme("toast-error"));
@@ -52,11 +55,14 @@
 
     $scope.rejectBlog = function (blog) {
         blog.Approved = false;
+        $scope.rejectingBlog = true;
         blog.$update(function () {
+            $scope.rejectingBlog = false;
             $mdToast.show($mdToast.simple().content('Blog rejected successfully')
                              .position('top left').theme("toast-success"));
         },
         function (error) {
+            $scope.rejectingBlog = false;
             $mdToast.show($mdToast.simple()
                            .content('Unable to reject blog')
                            .position('top left').theme("toast-error"));
