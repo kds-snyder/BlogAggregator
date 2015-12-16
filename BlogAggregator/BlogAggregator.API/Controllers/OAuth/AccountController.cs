@@ -23,7 +23,7 @@ namespace BlogAggregator.API.Controllers.OAuth
     public class AccountController : ApiController
     {
         private const string faceBookProviderName = "Facebook";
-        private const string googleProviderName = "Google";          
+        private const string googleProviderName = "Google";
 
         private readonly IAuthRepository _authRepository;
 
@@ -37,127 +37,61 @@ namespace BlogAggregator.API.Controllers.OAuth
             _authRepository = authRepository;
         }
 
-        // GET api/Account/ExternalLogin
-        [OverrideAuthentication]
-        [HostAuthentication(DefaultAuthenticationTypes.ExternalCookie)]
-        [AllowAnonymous]
-        [Route("ExternalLogin", Name = "ExternalLogin")]
-        public async Task<IHttpActionResult> GetExternalLogin(string provider, string error = null)
-        {
-            string redirectUri = string.Empty;
-
-            if (error != null)
-            {
-                return BadRequest(Uri.EscapeDataString(error));
-            }
-
-            if (!User.Identity.IsAuthenticated)
-            {
-                return new ChallengeResult(provider, this);
-            }
-
-            var redirectUriValidationResult = validateClientAndRedirectUri(this.Request, ref redirectUri);
-
-            if (!string.IsNullOrWhiteSpace(redirectUriValidationResult))
-            {
-                return BadRequest(redirectUriValidationResult);
-            }
-
-            ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
-
-            if (externalLogin == null)
-            {
-                return InternalServerError();
-            }
-
-            if (externalLogin.LoginProvider != provider)
-            {
-                Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-                return new ChallengeResult(provider, this);
-            }
-
-            User user = await _authRepository.FindAsync
-                (new UserLoginInfo(externalLogin.LoginProvider, externalLogin.ProviderKey));
-
-            bool hasRegistered = user != null;
-
-            redirectUri = string.Format
-                ("{0}#external_access_token={1}&provider={2}&haslocalaccount={3}&external_user_name={4}",
-                redirectUri,
-                externalLogin.ExternalAccessToken,
-                externalLogin.LoginProvider,
-                hasRegistered.ToString(),
-                externalLogin.UserName);
-
-            return Redirect(redirectUri);
-        }
-
-        // Get user corresponding to external login
-        [HttpGet]
-        [Route("GetExternalLoginUser")]
-        public async Task<IHttpActionResult> GetExternalLoginUser(ExternalLoginUserData externalLogin)
-        {
-            User dbUser = await _authRepository.FindAsync(new UserLoginInfo(externalLogin.LoginProvider, 
-                                                                            externalLogin.ProviderKey));
-
-            return Ok(Mapper.Map<UserModel>(dbUser));
-        }
-
         [AllowAnonymous]
         [HttpGet]
         [Route("ObtainLocalAccessToken")]
         public async Task<IHttpActionResult> ObtainLocalAccessToken(string provider, string externalAccessToken)
         {
-            string errorInfo = "\nObtainLocalAccessToken " + DateTime.Now + " provider: " + 
-                provider + " externalAccessToken: " + externalAccessToken;            
-            var emailLog = new EmailLog();
-            string emailLogSentTo = "kds_snyder@yahoo.com";
-            string emailLogSubject = "ObtainLocalAccessToken Email Log";
+            //string errorInfo = "\nObtainLocalAccessToken " + DateTime.Now + " provider: " + 
+            //    provider + " externalAccessToken: " + externalAccessToken;            
+            //var emailLog = new EmailLog();
+            //string emailLogSentTo = "kds_snyder@yahoo.com";
+            //string emailLogSubject = "ObtainLocalAccessToken Email Log";
 
-            try
-            {
+            //try
+            //{
                 if (string.IsNullOrWhiteSpace(provider) || string.IsNullOrWhiteSpace(externalAccessToken))
                 {
-                    errorInfo = errorInfo + "\nProvider or external access token is not sent";
-                    emailLog.SendEmail(emailLogSentTo, emailLogSubject, errorInfo);
-                    return BadRequest("Provider or external access token is not sent" + errorInfo);
+                    //errorInfo = errorInfo + "\nProvider or external access token is not sent";
+                    //emailLog.SendEmail(emailLogSentTo, emailLogSubject, errorInfo);
+                    //return BadRequest("Provider or external access token is not sent" + errorInfo);
+                    return BadRequest("Provider or external access token is not sent");
                 }
 
                 var verifiedAccessToken = await verifyExternalAccessToken(provider, externalAccessToken);
                 //errorInfo = errorInfo + verifiedAccessToken.errorDetails;
                 if (verifiedAccessToken == null)
                 {
-                    errorInfo = errorInfo + "\nInvalid Provider or External Access Token ";
-                    emailLog.SendEmail(emailLogSentTo, emailLogSubject, errorInfo);
+                    //errorInfo = errorInfo + "\nInvalid Provider or External Access Token ";
+                    //emailLog.SendEmail(emailLogSentTo, emailLogSubject, errorInfo);
                     return BadRequest("Invalid Provider or External Access Token");
                 }
 
                 User user = await _authRepository.FindAsync(new UserLoginInfo(provider, verifiedAccessToken.user_id));
 
                 bool hasRegistered = user != null;
-                errorInfo = errorInfo + "\nUser ID: " + user.Id + " name: " + user.UserName;
+                //errorInfo = errorInfo + "\nUser ID: " + user.Id + " name: " + user.UserName;
 
                 if (!hasRegistered)
                 {
-                    errorInfo = errorInfo + "\nExternal user is not registered";
-                    emailLog.SendEmail(emailLogSentTo, emailLogSubject, errorInfo);
+                    //errorInfo = errorInfo + "\nExternal user is not registered";
+                    //emailLog.SendEmail(emailLogSentTo, emailLogSubject, errorInfo);
                     return BadRequest("External user is not registered");
                 }
 
                 //Generate access token response
                 //var accessTokenResponse = generateLocalAccessTokenResponse(user.UserName);
                 var accessTokenResponse = generateLocalAccessTokenResponse(user);
-                errorInfo = errorInfo + "\naccessTokenResponse: " + accessTokenResponse;
-                emailLog.SendEmail(emailLogSentTo, emailLogSubject, errorInfo);
+                //errorInfo = errorInfo + "\naccessTokenResponse: " + accessTokenResponse;
+                //emailLog.SendEmail(emailLogSentTo, emailLogSubject, errorInfo);
                 return Ok(accessTokenResponse);
-            }
-            catch (Exception e)
-            {
-                errorInfo = errorInfo + e.Message;
-                emailLog.SendEmail(emailLogSentTo, emailLogSubject, errorInfo);
-                throw e;
-            }
-
+            //}
+            //catch (Exception e)
+            //{
+                //errorInfo = errorInfo + e.Message;
+                //emailLog.SendEmail(emailLogSentTo, emailLogSubject, errorInfo);
+            //    throw e;
+            //}
         }
 
         // POST api/Account/Register
@@ -186,19 +120,19 @@ namespace BlogAggregator.API.Controllers.OAuth
         [AllowAnonymous]
         [Route("RegisterExternal")]
         public async Task<IHttpActionResult> RegisterExternal(RegisterExternalBindingModel model)
-        {           
+        {
             string errorInfo = "\nRegisterExternal " + DateTime.Now + " user name: " + model.UserName +
-                " provider: " + model.Provider + " externalAccessToken: " + model.ExternalAccessToken ;
+                " provider: " + model.Provider + " externalAccessToken: " + model.ExternalAccessToken;
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            
+
             var verifiedAccessToken = await verifyExternalAccessToken(model.Provider, model.ExternalAccessToken);
             //errorInfo = errorInfo + verifiedAccessToken.errorDetails;
             //if (verifiedAccessToken.user_id == "")
-            if (verifiedAccessToken == null)           
+            if (verifiedAccessToken == null)
             {
                 return BadRequest("Invalid Provider or External Access Token" + errorInfo);
             }
@@ -243,35 +177,40 @@ namespace BlogAggregator.API.Controllers.OAuth
         //private JObject generateLocalAccessTokenResponse(string userName)
         private JObject generateLocalAccessTokenResponse(User user)
         {
-
-            var tokenExpiration = TimeSpan.FromDays(1);
-
-            ClaimsIdentity identity = new ClaimsIdentity(OAuthDefaults.AuthenticationType);
-
-            identity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
-            identity.AddClaim(new Claim("role", "user"));
-
-            var props = new AuthenticationProperties()
+            try
             {
-                IssuedUtc = DateTime.UtcNow,
-                ExpiresUtc = DateTime.UtcNow.Add(tokenExpiration),
-            };
+                var tokenExpiration = TimeSpan.FromDays(1);
 
-            var ticket = new AuthenticationTicket(identity, props);
+                ClaimsIdentity identity = new ClaimsIdentity(OAuthDefaults.AuthenticationType);
 
-            var accessToken = Startup.OAuthBearerOptions.AccessTokenFormat.Protect(ticket);
+                identity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
+                identity.AddClaim(new Claim("role", "user"));
 
-            JObject tokenResponse = new JObject(
-                                        new JProperty("userName", user.UserName),
-                                        new JProperty("isAuthorized", user.Authorized),
-                                        new JProperty("access_token", accessToken),
-                                        new JProperty("token_type", "bearer"),
-                                        new JProperty("expires_in", tokenExpiration.TotalSeconds.ToString()),
-                                        new JProperty(".issued", ticket.Properties.IssuedUtc.ToString()),
-                                        new JProperty(".expires", ticket.Properties.ExpiresUtc.ToString())
-        );
+                var props = new AuthenticationProperties()
+                {
+                    IssuedUtc = DateTime.UtcNow,
+                    ExpiresUtc = DateTime.UtcNow.Add(tokenExpiration),
+                };
 
-            return tokenResponse;
+                var ticket = new AuthenticationTicket(identity, props);
+
+                var accessToken = Startup.OAuthBearerOptions.AccessTokenFormat.Protect(ticket);
+
+                JObject tokenResponse = new JObject(
+                                            new JProperty("userName", user.UserName),
+                                            new JProperty("isAuthorized", user.Authorized),
+                                            new JProperty("access_token", accessToken),
+                                            new JProperty("token_type", "bearer"),
+                                            new JProperty("expires_in", tokenExpiration.TotalSeconds.ToString()),
+                                            new JProperty(".issued", ticket.Properties.IssuedUtc.ToString()),
+                                            new JProperty(".expires", ticket.Properties.ExpiresUtc.ToString())
+                                        );
+                return tokenResponse;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }            
         }
 
         private IHttpActionResult getErrorResult(IdentityResult result)
@@ -347,10 +286,10 @@ namespace BlogAggregator.API.Controllers.OAuth
             return string.Empty;
         }
 
-        private async Task<ParsedExternalAccessToken> 
+        private async Task<ParsedExternalAccessToken>
                 verifyExternalAccessToken(string provider, string accessToken)
-        {            
-           
+        {
+
             ParsedExternalAccessToken parsedToken = null;
             //var parsedToken = new ExternalLoginModel.ParsedExternalAccessToken();
             //parsedToken.errorDetails = "";
@@ -371,8 +310,8 @@ namespace BlogAggregator.API.Controllers.OAuth
             //else 
             if (provider == googleProviderName)
             {
-                verifyTokenEndPoint = 
-                    string.Format("https://www.googleapis.com/oauth2/v1/tokeninfo?access_token={0}", accessToken);               
+                verifyTokenEndPoint =
+                    string.Format("https://www.googleapis.com/oauth2/v1/tokeninfo?access_token={0}", accessToken);
             }
             else
             {
@@ -388,7 +327,7 @@ namespace BlogAggregator.API.Controllers.OAuth
                 var content = await response.Content.ReadAsStringAsync();
 
                 dynamic jObj = (JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(content);
-                
+
                 parsedToken = new ParsedExternalAccessToken();
 
                 //if (provider == "Facebook")
@@ -407,7 +346,7 @@ namespace BlogAggregator.API.Controllers.OAuth
                     parsedToken.user_id = jObj["user_id"];
                     parsedToken.app_id = jObj["audience"];
 
-                    if (!string.Equals(Startup.googleAuthOptions.ClientId, parsedToken.app_id, 
+                    if (!string.Equals(Startup.GoogleAuthOptions.ClientId, parsedToken.app_id,
                                                             StringComparison.OrdinalIgnoreCase))
                     {
                         //parsedToken.errorDetails = parsedToken.errorDetails +
@@ -428,6 +367,6 @@ namespace BlogAggregator.API.Controllers.OAuth
             //}
             return parsedToken;
         }
-       
+
     }
 }

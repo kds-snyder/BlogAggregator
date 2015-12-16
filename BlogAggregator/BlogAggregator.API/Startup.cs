@@ -25,8 +25,8 @@ namespace BlogAggregator.API
     public class Startup
     {
         public static OAuthBearerAuthenticationOptions OAuthBearerOptions { get; private set; }
-        public static GoogleOAuth2AuthenticationOptions googleAuthOptions { get; private set; }
-        public static FacebookAuthenticationOptions facebookAuthOptions { get; private set; }
+        public static GoogleOAuth2AuthenticationOptions GoogleAuthOptions { get; private set; }
+        public static FacebookAuthenticationOptions FacebookAuthOptions { get; private set; }
 
         public void Configuration(IAppBuilder app)
         {
@@ -55,23 +55,6 @@ namespace BlogAggregator.API
             app.UseExternalSignInCookie(Microsoft.AspNet.Identity.DefaultAuthenticationTypes.ExternalCookie);
             OAuthBearerOptions = new OAuthBearerAuthenticationOptions();
 
-            // Set third-party login provider options
-            googleAuthOptions = new GoogleOAuth2AuthenticationOptions
-            {
-                ClientId = "620597621300-lt136jc3pa1i94v0cbqgtjvpsjda00hd.apps.googleusercontent.com",
-                ClientSecret = "ZpcLG1Ri-TlpmTiRcEFUEQ6q",
-                Provider = new GoogleAuthProvider()
-            };
-            app.UseGoogleAuthentication(googleAuthOptions);
-
-            //facebookAuthOptions = new FacebookAuthenticationOptions()
-            //{
-            //    AppId = "xxx",
-            //    AppSecret = "xxx",
-            //    Provider = new FacebookAuthProvider()
-            //};
-            //app.UseFacebookAuthentication(facebookAuthOptions);
-
             var oAuthServerOptions = new OAuthAuthorizationServerOptions()
             {
                 AllowInsecureHttp = true,
@@ -81,8 +64,25 @@ namespace BlogAggregator.API
             };
 
             // Token Generation
-            app.UseOAuthAuthorizationServer(oAuthServerOptions);
-            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+            app.UseOAuthAuthorizationServer(oAuthServerOptions);           
+            app.UseOAuthBearerAuthentication(OAuthBearerOptions);
+
+            // Set third-party login provider options
+            GoogleAuthOptions = new GoogleOAuth2AuthenticationOptions
+            {
+                ClientId = "620597621300-lt136jc3pa1i94v0cbqgtjvpsjda00hd.apps.googleusercontent.com",
+                ClientSecret = "ZpcLG1Ri-TlpmTiRcEFUEQ6q",
+                Provider = new GoogleAuthProvider()
+            };
+            app.UseGoogleAuthentication(GoogleAuthOptions);
+
+            //FacebookAuthOptions = new FacebookAuthenticationOptions()
+            //{
+            //    AppId = "xxx",
+            //    AppSecret = "xxx",
+            //    Provider = new FacebookAuthProvider()
+            //};
+            //app.UseFacebookAuthentication(FacebookAuthOptions);                     
         }
 
         // Register containers for classes that use dependency injection
