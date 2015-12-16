@@ -1,36 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace BlogAggregator.Core.Models
+﻿namespace BlogAggregator.Core.Models
 {
     public class ExternalLoginModel
     {
-        public class ExternalLoginViewModel
-        {
-            public string Name { get; set; }
+        public int ExternalLoginID { get; set; }
 
-            public string Url { get; set; }
+        public int UserID {get; set;}
 
-            public string State { get; set; }
-        }
+        public string LoginProvider { get; set; }
 
-        public class RegisterExternalBindingModel
-        {
-            [Required]
-            public string UserName { get; set; }
-
-            [Required]
-            public string Provider { get; set; }
-
-            [Required]
-            public string ExternalAccessToken { get; set; }
-
-        }
-
-        public class ParsedExternalAccessToken
-        {
-            public string user_id { get; set; }
-            public string app_id { get; set; }
-            //public string errorDetails { get; set; }
-        }
+        public string ProviderKey { get; set; }      
     }
 }

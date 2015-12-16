@@ -45,6 +45,8 @@ namespace BlogAggregator.API
         {
             Mapper.CreateMap<Blog, BlogModel>();
             Mapper.CreateMap<Post, PostModel>();
+
+            Mapper.CreateMap<ExternalLogin, ExternalLoginModel>();
             Mapper.CreateMap<User, UserModel>();
         }
     }

@@ -16,7 +16,6 @@ namespace BlogAggregator.Core.Domain
 
         public void Update(UserModel user)
         {
-            Id = user.Id;
             Authorized = user.Authorized;
             PasswordHash = user.PasswordHash;
             SecurityStamp = user.SecurityStamp;

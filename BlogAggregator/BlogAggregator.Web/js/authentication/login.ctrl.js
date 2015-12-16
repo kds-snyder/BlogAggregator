@@ -4,22 +4,28 @@
 
         console.log('Google signin success');
 
-        // Get user info, then check if user is in database
+        // Get user info, then check if user is registered in database with
+        //  Google as provider, and Google user ID as provider key
         authService.getUserInfoFromGoogle(authResult.access_token).then(function (data) {
-            $scope.user = User.get({ id: data.id }, function () {
+
+            var externalData = { provider: 'Google', providerKey: data.id };
+            authService.findExternalLoginUser(externalData).then(function (response) {
 
                 // Handle existing user
+                console.log('Found external user ' + data.email);
                 debugger;
                 var userData = { provider: 'Google', externalAccessToken: authResult.access_token };
                 $scope.handleExistingExternalUser(userData);
             },
             function (error) {
+                
                 // Handle new user (email is used for user name)
+                console.log('Did not find external user ' + data.email);
                 debugger;
                 var newUserData =
                     { userName: data.email, provider: 'Google', externalAccessToken: authResult.access_token };
                 $scope.handleNewExternalUser(newUserData);
-            });          
+            });
 
         }, function (error) {
             debugger;
@@ -31,9 +37,9 @@
     // External login for existing user: Obtain access token and redirect to admin
     $scope.handleExistingExternalUser = function(externalUserData) {
         authService.obtainAccessToken(externalUserData).then(function (response) {
+            console.log('Obtained access token successfully');
             debugger;
             $state.go('admin');
-
         },
             function (err) {
                 debugger;
@@ -45,6 +51,7 @@
     //  and redirect to admin
     $scope.handleNewExternalUser = function (externalNewUserData) {
         authService.registerExternal(externalNewUserData).then(function (response) {
+            console.log('Registered new user ' + externalNewUserData.userName);
             $state.go('admin');
 
         },
@@ -57,7 +64,8 @@
               $mdToast.show($mdToast.simple()
                           .content('Unable to register you as a user')
                           .position('top left').theme("toast-error"));
-              console.log('Failed to register user: ' + errors.join(' '));
+              console.log('Failed to register user' + externalNewUserData.userName
+                                                + ' due to: ' + errors.join(' '));
           });
     };
 

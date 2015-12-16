@@ -25,8 +25,8 @@ angular.module('app', ['directive.g+signin', 'LocalStorageModule', 'ngMaterial',
 });
 
 //API link
-//angular.module('app').value('apiUrl', 'http://blogaggregator.azurewebsites.net/');
-angular.module('app').value('apiUrl', 'http://localhost:3000/');
+angular.module('app').value('apiUrl', 'http://blogaggregator.azurewebsites.net/');
+//angular.module('app').value('apiUrl', 'http://localhost:3000/');
 
 // Load authentication data
 angular.module('app').run(function ($rootScope, authService, $state) {

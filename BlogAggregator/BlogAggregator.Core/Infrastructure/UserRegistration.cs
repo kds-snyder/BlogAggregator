@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BlogAggregator.Core.Models
+namespace BlogAggregator.Core.Infrastructure
 {
-    public class RegistrationModel
+    public class UserRegistration
     {
         [Required]
         [Display(Name = "User name")]

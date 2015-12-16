@@ -1,4 +1,5 @@
 ﻿using BlogAggregator.Core.Domain;
+using BlogAggregator.Core.Infrastructure;
 using BlogAggregator.Core.Models;
 using BlogAggregator.Data.Infrastructure;
 using Microsoft.AspNet.Identity;
@@ -59,7 +60,7 @@ namespace BlogAggregator.Data.OAuth
         }
 
 
-        public async Task<IdentityResult> RegisterUser(RegistrationModel registrationModel)
+        public async Task<IdentityResult> RegisterUser(UserRegistration registrationModel)
         {
             User user = new User
             {

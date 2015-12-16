@@ -1,4 +1,5 @@
 ﻿using BlogAggregator.Core.Domain;
+using BlogAggregator.Core.Infrastructure;
 using BlogAggregator.Core.Models;
 using Microsoft.AspNet.Identity;
 using System;
@@ -19,7 +20,7 @@ namespace BlogAggregator.Data.OAuth
 
         Task<User> FindUser(string userName, string password);
 
-        Task<IdentityResult> RegisterUser(RegistrationModel userModel);
+        Task<IdentityResult> RegisterUser(UserRegistration userModel);
 
     }
 }

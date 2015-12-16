@@ -85,10 +85,10 @@
     <Compile Include="BlogReader\IBlogReader.cs" />
     <Compile Include="Infrastructure\IRepository.cs" />
     <Compile Include="Infrastructure\IUnitOfWork.cs" />
+    <Compile Include="Infrastructure\UserRegistration.cs" />
     <Compile Include="Models\BlogModel.cs" />
     <Compile Include="Models\ExternalLoginModel.cs" />
     <Compile Include="Models\PostModel.cs" />
-    <Compile Include="Models\RegistrationModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IBlogRepository.cs" />

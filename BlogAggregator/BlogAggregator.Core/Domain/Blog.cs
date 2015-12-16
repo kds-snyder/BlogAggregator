@@ -36,8 +36,7 @@ namespace BlogAggregator.Core.Domain
             if (blog.BlogID == 0)
             {
                 CreatedDate = DateTime.Now;
-            }
-            
+            }           
             Approved = blog.Approved;
             AuthorName = blog.AuthorName;
             AuthorEmail = blog.AuthorEmail;

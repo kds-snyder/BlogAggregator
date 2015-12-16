@@ -63,6 +63,25 @@
         }
     };
 
+    var _findExternalLoginUser = function (externalData) {
+
+        var deferred = $q.defer();
+
+        $http.get(apiUrl + 'api/account/GetExternalLoginUser', {
+            params: {
+                provider: externalData.provider,
+                providerKey: externalData.providerKey
+            }
+        }).then(function (response) {
+            deferred.resolve(response.data);
+        }, function (error) {
+            deferred.reject(error);
+        });
+
+        debugger;
+        return deferred.promise;
+    };
+
     var _getUserInfoFromGoogle = function (external_access_token) {
         var deferred = $q.defer();
 
@@ -152,6 +171,7 @@
 
     authServiceFactory.authentication = _authentication;
     authServiceFactory.externalAuthData = _externalAuthData;
+    authServiceFactory.findExternalLoginUser = _findExternalLoginUser;
     authServiceFactory.getUserInfoFromGoogle = _getUserInfoFromGoogle;
     authServiceFactory.loadAuthData = _loadAuthData;
     authServiceFactory.login = _login;

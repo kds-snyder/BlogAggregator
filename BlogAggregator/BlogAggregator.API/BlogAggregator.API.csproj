@@ -185,10 +185,14 @@
     <Compile Include="Controllers\BlogsPosts\BlogsController.cs" />
     <Compile Include="Controllers\BlogsPosts\PostsController.cs" />
     <Compile Include="Controllers\OAuth\AccountController.cs" />
+    <Compile Include="Controllers\OAuth\ExternalLoginsController.cs" />
     <Compile Include="Controllers\OAuth\UsersController.cs" />
     <Compile Include="OAuth\BlogAggregatorAuthorizationServerProvider.cs" />
     <Compile Include="OAuth\ChallengeResult.cs" />
+    <Compile Include="OAuth\ExternalLoginUserData.cs" />
+    <Compile Include="OAuth\ParsedExternalAccessToken.cs" />
     <Compile Include="OAuth\ExternalLoginData.cs" />
+    <Compile Include="OAuth\RegisterExternalBindingModel.cs" />
     <Compile Include="OAuth\FaceBookAuthProvider.cs" />
     <Compile Include="OAuth\GoogleAuthProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

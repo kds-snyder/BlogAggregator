@@ -1,5 +1,7 @@
-﻿using BlogAggregator.API.OAuth;
+﻿using AutoMapper;
+using BlogAggregator.API.OAuth;
 using BlogAggregator.Core.Domain;
+using BlogAggregator.Core.Infrastructure;
 using BlogAggregator.Core.Models;
 using BlogAggregator.Core.Services;
 using BlogAggregator.Data.OAuth;
@@ -90,6 +92,17 @@ namespace BlogAggregator.API.Controllers.OAuth
             return Redirect(redirectUri);
         }
 
+        // Get user corresponding to external login
+        [HttpGet]
+        [Route("GetExternalLoginUser")]
+        public async Task<IHttpActionResult> GetExternalLoginUser(ExternalLoginUserData externalLogin)
+        {
+            User dbUser = await _authRepository.FindAsync(new UserLoginInfo(externalLogin.LoginProvider, 
+                                                                            externalLogin.ProviderKey));
+
+            return Ok(Mapper.Map<UserModel>(dbUser));
+        }
+
         [AllowAnonymous]
         [HttpGet]
         [Route("ObtainLocalAccessToken")]
@@ -150,7 +163,7 @@ namespace BlogAggregator.API.Controllers.OAuth
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
-        public async Task<IHttpActionResult> Register(RegistrationModel registrationModel)
+        public async Task<IHttpActionResult> Register(UserRegistration registrationModel)
         {
             if (!ModelState.IsValid)
             {
@@ -172,7 +185,7 @@ namespace BlogAggregator.API.Controllers.OAuth
         // POST api/Account/RegisterExternal
         [AllowAnonymous]
         [Route("RegisterExternal")]
-        public async Task<IHttpActionResult> RegisterExternal(ExternalLoginModel.RegisterExternalBindingModel model)
+        public async Task<IHttpActionResult> RegisterExternal(RegisterExternalBindingModel model)
         {           
             string errorInfo = "\nRegisterExternal " + DateTime.Now + " user name: " + model.UserName +
                 " provider: " + model.Provider + " externalAccessToken: " + model.ExternalAccessToken ;
@@ -334,11 +347,11 @@ namespace BlogAggregator.API.Controllers.OAuth
             return string.Empty;
         }
 
-        private async Task<ExternalLoginModel.ParsedExternalAccessToken> 
+        private async Task<ParsedExternalAccessToken> 
                 verifyExternalAccessToken(string provider, string accessToken)
         {            
            
-            ExternalLoginModel.ParsedExternalAccessToken parsedToken = null;
+            ParsedExternalAccessToken parsedToken = null;
             //var parsedToken = new ExternalLoginModel.ParsedExternalAccessToken();
             //parsedToken.errorDetails = "";
             //parsedToken.user_id = "";
@@ -376,7 +389,7 @@ namespace BlogAggregator.API.Controllers.OAuth
 
                 dynamic jObj = (JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(content);
                 
-                parsedToken = new ExternalLoginModel.ParsedExternalAccessToken();
+                parsedToken = new ParsedExternalAccessToken();
 
                 //if (provider == "Facebook")
                 //{
