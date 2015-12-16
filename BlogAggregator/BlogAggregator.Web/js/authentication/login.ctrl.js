@@ -4,7 +4,7 @@
 
         console.log('Google signin success, access token: ' + authResult.access_token);
 
-        // Get user info, then check if user is registered in database with
+        // Get user info, then check if user is registered in external logins with
         //  Google as provider, and Google user ID as provider key
         authService.getUserInfoFromGoogle(authResult.access_token).then(function (data) {
 
@@ -26,12 +26,12 @@
                 },
             function (error) {
                 // Unable to get eternal login data 
-                console.log('Error searching for external user ' + data.email
+                console.log('Error searching for external user in external logins' + data.email
                                 + ' due to: ' + error);               
             });
 
         }, function (error) {
-            // Unable to get Google user info: change to admin state if user is authenticated & authorized
+            // Unable to get Google user info, but change to admin state if user is authenticated & authorized
             debugger;
             console.log('Error getting Google user info: ' + error);
             console.log('authService.authentication.isAuthenticated: ' + authService.authentication.isAuthenticated);

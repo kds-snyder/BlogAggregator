@@ -1,4 +1,6 @@
-﻿angular.module('app').controller('AdminUsersController', function ($mdToast, $scope, User) {
+﻿angular.module('app').controller('AdminUsersController', function (authService, $mdToast, $scope, User) {
+
+    $scope.authenticationData = authService.authentication;
    
     // Function to load users, setting loading indicator while loading
     $scope.load = function () {
@@ -8,6 +10,7 @@
         });
     };
 
+    // Authorize user
     $scope.authorizeUser = function (user) {
         user.Authorized = true;
         user.$update(function () {
@@ -22,11 +25,17 @@
         });
     };
 
+    // Deauthorize user
     $scope.deauthorizeUser = function (user) {
         user.Authorized = false;
         user.$update(function () {
             $mdToast.show($mdToast.simple().content('User deauthorized successfully')
-                             .position('top left').theme("toast-success"));
+             .position('top left').theme("toast-success"));
+
+            // If user deauthorized is same as logged-in user, then log out the user
+            if (user.UserName == $scope.authenticationData.userName) {
+                authService.logOut();
+            }
         },
         function (error) {
             $mdToast.show($mdToast.simple()

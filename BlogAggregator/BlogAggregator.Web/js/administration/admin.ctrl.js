@@ -1,6 +1,6 @@
 ﻿angular.module('app').controller('AdminController', function (authService, $rootScope, $scope, $state) {
 
-    $scope.user = authService.authentication;  
+    $scope.authenticationData = authService.authentication;  
 
     $scope.tabs = [
         { heading: "Blog Moderation", state: "admin.blogs" },

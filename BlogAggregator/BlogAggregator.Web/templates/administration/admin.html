@@ -2,9 +2,9 @@
     <div class="md-toolbar-tools">
         <span>Blog Aggregator Administration</span>
         <span flex></span>
-        <div ng-show="user.userName.length > 0">
+        <div ng-show="authenticationData.userName.length > 0">
         <span class="md-body-2">
-            Logged in: {{user.userName}}
+            Logged in: {{authenticationData.userName}}
         </span>
              <md-button class="md-raised md-warn md-hue-2" ng-click="logout()">
                 Log Out
