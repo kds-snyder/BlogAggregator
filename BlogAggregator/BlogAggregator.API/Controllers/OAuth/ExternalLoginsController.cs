@@ -45,6 +45,7 @@ namespace BlogAggregator.API.Controllers.OAuth
         }
 
         // PUT: api/ExternalLogins/5
+        [Authorize]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutExternalLogin(int id, ExternalLoginModel externalLogin)
         {
@@ -89,6 +90,7 @@ namespace BlogAggregator.API.Controllers.OAuth
         }
 
         // POST: api/ExternalLogins
+        [Authorize]
         [ResponseType(typeof(ExternalLoginModel))]
         public IHttpActionResult PostExternalLogin(ExternalLoginModel externalLogin)
         {
@@ -122,6 +124,7 @@ namespace BlogAggregator.API.Controllers.OAuth
         }
 
         // DELETE: api/ExternalLogins/5
+        [Authorize]
         [ResponseType(typeof(ExternalLoginModel))]
         public IHttpActionResult DeleteExternalLogin(int id)
         {

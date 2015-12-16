@@ -26,7 +26,6 @@ namespace BlogAggregator.API.Controllers
         private readonly IWordPressBlogReader _wordPressBlogReader;
 
         public BlogsController(IBlogRepository blogRepository, IPostRepository postRepository,
-                                                //IUnitOfWork unitOfWork)
                                     IUnitOfWork unitOfWork, IBlogService blogService, 
                                     IWordPressBlogReader wordPressBlogReader)
         {
@@ -42,7 +41,6 @@ namespace BlogAggregator.API.Controllers
         public IQueryable<BlogModel> GetBlogs()
         {
             return _blogRepository.GetAll().ProjectTo<BlogModel>();
-
         }
 
         // GET: api/Blogs/5

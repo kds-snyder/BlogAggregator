@@ -14,13 +14,16 @@ using System.Web.Http.OData;
 
 namespace BlogAggregator.API.Controllers.OAuth
 {
+    [Authorize]
     public class UsersController : ApiController
-    {       
+    {
+        private readonly IExternalLoginRepository _externalLoginRepository;
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public UsersController(IUserRepository userRepository, IUnitOfWork unitOfWork)
-        {            
+        public UsersController(IExternalLoginRepository externalLoginRepository, IUserRepository userRepository, IUnitOfWork unitOfWork)
+        {
+            _externalLoginRepository = externalLoginRepository;
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
         }
@@ -131,6 +134,17 @@ namespace BlogAggregator.API.Controllers.OAuth
             if (dbUser == null)
             {
                 return NotFound();
+            }
+
+            // Remove any external logins corresponding to user
+            var dbExternalLogins = _externalLoginRepository.Where(el => el.UserID == id);
+
+            if (dbExternalLogins.Count() > 0)
+            {
+                foreach (var dbExternalLogin in dbExternalLogins)
+                {
+                    _externalLoginRepository.Delete(dbExternalLogin);
+                }
             }
 
             // Remove the user
