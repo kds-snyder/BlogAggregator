@@ -10,23 +10,28 @@
 
             ExternalLoginService.getExternalLoginForProviderAndKey('Google', data.id)
                 .then(function (response) {
-
-                    // Handle existing user
-                    console.log('Found external user ' + data.email);
-                    var userData = { provider: 'Google', externalAccessToken: authResult.access_token };
-                    $scope.handleExistingExternalUser(userData);
+                    if (response.length > 0) {
+                        // Handle existing user
+                        console.log('Found existing external user ' + data.email);
+                        var userData = { provider: 'Google', externalAccessToken: authResult.access_token };
+                        $scope.handleExistingExternalUser(userData);
+                    }
+                    else {
+                        // Handle new user (email is used for user name)
+                        console.log('Found new external user ' + data.email);
+                        var newUserData =
+                            { userName: data.email, provider: 'Google', externalAccessToken: authResult.access_token };
+                        $scope.handleNewExternalUser(newUserData);
+                    }                   
                 },
             function (error) {
-
-                // Handle new user (email is used for user name)
-                console.log('Did not find external user ' + data.email);
-                var newUserData =
-                    { userName: data.email, provider: 'Google', externalAccessToken: authResult.access_token };
-                $scope.handleNewExternalUser(newUserData);
+                // Unable to get eternal login data 
+                console.log('Error searching for external user ' + data.email
+                                + ' due to: ' + error);               
             });
 
         }, function (error) {
-            // If unable to get Google user info, change to admin state if user is authenticated & authorized
+            // Unable to get Google user info: change to admin state if user is authenticated & authorized
             debugger;
             console.log('Error getting Google user info: ' + error);
             console.log('authService.authentication.isAuthenticated: ' + authService.authentication.isAuthenticated);
