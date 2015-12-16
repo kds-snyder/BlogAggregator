@@ -16,8 +16,8 @@ angular.module('app', ['directive.g+signin', 'LocalStorageModule', 'ngMaterial',
 
          .state('admin', { url: '/admin', templateUrl: '/templates/administration/admin.html', controller: 'AdminController' })
 
-            .state('admin.blogs', { url: '/blogs', templateUrl: '/templates/administration/blogs.html', controller: 'AdminBlogsController', authenticate: false })
-            .state('admin.users', { url: '/users', templateUrl: '/templates/administration/users.html', controller: 'AdminUsersController', authenticate: false })
+            .state('admin.blogs', { url: '/blogs', templateUrl: '/templates/administration/blogs.html', controller: 'AdminBlogsController', authenticate: true })
+            .state('admin.users', { url: '/users', templateUrl: '/templates/administration/users.html', controller: 'AdminUsersController', authenticate: true })
  
         .state('app', { url: '/app', templateUrl: '/templates/app/app.html', controller: 'AppController' })
             .state('app.posts', { url: '/posts', templateUrl: '/templates/app/posts.html', controller: 'PostsController', authenticate: false })
@@ -33,8 +33,11 @@ angular.module('app').run(function ($rootScope, authService, $state) {
     authService.loadAuthData();
    
     $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
-        if (toState.authenticate && !authService.authentication.isAuthenticated
-            && !authService.authentication.isAuthorized) {
+        console.log('toState.authenticate: ' + toState.authenticate);
+        console.log('authService.authentication.isAuthenticated: ' + authService.authentication.isAuthenticated);
+        console.log('authService.authentication.isAuthorized: ' + authService.authentication.isAuthorized);
+        if (toState.authenticate && !(authService.authentication.isAuthenticated
+            && authService.authentication.isAuthorized)) {
             $state.go('login');
             event.preventDefault();
         }

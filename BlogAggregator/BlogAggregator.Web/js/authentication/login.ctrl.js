@@ -26,8 +26,16 @@
             });
 
         }, function (error) {
+            // If unable to get Google user info, change to admin state if user is authenticated & authorized
             debugger;
             console.log('Error getting Google user info: ' + error);
+            console.log('authService.authentication.isAuthenticated: ' + authService.authentication.isAuthenticated);
+            console.log('authService.authentication.isAuthorized: ' + authService.authentication.isAuthorized);
+            if (authService.authentication.isAuthenticated
+                && authService.authentication.isAuthorized) {
+                $state.go('admin');
+            }
+                
         });
 
     });

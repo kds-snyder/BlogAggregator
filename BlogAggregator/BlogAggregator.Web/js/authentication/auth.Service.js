@@ -41,6 +41,16 @@
         return deferred.promise;
 
     };
+   
+    var _loadAuthData = function () {
+
+        var authData = localStorageService.get('authenticationData');
+        if (authData) {
+            _authentication.isAuthenticated = true;
+            _authentication.isAuthorized = authData.isAuthorized;
+            _authentication.userName = authData.userName;
+        }
+    };
 
     var _logOut = function () {
 
@@ -50,17 +60,8 @@
         _authentication.isAuthorized = false;
         _authentication.userName = "";
 
-        $state.go('login');
-    };
-
-    var _loadAuthData = function () {
-
-        var authData = localStorageService.get('authenticationData');
-        if (authData) {
-            _authentication.isAuthenticated = true;
-            _authentication.isAuthorized = authData.isAuthorized;
-            _authentication.userName = authData.userName;
-        }
+        //$state.go('login');
+        $state.go('app.posts');
     };
 
     var _findExternalLoginUser = function (externalData) {
@@ -120,8 +121,7 @@
                 _authentication.isAuthenticated = true;
                 _authentication.isAuthorized = response.isAuthorized;
                 _authentication.userName = response.userName;
-                _authentication.useRefreshTokens = false;
-
+ 
                 deferred.resolve(response);
 
             }).error(function (err, status) {
