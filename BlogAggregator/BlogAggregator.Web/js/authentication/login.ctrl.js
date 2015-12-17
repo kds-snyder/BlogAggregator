@@ -4,6 +4,9 @@
 
         console.log('Google signin success, access token: ' + authResult.access_token);
 
+        // Log out to clear token if any
+        authService.logOut();
+
         // Get user info, then check if user is registered in external logins with
         //  Google as provider, and Google user ID as provider key
         authService.getUserInfoFromGoogle(authResult.access_token).then(function (data) {
