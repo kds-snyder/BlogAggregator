@@ -37,7 +37,6 @@ name: "Karen Snyder"
 picture: "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg"
 verified_email: true
 
-
 private readonly IUserRepository _userRepository;
 
 // GET: api/Blogs

@@ -1,22 +1,33 @@
-﻿<md-toolbar class="md-primary">
-    <div class="md-toolbar-tools">
-        <h1>Blog Aggregator</h1>
-        <span flex></span> 
-        <div ng-show="authenticationData.userName.length > 0">
-            <span class="md-body-2">
-                Logged in: {{authenticationData.userName}}
-            </span>
-            <md-button class="md-raised md-warn md-hue-2" ng-click="logout()">
-                Log Out
+﻿<div layout-fill>
+    <md-toolbar class="md-primary">
+        <div class="md-toolbar-tools">
+            <h1>Blog Aggregator</h1>
+            <span flex></span>
+            <div ng-show="authenticationData.userName.length > 0">
+                <span class="md-body-2">
+                    Logged in: {{authenticationData.userName}}
+                </span>
+                <md-button class="md-raised md-warn md-hue-2" ng-click="logout()">
+                    Log Out
+                </md-button>
+            </div><!-- end ng-show="user"-->
+            <md-button class="md-raised md-accent">
+                <a ui-sref="app.addblog">Add Blog</a>
             </md-button>
-        </div><!-- end ng-show="user"-->      
-        <md-button class="md-raised md-accent">
-            <a ui-sref="app.addblog">Add Blog</a>                   
-        </md-button>
-        <md-button class="md-raised md-accent">
-            <a ui-sref="app.posts">Home</a>
-        </md-button>
-    </div>
-</md-toolbar>
+            <md-button class="md-raised md-accent">
+                <a ui-sref="app.posts">Home</a>
+            </md-button>
+        </div>
+    </md-toolbar>
 
-<div ui-view />
+    <div ui-view></div>
+
+    <footer>
+        <div layout="row">
+            <p>
+                Blog Aggregator created by <a target="_blank" href="https://linkedin.com/in/kdsnyder">Karen Snyder</a> in the Fall 2015 cohort of <img src="../../img/origin.png" class="origin-image" />
+                <a target="_blank" href="http://origincodeacademy.com/">Origin Code Academy</a>
+            </p>
+        </div>
+    </footer>
+</div>
