@@ -1,7 +1,15 @@
 ﻿<md-toolbar class="md-primary">
     <div class="md-toolbar-tools">
         <h1>Blog Aggregator</h1>
-        <span flex></span>       
+        <span flex></span> 
+        <div ng-show="authenticationData.userName.length > 0">
+            <span class="md-body-2">
+                Logged in: {{authenticationData.userName}}
+            </span>
+            <md-button class="md-raised md-warn md-hue-2" ng-click="logout()">
+                Log Out
+            </md-button>
+        </div><!-- end ng-show="user"-->      
         <md-button class="md-raised md-accent">
             <a ui-sref="app.addblog">Add Blog</a>                   
         </md-button>

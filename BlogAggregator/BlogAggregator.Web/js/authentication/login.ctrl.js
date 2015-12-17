@@ -27,7 +27,7 @@
             function (error) {
                 // Unable to get eternal login data 
                 $mdToast.show($mdToast.simple()
-                          .content('Unable to log in user')
+                          .content('Unsuccessful login')
                           .position('top left').theme("toast-error"));
                 console.log('Error searching for external user in external logins' + data.email
                                 + ' due to: ' + error);               
@@ -36,23 +36,34 @@
         }, function (error) {
             // Unable to get Google user info   
             $mdToast.show($mdToast.simple()
-                          .content('Unable to log in user')
+                          .content('Unsuccessful login')
                           .position('top left').theme("toast-error"));
            console.log('Error getting Google user info: ' + error.data.error.message);
            
         });
     });
 
-    // External login for existing user: Obtain access token and redirect to admin
+    // External login for existing user: Obtain access token and redirect according to authorization
     $scope.handleExistingExternalUser = function (externalUserData) {
         authService.obtainAccessToken(externalUserData).then(function (response) {
             $mdToast.show($mdToast.simple()
                     .content('Successful login')
                              .position('top left').theme("toast-success"));
             console.log('Obtained access token successfully');
-            $state.go('admin');
+
+            // Redirect to admin if authorized, otherwise to home
+            authService.loadAuthData();
+            if (authService.authentication.isAuthenticated && authService.authentication.isAuthorized) {
+                $state.go('admin');
+            }
+            else {
+                $state.go('app.posts');
+            }            
         },
             function (err) {
+                $mdToast.show($mdToast.simple()
+                         .content('Unsuccessful login')
+                         .position('top left').theme("toast-error"));
                 console.log('Failed to get access token: ' + err.error_description);
             });
     }
@@ -62,7 +73,7 @@
     $scope.handleNewExternalUser = function (externalNewUserData) {
         authService.registerExternal(externalNewUserData).then(function (response) {
             $mdToast.show($mdToast.simple()
-                    .content('User ' + externalNewUserData.userName + ' has been added')
+                    .content('Successful login')
                              .position('top left').theme("toast-success"));
             console.log('Registered new user ' + externalNewUserData.userName);
             $state.go('app.posts');
@@ -73,7 +84,7 @@
                   errors.push(response.modelState[key]);
               }
               $mdToast.show($mdToast.simple()
-                          .content('Unable to add ' + externalNewUserData.userName + ' as a user')
+                          .content('Unsuccessful login')
                           .position('top left').theme("toast-error"));
               console.log('Failed to register user' + externalNewUserData.userName
                                                 + ' due to: ' + errors.join(' '));
