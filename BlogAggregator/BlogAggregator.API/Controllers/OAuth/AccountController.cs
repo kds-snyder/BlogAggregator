@@ -42,56 +42,29 @@ namespace BlogAggregator.API.Controllers.OAuth
         [Route("ObtainLocalAccessToken")]
         public async Task<IHttpActionResult> ObtainLocalAccessToken(string provider, string externalAccessToken)
         {
-            //string errorInfo = "\nObtainLocalAccessToken " + DateTime.Now + " provider: " + 
-            //    provider + " externalAccessToken: " + externalAccessToken;            
-            //var emailLog = new EmailLog();
-            //string emailLogSentTo = "kds_snyder@yahoo.com";
-            //string emailLogSubject = "ObtainLocalAccessToken Email Log";
+            if (string.IsNullOrWhiteSpace(provider) || string.IsNullOrWhiteSpace(externalAccessToken))
+            {
+                return BadRequest("Provider or external access token is not sent");
+            }
 
-            //try
-            //{
-                if (string.IsNullOrWhiteSpace(provider) || string.IsNullOrWhiteSpace(externalAccessToken))
-                {
-                    //errorInfo = errorInfo + "\nProvider or external access token is not sent";
-                    //emailLog.SendEmail(emailLogSentTo, emailLogSubject, errorInfo);
-                    //return BadRequest("Provider or external access token is not sent" + errorInfo);
-                    return BadRequest("Provider or external access token is not sent");
-                }
+            var verifiedAccessToken = await verifyExternalAccessToken(provider, externalAccessToken);
+            if (verifiedAccessToken == null)
+            {
+                return BadRequest("Invalid Provider or External Access Token");
+            }
 
-                var verifiedAccessToken = await verifyExternalAccessToken(provider, externalAccessToken);
-                //errorInfo = errorInfo + verifiedAccessToken.errorDetails;
-                if (verifiedAccessToken == null)
-                {
-                    //errorInfo = errorInfo + "\nInvalid Provider or External Access Token ";
-                    //emailLog.SendEmail(emailLogSentTo, emailLogSubject, errorInfo);
-                    return BadRequest("Invalid Provider or External Access Token");
-                }
+            User user = await _authRepository.FindAsync(new UserLoginInfo(provider, verifiedAccessToken.user_id));
 
-                User user = await _authRepository.FindAsync(new UserLoginInfo(provider, verifiedAccessToken.user_id));
+            bool hasRegistered = user != null;
 
-                bool hasRegistered = user != null;
-                //errorInfo = errorInfo + "\nUser ID: " + user.Id + " name: " + user.UserName;
+            if (!hasRegistered)
+            {
+                return BadRequest("External user is not registered");
+            }
 
-                if (!hasRegistered)
-                {
-                    //errorInfo = errorInfo + "\nExternal user is not registered";
-                    //emailLog.SendEmail(emailLogSentTo, emailLogSubject, errorInfo);
-                    return BadRequest("External user is not registered");
-                }
-
-                //Generate access token response
-                //var accessTokenResponse = generateLocalAccessTokenResponse(user.UserName);
-                var accessTokenResponse = generateLocalAccessTokenResponse(user);
-                //errorInfo = errorInfo + "\naccessTokenResponse: " + accessTokenResponse;
-                //emailLog.SendEmail(emailLogSentTo, emailLogSubject, errorInfo);
-                return Ok(accessTokenResponse);
-            //}
-            //catch (Exception e)
-            //{
-                //errorInfo = errorInfo + e.Message;
-                //emailLog.SendEmail(emailLogSentTo, emailLogSubject, errorInfo);
-            //    throw e;
-            //}
+            //Generate access token response
+            var accessTokenResponse = generateLocalAccessTokenResponse(user);
+            return Ok(accessTokenResponse);
         }
 
         // POST api/Account/Register
@@ -210,7 +183,7 @@ namespace BlogAggregator.API.Controllers.OAuth
             catch (Exception e)
             {
                 throw e;
-            }            
+            }
         }
 
         private IHttpActionResult getErrorResult(IdentityResult result)
@@ -253,38 +226,7 @@ namespace BlogAggregator.API.Controllers.OAuth
             if (string.IsNullOrEmpty(match.Value)) return null;
 
             return match.Value;
-        }
-
-        private string validateClientAndRedirectUri(HttpRequestMessage request, ref string redirectUriOutput)
-        {
-
-            Uri redirectUri;
-
-            var redirectUriString = getQueryString(Request, "redirect_uri");
-
-            if (string.IsNullOrWhiteSpace(redirectUriString))
-            {
-                return "redirect_uri is required";
-            }
-
-            bool validUri = Uri.TryCreate(redirectUriString, UriKind.Absolute, out redirectUri);
-
-            if (!validUri)
-            {
-                return "redirect_uri is invalid";
-            }
-
-            var clientId = getQueryString(Request, "client_id");
-
-            if (string.IsNullOrWhiteSpace(clientId))
-            {
-                return "client_Id is required";
-            }
-
-            redirectUriOutput = redirectUri.AbsoluteUri;
-
-            return string.Empty;
-        }
+        }        
 
         private async Task<ParsedExternalAccessToken>
                 verifyExternalAccessToken(string provider, string accessToken)

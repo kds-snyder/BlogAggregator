@@ -14,6 +14,32 @@
         externalAccessToken: ""
     };
 
+    var _getUserInfoFromGoogle = function (external_access_token) {
+        var deferred = $q.defer();
+
+        $http.get('https://www.googleapis.com/oauth2/v1/userinfo?alt=json', {
+            headers: {
+                'Authorization': 'Bearer ' + external_access_token
+            }
+        }).then(function (response) {
+            deferred.resolve(response.data);
+        }, function (error) {
+            deferred.reject(error);
+        });
+
+        return deferred.promise;
+    };
+
+    var _loadAuthData = function () {
+
+        var authData = localStorageService.get('authenticationData');
+        if (authData) {
+            _authentication.isAuthenticated = true;
+            _authentication.isAuthorized = authData.isAuthorized;
+            _authentication.userName = authData.userName;
+        }
+    };
+
     var _login = function (loginData) {
 
         var data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password;
@@ -41,16 +67,6 @@
         return deferred.promise;
 
     };
-   
-    var _loadAuthData = function () {
-
-        var authData = localStorageService.get('authenticationData');
-        if (authData) {
-            _authentication.isAuthenticated = true;
-            _authentication.isAuthorized = authData.isAuthorized;
-            _authentication.userName = authData.userName;
-        }
-    };
 
     var _logOut = function () {
 
@@ -62,41 +78,6 @@
 
         //$state.go('login');
         $state.go('app.posts');
-    };
-
-    var _findExternalLoginUser = function (externalData) {
-
-        var deferred = $q.defer();
-
-        $http.get(apiUrl + 'api/account/GetExternalLoginUser', {
-            params: {
-                provider: externalData.provider,
-                providerKey: externalData.providerKey
-            }
-        }).then(function (response) {
-            deferred.resolve(response.data);
-        }, function (error) {
-            deferred.reject(error);
-        });
-
-        debugger;
-        return deferred.promise;
-    };
-
-    var _getUserInfoFromGoogle = function (external_access_token) {
-        var deferred = $q.defer();
-
-        $http.get('https://www.googleapis.com/oauth2/v1/userinfo?alt=json', {
-            headers: {
-                'Authorization': 'Bearer ' + external_access_token
-            }
-        }).then(function (response) {
-            deferred.resolve(response.data);
-        }, function (error) {
-            deferred.reject(error);
-        });
-
-        return deferred.promise;
     };
 
     var _obtainAccessToken = function (externalData) {
@@ -170,8 +151,7 @@
     };
 
     authServiceFactory.authentication = _authentication;
-    authServiceFactory.externalAuthData = _externalAuthData;
-    authServiceFactory.findExternalLoginUser = _findExternalLoginUser;
+    authServiceFactory.externalAuthData = _externalAuthData;   
     authServiceFactory.getUserInfoFromGoogle = _getUserInfoFromGoogle;
     authServiceFactory.loadAuthData = _loadAuthData;
     authServiceFactory.login = _login;
