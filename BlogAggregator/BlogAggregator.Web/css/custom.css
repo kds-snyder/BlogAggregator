@@ -10,11 +10,6 @@ footer {
     right: 0;
 }
 
-#footer {
-    height: 45px;    
-    background: #ccf9ff;
-}
-
 md-toast.md-toast-error-theme {
     background-color: red;
 }

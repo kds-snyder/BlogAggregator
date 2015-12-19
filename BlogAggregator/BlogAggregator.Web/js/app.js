@@ -32,10 +32,7 @@ angular.module('app').value('apiUrl', 'http://blogaggregator.azurewebsites.net/'
 angular.module('app').run(function ($rootScope, authService, $state) {
     authService.loadAuthData();
    
-    $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
-        console.log('toState.authenticate: ' + toState.authenticate);
-        console.log('authService.authentication.isAuthenticated: ' + authService.authentication.isAuthenticated);
-        console.log('authService.authentication.isAuthorized: ' + authService.authentication.isAuthorized);
+    $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {       
         if (toState.authenticate && !(authService.authentication.isAuthenticated
             && authService.authentication.isAuthorized)) {
             $state.go('login');
