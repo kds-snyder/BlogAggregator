@@ -1,9 +1,11 @@
 ﻿using BlogAggregator.Core.Domain;
+using BlogAggregator.Core.Infrastructure;
 using BlogAggregator.Core.Models;
 using BlogAggregator.Data.Infrastructure;
-using BlogAggregator.Data.Repository;
 using Microsoft.AspNet.Identity;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BlogAggregator.Data.OAuth
@@ -30,7 +32,35 @@ namespace BlogAggregator.Data.OAuth
             _userManager = new UserManager<User, int>(userStore);
         }
 
-        public async Task<IdentityResult> RegisterUser(RegistrationModel registrationModel)
+        public async Task<IdentityResult> AddLoginAsync(int userId, UserLoginInfo login)
+        {
+            var result = await _userManager.AddLoginAsync(userId, login);
+
+            return result;
+        }  
+
+        public async Task<IdentityResult> CreateAsync(User user)
+        {
+            var result = await _userManager.CreateAsync(user);
+
+            return result;
+        }
+
+        public async Task<User> FindAsync(UserLoginInfo loginInfo)
+        {
+            User user = await _userManager.FindAsync(loginInfo);
+
+            return user;
+        }        
+
+        public async Task<User> FindUser(string userName, string password)
+        {
+            return await _userManager.FindAsync(userName, password);
+
+        }
+
+
+        public async Task<IdentityResult> RegisterUser(UserRegistration registrationModel)
         {
             User user = new User
             {
@@ -40,13 +70,7 @@ namespace BlogAggregator.Data.OAuth
             var result = await _userManager.CreateAsync(user, registrationModel.Password);
 
             return result;
-        }
-
-        public async Task<User> FindUser(string userName, string password)
-        {
-            return await _userManager.FindAsync(userName, password);
-
-        }
+        }   
 
         public void Dispose()
         {

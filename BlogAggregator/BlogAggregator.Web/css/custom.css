@@ -1,4 +1,15 @@
 
+footer {
+    background: #e5fcff;
+    padding: 5px 20px 35px;
+    height: 15px;
+    margin: 0 -17px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
 md-toast.md-toast-error-theme {
     background-color: red;
 }
@@ -8,7 +19,12 @@ md-toast.md-toast-success-theme {
 }
 
 #loading-text {
-    color: rgb(0,188,212);
+    color: #00BCD4;
+}
+
+.origin-image {
+    height:25px;
+    width:25px;
 }
 
 .spacer5 {

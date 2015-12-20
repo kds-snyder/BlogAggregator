@@ -18,6 +18,8 @@ namespace BlogAggregator.Core.Domain
 
         public string Description { get; set; }
 
+        public string Guid { get; set; }
+
         public string Link { get; set; }
 
         public DateTime PublicationDate { get; set; }       
@@ -32,6 +34,7 @@ namespace BlogAggregator.Core.Domain
             BlogID = post.BlogID;
             Content = post.Content;
             Description = post.Description;
+            Guid = post.Guid;
             Link = post.Link;
             PublicationDate = post.PublicationDate;
             Title = post.Title;

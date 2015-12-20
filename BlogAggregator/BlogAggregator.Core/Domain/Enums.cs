@@ -10,4 +10,11 @@ namespace BlogAggregator.Core.Domain
     {
         WordPress=1
     }
+
+    // Application types for clients
+    public enum ApplicationTypes
+    {
+        JavaScript = 0,
+        NativeConfidential = 1
+    };
 }

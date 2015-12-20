@@ -16,6 +16,11 @@ namespace System
         // Note that &#8230; is displayed as ...  
         public static string AdjustContent(this string content)
         {
+            // If content is empty, no adjustment is needed
+            if (content.Length == 0)
+            {
+                return content;
+            }
             // If "[&#8230;]\nThe post" and " appeared first on " are in content,
             //  remove all characters after "[&#8230;]"
             int indexBracket = content.IndexOf("[&#8230;]\nThe post");

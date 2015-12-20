@@ -71,8 +71,8 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BlogPosts\PostsControllerTests.cs" />
-    <Compile Include="BlogPosts\BlogsControllerTests.cs" />
+    <Compile Include="BlogsPosts\PostsControllerTests.cs" />
+    <Compile Include="BlogsPosts\BlogsControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

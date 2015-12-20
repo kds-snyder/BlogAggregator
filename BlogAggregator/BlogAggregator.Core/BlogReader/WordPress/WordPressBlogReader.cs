@@ -14,6 +14,8 @@ namespace BlogAggregator.Core.BlogReader.WordPress
     // Handle Word Press blogs
     public class WordPressBlogReader : IWordPressBlogReader
     {
+        public static WordPressBlogReader Instance => new WordPressBlogReader();
+
         // Retrieve blog description and title from blog Website
         //  according to blog link, and store in the blog record
         // Return true if able to get the info, otherwise return false
@@ -49,7 +51,6 @@ namespace BlogAggregator.Core.BlogReader.WordPress
             {
                 blogPosts = parseBlogPosts(xmlData);
             }
-
             return blogPosts;
         }
 
@@ -96,8 +97,7 @@ namespace BlogAggregator.Core.BlogReader.WordPress
                     var blogInfoXML = xmlDoc.Element("rss").Element("channel");
 
                     // Get the blog information and store it in the blog record  
-                    blog.Description = blogInfoXML.Element("description").Value.ScrubHtml();
-                    blog.Link = blogInfoXML.Element("link").Value;
+                    blog.Description = blogInfoXML.Element("description").Value.ScrubHtml();                   
                     blog.Title = blogInfoXML.Element("title").Value.ScrubHtml();
                 }
             }
@@ -125,16 +125,18 @@ namespace BlogAggregator.Core.BlogReader.WordPress
                     XNamespace contentNameSpace = getContentNameSpace(xmlDoc);
 
                     // Get the blog posts from the XML document
-                    // They are in <item> tags, which are under <channel> under <rss>           
+                    // They are in <item> tags, which are under <channel> under <rss> 
+                                                 
                     posts =
                        xmlDoc.Element("rss").Element("channel").Descendants("item").Select(post => new Post
                        {
                            Content = post.Element(contentNameSpace + "encoded").Value.ScrubHtml(),
                            Description = post.Element("description").Value.ScrubHtml().AdjustContent(),
+                           Guid = post.Element("guid").Value,
                            Link = post.Element("link").Value,
                            PublicationDate = Convert.ToDateTime(post.Element("pubDate").Value),
                            Title = post.Element("title").Value.ScrubHtml()
-                       }).ToList();                             
+                       }).ToList();                        
                 }
             }
             catch (Exception e)

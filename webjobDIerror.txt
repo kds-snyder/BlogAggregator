@@ -1,0 +1,21 @@
+Additional information: No Entity Framework provider found for the ADO.NET provider with invariant name 'System.Data.SqlClient'. Make sure the provider is registered in the 'entityFramework' section of the application config file. See http://go.microsoft.com/fwlink/?LinkId=260882 for more information.
+
+-Added to App.config (copied from Web.config of API):
+<entityFramework>
+    <defaultConnectionFactory type="System.Data.Entity.Infrastructure.SqlConnectionFactory, EntityFramework" />
+    <providers>
+      <provider invariantName="System.Data.SqlClient" type="System.Data.Entity.SqlServer.SqlProviderServices, EntityFramework.SqlServer" />
+    </providers>
+  </entityFramework>
+
+An unhandled exception of type 'System.InvalidOperationException' occurred in SimpleInjector.dll
+
+Additional information: The configuration is invalid. Creating the instance for type IDatabaseFactory failed. The type initializer for 'System.Data.Entity.Internal.AppConfig' threw an exception.
+
+-Changed registering of all from singleton to scoped
+
+An unhandled exception of type 'System.InvalidOperationException' occurred in SimpleInjector.dll
+
+Additional information: The configuration is invalid. Creating the instance for type IUnitOfWork failed. The type initializer for 'System.Data.Entity.Internal.AppConfig' threw an exception.
+
+-Tried all different scopes, same exception

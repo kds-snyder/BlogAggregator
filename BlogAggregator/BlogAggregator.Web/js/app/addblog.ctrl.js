@@ -8,18 +8,18 @@ angular.module('app').controller('AddBlogController', function (Blog, $mdToast, 
         // Set blog type to Word Press
         $scope.blog.BlogType = 1;
 
-        // TODO: remove when blog moderation is ready
-        $scope.blog.Approved = true;
+        // Add blog as not approved
+        $scope.blog.Approved = false;
 
         // Set loading indicator and save the new blog
         $scope.loading = true;
         $scope.blog.$save(function () {
             
             // Blog saved successfully: 
-            //  Clear loading indicator and display success message
+            //  Clear loading indicator and display success message            
             $scope.loading = false;
-            $mdToast.show($mdToast.simple().content('Blog was added successfully')
-                            .position('top center').theme("toast-success"));
+           $mdToast.show($mdToast.simple().content('Blog was added successfully')
+                            .position('top left').theme("toast-success"));
 
             // Clear the blog object and input form
             $scope.clearInputBlog();
@@ -31,7 +31,7 @@ angular.module('app').controller('AddBlogController', function (Blog, $mdToast, 
             $scope.loading = false;
             $mdToast.show($mdToast.simple()
                            .content('Error adding blog: Please verify that you entered a link to a valid blog')
-                           .position('top right').theme("toast-error"));
+                           .position('top left').theme("toast-error"));
         });
     };
 

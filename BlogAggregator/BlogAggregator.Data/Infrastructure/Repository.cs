@@ -59,7 +59,7 @@ namespace BlogAggregator.Data.Infrastructure
         }
 
         public TEntity FirstOrDefault(Expression<Func<TEntity, bool>> where)
-        {
+        {           
             return DbSet.FirstOrDefault(where);
         }
 

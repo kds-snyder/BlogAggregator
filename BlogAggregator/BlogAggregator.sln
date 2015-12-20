@@ -32,7 +32,9 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "BlogAggregator.Web", "BlogA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogAggregator.Data", "BlogAggregator.Data\BlogAggregator.Data.csproj", "{2E54C393-A777-48F8-8F2F-58B86B89A4D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogAggregator.Core.Test", "BlogAggregator.Core.Test\BlogAggregator.Core.Test.csproj", "{92D84634-094E-4A4B-9B83-DAD169440569}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogAggregator.Core.Tests", "BlogAggregator.Core.Test\BlogAggregator.Core.Tests.csproj", "{92D84634-094E-4A4B-9B83-DAD169440569}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogAggregator.WebJob", "BlogAggregator.WebJob\BlogAggregator.WebJob.csproj", "{FFBAA316-6802-4F1A-9455-DA705E18807C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -64,6 +66,10 @@ Global
 		{92D84634-094E-4A4B-9B83-DAD169440569}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92D84634-094E-4A4B-9B83-DAD169440569}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92D84634-094E-4A4B-9B83-DAD169440569}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFBAA316-6802-4F1A-9455-DA705E18807C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFBAA316-6802-4F1A-9455-DA705E18807C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFBAA316-6802-4F1A-9455-DA705E18807C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFBAA316-6802-4F1A-9455-DA705E18807C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

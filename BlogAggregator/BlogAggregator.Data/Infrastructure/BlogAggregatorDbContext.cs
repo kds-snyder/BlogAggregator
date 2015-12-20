@@ -12,14 +12,17 @@ namespace BlogAggregator.Data.Infrastructure
     public class BlogAggregatorDbContext : DbContext
     {
 
-        public BlogAggregatorDbContext() : base("BlogAggregator")
+        public BlogAggregatorDbContext() : base("BlogAggregator_oauth")
         {
+            var ensureDLLIsCopied =
+                System.Data.Entity.SqlServer.SqlProviderServices.Instance;
         }
 
         public IDbSet<Blog> Blogs { get; set; }
         public IDbSet<Post> Posts { get; set; }
-        public IDbSet<User> Users { get; set; }
+           
         public IDbSet<ExternalLogin> ExternalLogins { get; set; }
+        public IDbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

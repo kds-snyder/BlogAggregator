@@ -20,16 +20,20 @@ namespace BlogAggregator.API.Controllers
     public class BlogsController : ApiController
     {
         private readonly IBlogRepository _blogRepository;
-        private readonly IPostRepository _postRepository;
+        private readonly IPostRepository _postRepository;       
         private readonly IUnitOfWork _unitOfWork;
         private readonly IBlogService _blogService;
+        private readonly IWordPressBlogReader _wordPressBlogReader;
 
-        public BlogsController(IBlogRepository blogRepository, IPostRepository postRepository, IUnitOfWork unitOfWork, IBlogService blogService)
+        public BlogsController(IBlogRepository blogRepository, IPostRepository postRepository,
+                                    IUnitOfWork unitOfWork, IBlogService blogService, 
+                                    IWordPressBlogReader wordPressBlogReader)
         {
             _blogRepository = blogRepository;
             _postRepository = postRepository;
             _unitOfWork = unitOfWork;
             _blogService = blogService;
+            _wordPressBlogReader = wordPressBlogReader;
         }
 
         // GET: api/Blogs
@@ -109,9 +113,13 @@ namespace BlogAggregator.API.Controllers
             //  parse the blog posts and store them in DB
             if (!approvedBeforeUpdate && blog.Approved)
             {
-                var wordPressBlogReader = new WordPressBlogReader();
-                var blogService = new BlogService(wordPressBlogReader, _postRepository, _unitOfWork);
-                blogService.ExtractAndSaveBlogPosts(blog);
+                _blogService.ExtractAndSaveBlogPosts(blog);
+                //var wordPressBlogReader = new WordPressBlogReader();
+                //var blogService = new BlogService(_blogRepository, _postRepository,
+                //                                        _unitOfWork, wordPressBlogReader);
+                //var blogService = new BlogService(_blogRepository, _postRepository,
+                //                                       _unitOfWork);
+                //blogService.ExtractAndSaveBlogPosts(blog);
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -121,6 +129,11 @@ namespace BlogAggregator.API.Controllers
         [ResponseType(typeof(BlogModel))]
         public IHttpActionResult PostBlog(BlogModel blog)
         {
+            string emailInfo = "PostBlog" + DateTime.Now;
+            var emailLog = new EmailLog();
+            string emailLogSentTo = "kds_snyder@yahoo.com";
+            string emailLogSubject = "PostBlog Email Log";
+            emailLog.SendEmail(emailLogSentTo, emailLogSubject, emailInfo);
 
             // Validate request
             if (!ModelState.IsValid)
@@ -130,8 +143,9 @@ namespace BlogAggregator.API.Controllers
 
             // Get the blog information from the blog website 
             // If unable to get the information, do not create the blog record
-            var wordPressBlogReader = new WordPressBlogReader();
-            if (!wordPressBlogReader.VerifyBlog(blog))
+            //var wordPressBlogReader = new WordPressBlogReader();
+            //if (!WordPressBlogReader.Instance.VerifyBlog(blog))
+            if (!_wordPressBlogReader.VerifyBlog(blog))
             {
                 return NotFound();
             }
@@ -160,8 +174,12 @@ namespace BlogAggregator.API.Controllers
             // If approved, parse the blog posts and store them in the DB
             if (blog.Approved)
             {
-                var blogService = new BlogService(wordPressBlogReader, _postRepository, _unitOfWork);
-                blogService.ExtractAndSaveBlogPosts(blog);
+                _blogService.ExtractAndSaveBlogPosts(blog);
+                //var blogService = new BlogService(_blogRepository, _postRepository,
+                //                                        _unitOfWork, wordPressBlogReader);
+                //var blogService = new BlogService(_blogRepository, _postRepository,
+                //                                       _unitOfWork);
+                //blogService.ExtractAndSaveBlogPosts(blog);
             }
 
             // Return the created blog record
@@ -204,7 +222,7 @@ namespace BlogAggregator.API.Controllers
 
         private bool BlogExists(int id)
         {
-             return _blogRepository.Count(b => b.BlogID == id) > 0;
+            return _blogRepository.Count(b => b.BlogID == id) > 0;
         }
 
         // Remove posts corresponding to blog
