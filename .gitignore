@@ -14,6 +14,8 @@
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
+# except BlogAggregator.Web/bower_components/angular-ui-router/release, which is part of angular-ui-router.
+!./BlogAggregator.Web/bower_components/angular-ui-router/release/
 [Rr]eleases/
 x64/
 x86/
