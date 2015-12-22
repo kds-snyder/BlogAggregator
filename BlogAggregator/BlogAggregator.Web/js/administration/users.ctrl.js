@@ -34,7 +34,7 @@
 
             // If user deauthorized is same as logged-in user, then log out the user
             if (user.UserName == $scope.authenticationData.userName) {
-                authService.logOut();
+                authService.logOut('app.posts');
             }
         },
         function (error) {

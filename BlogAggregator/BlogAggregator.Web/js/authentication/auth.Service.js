@@ -14,6 +14,7 @@
         externalAccessToken: ""
     };
 
+    // Get user info from Google by sending token
     var _getUserInfoFromGoogle = function (external_access_token) {
         var deferred = $q.defer();
 
@@ -24,12 +25,15 @@
         }).then(function (response) {
             deferred.resolve(response.data);
         }, function (error) {
+            console.log('Error getting Google user info');
+            _logOut('login');
             deferred.reject(error);
         });
 
         return deferred.promise;
     };
 
+    // Load data from local storage
     var _loadAuthData = function () {
 
         var authData = localStorageService.get('authenticationData');
@@ -40,6 +44,7 @@
         }
     };
 
+    // Login: post token
     var _login = function (loginData) {
 
         var data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password;
@@ -60,7 +65,7 @@
 
         }).error(function (err, status) {
 
-            _logOut();
+            _logOut('login');
             deferred.reject(err);
         });
 
@@ -68,7 +73,8 @@
 
     };
 
-    var _logOut = function () {
+    // Logout: Remove token, reset authentication data, and change to specified state
+    var _logOut = function (stateChange) {
 
         localStorageService.remove('authenticationData');
 
@@ -76,10 +82,12 @@
         _authentication.isAuthorized = false;
         _authentication.userName = "";
 
-        //$state.go('login');
-        $state.go('app.posts');
+        if (stateChange.length > 0) {
+            $state.go(stateChange);
+        }       
     };
 
+    // Get local access token for provider and external token
     var _obtainAccessToken = function (externalData) {
 
         var deferred = $q.defer();
@@ -106,13 +114,14 @@
                 deferred.resolve(response);
 
             }).error(function (err, status) {
-                _logOut();
+                _logOut('app.posts');
                 deferred.reject(err);
             });
 
         return deferred.promise;
     };
 
+    // Register user
     var _registerExternal = function (registerExternalData) {
 
         var deferred = $q.defer();
@@ -133,16 +142,17 @@
                 deferred.resolve(response);
 
             }).error(function (err, status) {
-                _logOut();
+                _logOut('login');
                 deferred.reject(err);
             });
 
         return deferred.promise;
     };
 
+    // Save user registration
     var _saveRegistration = function (registration) {
 
-        _logOut();
+        _logOut('login');
 
         return $http.post(apiUrl + 'api/account/register', registration).then(function (response) {
             return response;
