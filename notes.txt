@@ -102,3 +102,6 @@ name: "event:google-plus-signin-success"
 preventDefault: ()
 targetScope: Scope
 __proto__: Object
+
+<add key="SCM_COMMAND_IDLE_TIMEOUT" value="1800" />
+<add key="WEBJOBS_IDLE_TIMEOUT" value="1800" />

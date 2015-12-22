@@ -104,7 +104,7 @@ namespace BlogAggregator.Core.Services
             }
             else
             {
-                throw new Exception("Blog could not be verified for extraction");
+                throw new Exception("Blog at " + blog.Link + " could not be verified for extraction");
             }
         }
 
