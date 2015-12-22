@@ -35,7 +35,7 @@ namespace BlogAggregator.WebJob
             // Call the scheduled blog post updating method
             Console.WriteLine("Calling SaveNewBlogPosts");
             jobHost.Call(typeof(Functions).GetMethod("SaveNewBlogPosts"));
-            Console.WriteLine("Completed SaveNewBlogPosts");
+            Console.WriteLine("Completed SaveNewBlogPosts 18:25");
             //Console.ReadLine();
         }
 
