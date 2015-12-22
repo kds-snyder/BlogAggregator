@@ -2,10 +2,8 @@
 
     $scope.$on('event:google-plus-signin-success', function (event, authResult) {
 
-        console.log('Google signin success, access token: ' + authResult.access_token);
-
         // Log out to clear token if any
-        authService.logOut();
+        authService.logOut('login');
 
         // Get user info, then check if user is registered in external logins with
         //  Google as provider, and Google user ID as provider key
@@ -86,6 +84,9 @@
     $scope.$on('event:google-plus-signin-failure', function (event, authResult) {
         // Auth failure or signout detected
         console.log('Google signin failure');
+
+        // Log out to clear token if any
+        authService.logOut('login');
     });
 
 

@@ -7,8 +7,9 @@
         { heading: "User Management", state: "admin.users" }
     ];
 
+    // Log out from administrative state: go to home screen
     $scope.logout = function () {
-        authService.logOut();
+        authService.logOut('app.posts');
     };
 
     // Default administrative state is blog moderation
