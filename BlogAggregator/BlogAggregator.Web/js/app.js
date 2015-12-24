@@ -33,11 +33,11 @@ angular.module('app').run(function ($rootScope, authService, $state) {
     authService.loadAuthData();
    
     $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {       
-        //if (toState.authenticate && !(authService.authentication.isAuthenticated
-        //    && authService.authentication.isAuthorized)) {
-        //    $state.go('login');
-        //    event.preventDefault();
-        //}
+        if (toState.authenticate && !(authService.authentication.isAuthenticated
+            && authService.authentication.isAuthorized)) {
+            $state.go('login');
+            event.preventDefault();
+        }
     });
     
 });

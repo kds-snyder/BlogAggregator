@@ -21,12 +21,14 @@ namespace BlogAggregator.API.Tests.BlogPosts
     {
         private Mock<IBlogRepository> _blogRepositoryMock;
         private Mock<IPostRepository> _postRepositoryMock;
+        private Mock<IUserRepository> _userRepositoryMock;
         private Mock<IUnitOfWork> _unitOfWorkMock;
         private Mock<IBlogService> _blogServiceMock;
         private Mock<IWordPressBlogReader> _wordPressBlogReaderMock;
         private BlogsController _controller;
         private Blog[] _blogs;
         private Post[] _posts;
+        private User _authorizedUser;
 
         // Numbers for tests
         private int _blogIDApprovedNoMockPosts = 4;
@@ -54,6 +56,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
             // Set up repositories
             _blogRepositoryMock = new Mock<IBlogRepository>();
             _postRepositoryMock = new Mock<IPostRepository>();
+            _userRepositoryMock = new Mock<IUserRepository>();
 
             // Set data in repositories
             _blogs = new[]
@@ -80,7 +83,6 @@ namespace BlogAggregator.API.Tests.BlogPosts
                     Link = "http://testerson.wordpress.com",
                     Title = "Testerson's Blog"
                 },
-                // This entry has the URL of a real blog
                 new Blog {
                     BlogID = _blogIDNotApproved,
                     BlogType = BlogTypes.WordPress,
@@ -89,7 +91,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
                     AuthorEmail = "k@s.com",
                     AuthorName = "KDS",
                     Description = "Great Blog",
-                    Link = "kdssnyder.wordpress.com",
+                    Link = "kdstestyxxxcom",
                     Title = "KDS Blog"
                 }
             };
@@ -128,6 +130,16 @@ namespace BlogAggregator.API.Tests.BlogPosts
                 }
             };
 
+            // Set up authorized user
+            _authorizedUser = new User
+            {
+                Id = 1,
+                Authorized = true,
+                PasswordHash = "XXX",
+                SecurityStamp = "YYY",
+                UserName = "user1"
+            };
+
             _blogRepositoryMock.Setup(br => br.GetAll()).Returns(_blogs.AsQueryable());
             _blogRepositoryMock.Setup(br => br.GetByID(_blogIDApprovedMockPosts)).Returns(_blogs[_blogIDApprovedMockPostsIndexInData]);
             _blogRepositoryMock.Setup(br => br.GetByID(_blogIDApprovedNoMockPosts)).Returns(_blogs[_blogIDApprovedNoMockPostsIndexInData]);
@@ -136,14 +148,17 @@ namespace BlogAggregator.API.Tests.BlogPosts
             _postRepositoryMock.Setup(pr => pr.GetAll()).Returns(_posts.AsQueryable());
              _postRepositoryMock.Setup(pr => pr.GetByID(_postIDFirst)).Returns(_posts[_postIDFirstIndexInData]);
             _postRepositoryMock.Setup(pr => pr.GetByID(_postIDSecond)).Returns(_posts[_postIDSecondIndexInData]);
-            _postRepositoryMock.Setup(pr => pr.GetByID(_postIDThird)).Returns(_posts[_postIDThirdIndexInData]);           
+            _postRepositoryMock.Setup(pr => pr.GetByID(_postIDThird)).Returns(_posts[_postIDThirdIndexInData]); 
+               
+             _userRepositoryMock.Setup(pr => pr.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
+                                                                        .Returns(_authorizedUser);
 
             // Set up unit of work and controller
             _unitOfWorkMock = new Mock<IUnitOfWork>();
             _blogServiceMock = new Mock<IBlogService>();
             _wordPressBlogReaderMock = new Mock<IWordPressBlogReader>();
             _controller = new BlogsController(_blogRepositoryMock.Object, _postRepositoryMock.Object,
-                                                //_unitOfWorkMock.Object);
+                                                _userRepositoryMock.Object,
                                                 _unitOfWorkMock.Object, _blogServiceMock.Object,
                                                  _wordPressBlogReaderMock.Object);
         }
@@ -315,6 +330,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
         public void PutBlogApprovedChangedtoTrueReturnsHttpStatusCodeNoContentAndAddsPosts()
         {
             // Arrange
+            _wordPressBlogReaderMock.Setup(m => m.VerifyBlog(It.IsAny<BlogModel>())).Returns(true);
 
             // Act
             IHttpActionResult actionResult =
@@ -329,7 +345,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
                          AuthorEmail = "k@s.com",
                          AuthorName = "KDS",
                          Description = "Stupendous Blog",
-                         Link = "kdssnyder.wordpress.com",
+                         Link = "XXXX",
                          Title = "KDS Blog"
                      });
             var statusCodeResult = actionResult as StatusCodeResult;
@@ -337,13 +353,13 @@ namespace BlogAggregator.API.Tests.BlogPosts
             // Assert
             // Verify that:
             //  GetByID is called just once
-            //  Update is called for Blog object
-            //  Add is called for Post object at least once
+            //  Update is called for Blog object            
             //  unit of work is committed at least once
+            //  ExtractAndSaveBlogPosts is called
             //  result of update is HTTP status code with no content
             _blogRepositoryMock.Verify(b => b.GetByID(_blogIDNotApproved), Times.Once);
             _blogRepositoryMock.Verify(b => b.Update(It.IsAny<Blog>()), Times.Once);
-            _postRepositoryMock.Verify(p => p.Add(It.IsAny<Post>()), Times.AtLeastOnce);
+            _blogServiceMock.Verify(bs => bs.ExtractAndSaveBlogPosts(It.IsAny<BlogModel>()), Times.Once);
             _unitOfWorkMock.Verify(uow => uow.Commit(), Times.AtLeastOnce);
             Assert.IsNotNull(actionResult);
             Assert.IsNotNull(statusCodeResult);
@@ -428,6 +444,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
         public void PostBlogNotApprovedAddsBlog()
         {
             // Arrange
+            _wordPressBlogReaderMock.Setup(m => m.VerifyBlog(It.IsAny<BlogModel>())).Returns(true);
 
             // Act
             IHttpActionResult actionResult =
@@ -463,7 +480,8 @@ namespace BlogAggregator.API.Tests.BlogPosts
         [TestMethod]
         public void PostBlogApprovedAddsBlogAndPosts()
         {
-            // Arrange
+            // Arrange          
+            _wordPressBlogReaderMock.Setup(m => m.VerifyBlog(It.IsAny<BlogModel>())).Returns(true);
 
             // Act
             IHttpActionResult actionResult =
@@ -477,20 +495,21 @@ namespace BlogAggregator.API.Tests.BlogPosts
                          AuthorEmail = "k@s.com",
                          AuthorName = "KDS",
                          Description = "Stupendous Blog",
-                         Link = "kdssnyder.wordpress.com",
+                         Link = "XXXX",
                          Title = "KDS Blog"
                      });
             var statusCodeResult = actionResult as StatusCodeResult;
 
-            // Assert
-            // Verify that:
-            //  Add is called for Blog object
-            //  Add is called for Post object at least once
-            //  HTTP result is CreatedAtRouteNegotiatedContentResult
-            //  Location header is set in created result
+           // Assert
+           // Verify that:
+           //  Add is called for Blog object
+           //  Unit of Work is called at least once
+           //  ExtractAndSaveBlogPosts is called
+           //  HTTP result is CreatedAtRouteNegotiatedContentResult
+           //  Location header is set in created result
             _blogRepositoryMock.Verify(b => b.Add(It.IsAny<Blog>()), Times.Once);
-            _postRepositoryMock.Verify(p => p.Add(It.IsAny<Post>()), Times.AtLeastOnce);
             _unitOfWorkMock.Verify(uow => uow.Commit(), Times.AtLeastOnce);
+            _blogServiceMock.Verify(bs => bs.ExtractAndSaveBlogPosts(It.IsAny<BlogModel>()), Times.Once);
            Assert.IsInstanceOfType
                     (actionResult, typeof(CreatedAtRouteNegotiatedContentResult<BlogModel>));
             var createdResult = actionResult as CreatedAtRouteNegotiatedContentResult<BlogModel>;

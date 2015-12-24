@@ -20,17 +20,20 @@ namespace BlogAggregator.API.Controllers
     public class BlogsController : ApiController
     {
         private readonly IBlogRepository _blogRepository;
-        private readonly IPostRepository _postRepository;       
+        private readonly IPostRepository _postRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IBlogService _blogService;
         private readonly IWordPressBlogReader _wordPressBlogReader;
 
         public BlogsController(IBlogRepository blogRepository, IPostRepository postRepository,
+                                    IUserRepository userRepository,
                                     IUnitOfWork unitOfWork, IBlogService blogService, 
                                     IWordPressBlogReader wordPressBlogReader)
         {
             _blogRepository = blogRepository;
             _postRepository = postRepository;
+            _userRepository = userRepository;
             _unitOfWork = unitOfWork;
             _blogService = blogService;
             _wordPressBlogReader = wordPressBlogReader;
@@ -57,9 +60,17 @@ namespace BlogAggregator.API.Controllers
         }
 
         // PUT: api/Blogs/5
+        [Authorize]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutBlog(int id, BlogModel blog)
         {
+            //Allow only for authorized user
+            var userToCheck = _userRepository.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            if (!userToCheck.Authorized)
+            {
+                return Unauthorized();
+            }
+
             // Validate the request
             if (!ModelState.IsValid)
             {
@@ -129,11 +140,11 @@ namespace BlogAggregator.API.Controllers
         [ResponseType(typeof(BlogModel))]
         public IHttpActionResult PostBlog(BlogModel blog)
         {
-            string emailInfo = "PostBlog" + DateTime.Now;
-            var emailLog = new EmailLog();
-            string emailLogSentTo = "kds_snyder@yahoo.com";
-            string emailLogSubject = "PostBlog Email Log";
-            emailLog.SendEmail(emailLogSentTo, emailLogSubject, emailInfo);
+            //string emailInfo = "PostBlog" + DateTime.Now;
+            //var emailLog = new EmailLog();
+            //string emailLogSentTo = "kds_snyder@yahoo.com";
+            //string emailLogSubject = "PostBlog Email Log";
+            //emailLog.SendEmail(emailLogSentTo, emailLogSubject, emailInfo);
 
             // Validate request
             if (!ModelState.IsValid)
@@ -187,9 +198,17 @@ namespace BlogAggregator.API.Controllers
         }
 
         // DELETE: api/Blogs/5
+        [Authorize]
         [ResponseType(typeof(BlogModel))]
         public IHttpActionResult DeleteBlog(int id)
         {
+            //Allow only for authorized user
+            var userToCheck = _userRepository.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            if (!userToCheck.Authorized)
+            {
+                return Unauthorized();
+            }
+
             // Get the DB blog corresponding to the blog ID
             Blog dbBlog = _blogRepository.GetByID(id);
             if (dbBlog == null)
