@@ -13,15 +13,18 @@ using System.Web.Http.OData;
 using System.Web.Http.Description;
 
 namespace BlogAggregator.API.Controllers.OAuth
-{
+{   
     public class ExternalLoginsController : ApiController
     {
         private readonly IExternalLoginRepository _externalLoginRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public ExternalLoginsController(IExternalLoginRepository externalLoginRepository, IUnitOfWork unitOfWork)
+        public ExternalLoginsController(IExternalLoginRepository externalLoginRepository,
+                                            IUserRepository userRepository, IUnitOfWork unitOfWork)
         {
             _externalLoginRepository = externalLoginRepository;
+            _userRepository = userRepository;
             _unitOfWork = unitOfWork;
         }
 
@@ -49,6 +52,13 @@ namespace BlogAggregator.API.Controllers.OAuth
         [ResponseType(typeof(void))]
         public IHttpActionResult PutExternalLogin(int id, ExternalLoginModel externalLogin)
         {
+            // Allow only for authorized user
+            var userToCheck = _userRepository.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            if (!userToCheck.Authorized)
+            {
+                return Unauthorized();
+            }
+
             // Validate the request
             if (!ModelState.IsValid)
             {
@@ -128,6 +138,13 @@ namespace BlogAggregator.API.Controllers.OAuth
         [ResponseType(typeof(ExternalLoginModel))]
         public IHttpActionResult DeleteExternalLogin(int id)
         {
+            // Allow only for authorized user
+            var userToCheck = _userRepository.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            if (!userToCheck.Authorized)
+            {
+                return Unauthorized();
+            }
+
             // Get the DB externalLogin corresponding to the externalLogin ID
             ExternalLogin dbExternalLogin = _externalLoginRepository.GetByID(id);
             if (dbExternalLogin == null)
