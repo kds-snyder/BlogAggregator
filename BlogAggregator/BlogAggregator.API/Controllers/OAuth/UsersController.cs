@@ -11,6 +11,8 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using System.Data;
 using System.Web.Http.OData;
+using System.Collections.Generic;
+using System.Net.Http.Headers;
 
 namespace BlogAggregator.API.Controllers.OAuth
 {
@@ -32,13 +34,29 @@ namespace BlogAggregator.API.Controllers.OAuth
         [EnableQuery]
         public IQueryable<UserModel> GetUsers()
         {
-            return _userRepository.GetAll().ProjectTo<UserModel>();
+            // Allow only for authorized user
+            var userToCheck = _userRepository.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            if (!userToCheck.Authorized)
+            {
+                return Enumerable.Empty<UserModel>().AsQueryable();
+            }
+            else
+            {
+                return _userRepository.GetAll().ProjectTo<UserModel>();
+            }            
         }
 
         // GET: api/Users/5
         [ResponseType(typeof(UserModel))]
         public IHttpActionResult GetUser(int id)
         {
+            // Allow only for authorized user
+            var userToCheck = _userRepository.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            if (!userToCheck.Authorized)
+            {
+                return Unauthorized();
+            }
+
             User dbUser = _userRepository.GetByID(id);
             if (dbUser == null)
             {
@@ -52,6 +70,13 @@ namespace BlogAggregator.API.Controllers.OAuth
         [ResponseType(typeof(void))]
         public IHttpActionResult PutUser(int id, UserModel user)
         {
+            // Allow only for authorized user
+            var userToCheck = _userRepository.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            if (!userToCheck.Authorized)
+            {
+                return Unauthorized();
+            }
+
             // Validate the request
             if (!ModelState.IsValid)
             {
@@ -100,7 +125,7 @@ namespace BlogAggregator.API.Controllers.OAuth
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }           
+            }
 
             //Set up new User object, populated from input user
             User dbUser = new User();
@@ -129,6 +154,13 @@ namespace BlogAggregator.API.Controllers.OAuth
         [ResponseType(typeof(UserModel))]
         public IHttpActionResult DeleteUser(int id)
         {
+            // Allow only for authorized user
+            var userToCheck = _userRepository.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            if (!userToCheck.Authorized)
+            {
+                return Unauthorized();
+            }
+
             // Get the DB user corresponding to the user ID
             User dbUser = _userRepository.GetByID(id);
             if (dbUser == null)
