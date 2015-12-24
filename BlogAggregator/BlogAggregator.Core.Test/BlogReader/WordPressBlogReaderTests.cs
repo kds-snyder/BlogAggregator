@@ -21,6 +21,7 @@ namespace BlogAggregator.Core.Test.BlogReader
 
             // Real blog links
             string[] blogLinks = { "bracken.design",
+                                "jeffwarddevelopment.com/index.php",
                                 "kdssnyder.wordpress.com",
                                 "zakdietzen.com" };
             var blogModel = new BlogModel

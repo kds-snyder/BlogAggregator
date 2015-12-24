@@ -223,6 +223,35 @@ namespace BlogAggregator.API.Tests.BlogPosts
         }
 
         [TestMethod]
+        public void PutBlogUnauthorizedUserReturnsUnauthorized()
+        {
+            // Arrange
+            _userRepositoryMock.Setup(pr => pr.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
+                                                                       .Returns(_users[_userUnauthorizedIndexInData]);
+
+            // Act
+            IHttpActionResult actionResult =
+                _controller.PutBlog(
+                    _blogIDApprovedNoMockPosts,
+                     new BlogModel
+                     {
+                         BlogID = _blogIDApprovedNoMockPosts,
+                         BlogType = BlogTypes.WordPress,
+                         CreatedDate = new DateTime(2015, 12, 2, 14, 55, 32),
+                         Approved = false,
+                         AuthorEmail = "test@test.com",
+                         AuthorName = "Testy McTesterson",
+                         Description = "Testing",
+                         Link = "http://testy.wordpress.com",
+                         Title = "Testy's Blog"
+                     });
+ 
+            // Assert
+            // Verify that HTTP status code result of update is unauthorized
+            Assert.IsInstanceOfType(actionResult, typeof(UnauthorizedResult));
+        }
+
+        [TestMethod]
         public void PutBlogNoPostsApprovedChangedtoFalseReturnsHttpStatusCodeNoContent()
         {
             // Arrange
@@ -535,6 +564,21 @@ namespace BlogAggregator.API.Tests.BlogPosts
             var createdResult = actionResult as CreatedAtRouteNegotiatedContentResult<BlogModel>;
             Assert.IsNotNull(createdResult);
             Assert.AreEqual(createdResult.RouteName, "DefaultApi");
+        }
+
+        [TestMethod]
+        public void DeleteBlogUnauthorizedUserReturnsUnauthorized()
+        {
+            // Arrange
+            _userRepositoryMock.Setup(pr => pr.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
+                                                                       .Returns(_users[_userUnauthorizedIndexInData]);
+
+            // Act
+            IHttpActionResult actionResult = _controller.DeleteBlog(_blogIDApprovedNoMockPosts);
+
+            // Assert
+            // Verify that HTTP status code result of delete is unauthorized
+            Assert.IsInstanceOfType(actionResult, typeof(UnauthorizedResult));
         }
 
         [TestMethod]

@@ -110,6 +110,12 @@ namespace BlogAggregator.API.Controllers.OAuth
                 return BadRequest(ModelState);
             }
 
+            // Check that the corresponding user exists
+            if (!_userRepository.Any(u => u.Id == externalLogin.UserID))
+            {
+                throw new Exception("Unable to add the external login to the database, as it does not correspond to a user");
+            }
+
             //Set up new ExternalLogin object, populated from input externalLogin
             ExternalLogin dbExternalLogin = new ExternalLogin();
             dbExternalLogin.Update(externalLogin);
