@@ -35,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Moq, Version=4.2.1510.2205, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -57,10 +61,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BlogAggregator.API\BlogAggregator.API.csproj">
+      <Project>{e3a9ed76-339d-442e-b1a7-7d88d18ff2b7}</Project>
+      <Name>BlogAggregator.API</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BlogAggregator.Core\BlogAggregator.Core.csproj">
       <Project>{e7c923ff-bf49-4867-8dbc-b42734024d83}</Project>
       <Name>BlogAggregator.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

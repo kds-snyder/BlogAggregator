@@ -20,7 +20,6 @@ namespace BlogAggregator.Core.Services
         public BlogService(
             IBlogRepository blogRepository,
             IPostRepository postRepository,
-            //IUnitOfWork unitOfWork)
             IUnitOfWork unitOfWork,
             IWordPressBlogReader wordPressBlogReader)
         {
@@ -87,7 +86,6 @@ namespace BlogAggregator.Core.Services
             {
                 case BlogTypes.WordPress:
                     return extractBlogPosts(_wordPressBlogReader, blog);
-                    //return extractBlogPosts(WordPressBlogReader.Instance, blog);
                 default:
                     throw new ArgumentException(nameof(blog));
             }

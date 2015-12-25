@@ -35,19 +35,19 @@ namespace BlogAggregator.API.Tests.BlogPosts
         private int _blogIDApprovedMockPosts = 5;
         private int _blogIDNotApproved = 6;
         private int _numberOfMockBlogs = 3;
-        private int _blogIDApprovedNoMockPostsIndexInData = 0;
-        private int _blogIDApprovedMockPostsIndexInData = 1;
-        private int _blogIDNotApprovedIndexInData = 2;
+        private int _blogIDApprovedNoMockPostsIndexInArray = 0;
+        private int _blogIDApprovedMockPostsIndexInArray = 1;
+        private int _blogIDNotApprovedIndexInArray = 2;
         private int _blogIDNonexistent = 9;
         private int _postIDFirst = 2;
         private int _postIDSecond = 3;
         private int _postIDThird = 4;
         private int _numberOfMockPosts = 3;
-        private int _postIDFirstIndexInData = 0;
-        private int _postIDSecondIndexInData = 1;
-        private int _postIDThirdIndexInData = 2;
-        private int _userAuthorizedIndexInData = 0;
-        private int _userUnauthorizedIndexInData = 1;
+        private int _postIDFirstIndexInArray = 0;
+        private int _postIDSecondIndexInArray = 1;
+        private int _postIDThirdIndexInArray = 2;
+        private int _userAuthorizedIndexInArray = 0;
+        private int _userUnauthorizedIndexInArray = 1;
 
         [TestInitialize]
         public void Initialize()
@@ -103,7 +103,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
                 new Post {
                     PostID = _postIDFirst,
                     BlogID = _blogIDApprovedMockPosts,
-                    Blog = _blogs[_blogIDApprovedMockPostsIndexInData],
+                    Blog = _blogs[_blogIDApprovedMockPostsIndexInArray],
                     Content = "Test content",
                     Description = "Interesting post",
                     Link = "http://testerson.wordpress.com/post/1",
@@ -113,7 +113,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
                 new Post {
                     PostID = _postIDSecond,
                     BlogID = _blogIDApprovedMockPosts,
-                    Blog = _blogs[_blogIDApprovedMockPostsIndexInData],
+                    Blog = _blogs[_blogIDApprovedMockPostsIndexInArray],
                     Content = "More test content",
                     Description = "More interesting post",
                     Link = "http://testerson.wordpress.com/post/2",
@@ -123,7 +123,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
                 new Post {
                     PostID = _postIDThird,
                     BlogID = _blogIDApprovedMockPosts,
-                    Blog = _blogs[_blogIDApprovedMockPostsIndexInData],
+                    Blog = _blogs[_blogIDApprovedMockPostsIndexInArray],
                     Content = "Even more test content",
                     Description = "Even more interesting post",
                     Link = "http://testerson.wordpress.com/post/3",
@@ -152,14 +152,14 @@ namespace BlogAggregator.API.Tests.BlogPosts
             };
 
             _blogRepositoryMock.Setup(br => br.GetAll()).Returns(_blogs.AsQueryable());
-            _blogRepositoryMock.Setup(br => br.GetByID(_blogIDApprovedMockPosts)).Returns(_blogs[_blogIDApprovedMockPostsIndexInData]);
-            _blogRepositoryMock.Setup(br => br.GetByID(_blogIDApprovedNoMockPosts)).Returns(_blogs[_blogIDApprovedNoMockPostsIndexInData]);
-            _blogRepositoryMock.Setup(br => br.GetByID(_blogIDNotApproved)).Returns(_blogs[_blogIDNotApprovedIndexInData]);
+            _blogRepositoryMock.Setup(br => br.GetByID(_blogIDApprovedMockPosts)).Returns(_blogs[_blogIDApprovedMockPostsIndexInArray]);
+            _blogRepositoryMock.Setup(br => br.GetByID(_blogIDApprovedNoMockPosts)).Returns(_blogs[_blogIDApprovedNoMockPostsIndexInArray]);
+            _blogRepositoryMock.Setup(br => br.GetByID(_blogIDNotApproved)).Returns(_blogs[_blogIDNotApprovedIndexInArray]);
 
             _postRepositoryMock.Setup(pr => pr.GetAll()).Returns(_posts.AsQueryable());
-             _postRepositoryMock.Setup(pr => pr.GetByID(_postIDFirst)).Returns(_posts[_postIDFirstIndexInData]);
-            _postRepositoryMock.Setup(pr => pr.GetByID(_postIDSecond)).Returns(_posts[_postIDSecondIndexInData]);
-            _postRepositoryMock.Setup(pr => pr.GetByID(_postIDThird)).Returns(_posts[_postIDThirdIndexInData]); 
+             _postRepositoryMock.Setup(pr => pr.GetByID(_postIDFirst)).Returns(_posts[_postIDFirstIndexInArray]);
+            _postRepositoryMock.Setup(pr => pr.GetByID(_postIDSecond)).Returns(_posts[_postIDSecondIndexInArray]);
+            _postRepositoryMock.Setup(pr => pr.GetByID(_postIDThird)).Returns(_posts[_postIDThirdIndexInArray]); 
                           
             // Set up unit of work and controller
             _unitOfWorkMock = new Mock<IUnitOfWork>();
@@ -227,7 +227,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
         {
             // Arrange
             _userRepositoryMock.Setup(pr => pr.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
-                                                                       .Returns(_users[_userUnauthorizedIndexInData]);
+                                                                       .Returns(_users[_userUnauthorizedIndexInArray]);
 
             // Act
             IHttpActionResult actionResult =
@@ -256,7 +256,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
         {
             // Arrange
             _userRepositoryMock.Setup(pr => pr.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
-                                                                       .Returns(_users[_userAuthorizedIndexInData]);
+                                                                       .Returns(_users[_userAuthorizedIndexInArray]);
 
             // Act
             IHttpActionResult actionResult =
@@ -296,7 +296,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
         {
             // Arrange
             _userRepositoryMock.Setup(pr => pr.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
-                                                                       .Returns(_users[_userAuthorizedIndexInData]);
+                                                                       .Returns(_users[_userAuthorizedIndexInArray]);
 
             // Act
             IHttpActionResult actionResult =
@@ -335,7 +335,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
         {
             // Arrange
             _userRepositoryMock.Setup(pr => pr.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
-                                                                       .Returns(_users[_userAuthorizedIndexInData]);
+                                                                       .Returns(_users[_userAuthorizedIndexInArray]);
 
             // Act
             IHttpActionResult actionResult =
@@ -374,7 +374,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
         {
             // Arrange
             _userRepositoryMock.Setup(pr => pr.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
-                                                                       .Returns(_users[_userAuthorizedIndexInData]);
+                                                                       .Returns(_users[_userAuthorizedIndexInArray]);
             _wordPressBlogReaderMock.Setup(m => m.VerifyBlog(It.IsAny<BlogModel>())).Returns(true);
 
             // Act
@@ -419,7 +419,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
             _postRepositoryMock.Setup(pr => pr.Where(It.IsAny<Expression<Func<Post, bool>>>()))
                                                                         .Returns(_posts.AsQueryable());
             _userRepositoryMock.Setup(pr => pr.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
-                                                                       .Returns(_users[_userAuthorizedIndexInData]);
+                                                                       .Returns(_users[_userAuthorizedIndexInArray]);
 
             // Act
             IHttpActionResult actionResult =
@@ -461,7 +461,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
         {
             // Arrange
             _userRepositoryMock.Setup(pr => pr.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
-                                                                       .Returns(_users[_userAuthorizedIndexInData]);
+                                                                       .Returns(_users[_userAuthorizedIndexInArray]);
 
             // Act
             IHttpActionResult actionResult =
@@ -571,7 +571,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
         {
             // Arrange
             _userRepositoryMock.Setup(pr => pr.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
-                                                                       .Returns(_users[_userUnauthorizedIndexInData]);
+                                                                       .Returns(_users[_userUnauthorizedIndexInArray]);
 
             // Act
             IHttpActionResult actionResult = _controller.DeleteBlog(_blogIDApprovedNoMockPosts);
@@ -586,7 +586,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
         {
             // Arrange
             _userRepositoryMock.Setup(pr => pr.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
-                                                                       .Returns(_users[_userAuthorizedIndexInData]);
+                                                                       .Returns(_users[_userAuthorizedIndexInArray]);
 
             // Act
             IHttpActionResult actionResult = _controller.DeleteBlog(_blogIDApprovedNoMockPosts);
@@ -598,7 +598,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
             //  Unit of work commit is called once
             //  Result is OK, and content result ID matches
             _blogRepositoryMock.Verify(p => p.GetByID(_blogIDApprovedNoMockPosts), Times.Once);
-            _blogRepositoryMock.Verify(p => p.Delete(_blogs[_blogIDApprovedNoMockPostsIndexInData]), Times.Once);
+            _blogRepositoryMock.Verify(p => p.Delete(_blogs[_blogIDApprovedNoMockPostsIndexInArray]), Times.Once);
             _unitOfWorkMock.Verify(uow => uow.Commit(), Times.Once);
             Assert.IsInstanceOfType(actionResult, typeof(OkNegotiatedContentResult<BlogModel>));
             var contentResult = actionResult as OkNegotiatedContentResult<BlogModel>;
@@ -615,7 +615,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
             _postRepositoryMock.Setup(pr => pr.Where(It.IsAny<Expression<Func<Post, bool>>>()))
                                                                         .Returns(_posts.AsQueryable());
             _userRepositoryMock.Setup(pr => pr.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
-                                                                       .Returns(_users[_userAuthorizedIndexInData]);
+                                                                       .Returns(_users[_userAuthorizedIndexInArray]);
 
             // Act
             IHttpActionResult actionResult = _controller.DeleteBlog(_blogIDApprovedMockPosts);
@@ -628,7 +628,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
             //  Unit of work is committed at least  once
             //  Result is OK, and content result ID matches
             _blogRepositoryMock.Verify(p => p.GetByID(_blogIDApprovedMockPosts), Times.Once);
-            _blogRepositoryMock.Verify(p => p.Delete(_blogs[_blogIDApprovedMockPostsIndexInData]), Times.Once);
+            _blogRepositoryMock.Verify(p => p.Delete(_blogs[_blogIDApprovedMockPostsIndexInArray]), Times.Once);
             _postRepositoryMock.Verify(p => p.Delete(It.IsAny<Post>()), Times.Exactly(_numberOfMockPosts));
             _unitOfWorkMock.Verify(uow => uow.Commit(), Times.AtLeastOnce);
             Assert.IsInstanceOfType(actionResult, typeof(OkNegotiatedContentResult<BlogModel>));
@@ -643,7 +643,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
         {
             // Arrange
             _userRepositoryMock.Setup(pr => pr.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
-                                                                       .Returns(_users[_userAuthorizedIndexInData]);
+                                                                       .Returns(_users[_userAuthorizedIndexInArray]);
 
             // Act
             IHttpActionResult actionResult = _controller.DeleteBlog(_blogIDNonexistent);

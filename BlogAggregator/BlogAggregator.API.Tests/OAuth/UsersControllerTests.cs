@@ -25,12 +25,12 @@ namespace BlogAggregator.API.Tests.OAuth
         private User[] _users;      
 
         // Numbers for tests
-        private int _userAuthorizedIndexInData = 0;
-        private int _userUnauthorizedIndexInData = 1;
+        private int _userAuthorizedIndexInArray = 0;
+        private int _userUnauthorizedIndexInArray = 1;
         private int _userIDAuthorized = 1;
         private int _userIDUnauthorized = 2;
-        private int _userNoExternalLoginsIndexInData = 0;
-        private int _userWithExternalLoginsIndexInData = 1;
+        private int _userNoExternalLoginsIndexInArray = 0;
+        private int _userWithExternalLoginsIndexInArray = 1;
         private int _userIDNoExternalLogins = 1;
         private int _userIDWithExternalLogins = 2;
         private int _userIDNonexistent = 8;
@@ -87,9 +87,9 @@ namespace BlogAggregator.API.Tests.OAuth
 
             _userRepositoryMock.Setup(u => u.GetAll()).Returns(_users.AsQueryable());
             _userRepositoryMock.Setup(u => u.GetByID(_userIDAuthorized))
-                                                    .Returns(_users[_userAuthorizedIndexInData]);
+                                                    .Returns(_users[_userAuthorizedIndexInArray]);
             _userRepositoryMock.Setup(u => u.GetByID(_userIDUnauthorized))
-                                         .Returns(_users[_userUnauthorizedIndexInData]);
+                                         .Returns(_users[_userUnauthorizedIndexInArray]);
 
             // Set up unit of work and controller
             _unitOfWorkMock = new Mock<IUnitOfWork>();
@@ -102,7 +102,7 @@ namespace BlogAggregator.API.Tests.OAuth
         {
             // Arrange
             _userRepositoryMock.Setup(pr => pr.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
-                                                                      .Returns(_users[_userAuthorizedIndexInData]);
+                                                                      .Returns(_users[_userAuthorizedIndexInArray]);
 
             // Act
             var content = _controller.GetUsers();
@@ -119,7 +119,7 @@ namespace BlogAggregator.API.Tests.OAuth
         {
             // Arrange
             _userRepositoryMock.Setup(pr => pr.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
-                                                                      .Returns(_users[_userAuthorizedIndexInData]);
+                                                                      .Returns(_users[_userAuthorizedIndexInArray]);
 
             // Act
             IHttpActionResult actionResult = _controller.GetUser(_userIDUnauthorized);
@@ -142,7 +142,7 @@ namespace BlogAggregator.API.Tests.OAuth
         {
             // Arrange
             _userRepositoryMock.Setup(pr => pr.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
-                                                                      .Returns(_users[_userAuthorizedIndexInData]);
+                                                                      .Returns(_users[_userAuthorizedIndexInArray]);
 
             // Act
             IHttpActionResult actionResult = _controller.GetUser(_userIDNonexistent);
@@ -159,7 +159,7 @@ namespace BlogAggregator.API.Tests.OAuth
         {
             // Arrange
             _userRepositoryMock.Setup(pr => pr.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
-                                                                       .Returns(_users[_userUnauthorizedIndexInData]);
+                                                                       .Returns(_users[_userUnauthorizedIndexInArray]);
 
             // Act
             IHttpActionResult actionResult =
@@ -184,7 +184,7 @@ namespace BlogAggregator.API.Tests.OAuth
         {
             // Arrange
             _userRepositoryMock.Setup(pr => pr.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
-                                                                      .Returns(_users[_userAuthorizedIndexInData]);
+                                                                      .Returns(_users[_userAuthorizedIndexInArray]);
 
             // Act
             IHttpActionResult actionResult =
@@ -219,7 +219,7 @@ namespace BlogAggregator.API.Tests.OAuth
         {
             // Arrange
             _userRepositoryMock.Setup(pr => pr.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
-                                                                      .Returns(_users[_userAuthorizedIndexInData]);
+                                                                      .Returns(_users[_userAuthorizedIndexInArray]);
 
             // Act
             IHttpActionResult actionResult =
@@ -248,7 +248,7 @@ namespace BlogAggregator.API.Tests.OAuth
         {
             // Arrange
             _userRepositoryMock.Setup(pr => pr.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
-                                                                        .Returns(_users[_userAuthorizedIndexInData]);
+                                                                        .Returns(_users[_userAuthorizedIndexInArray]);
 
             // Act
             IHttpActionResult actionResult =
@@ -283,7 +283,7 @@ namespace BlogAggregator.API.Tests.OAuth
         {
             // Arrange
             _userRepositoryMock.Setup(pr => pr.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
-                                                                       .Returns(_users[_userUnauthorizedIndexInData]);
+                                                                       .Returns(_users[_userUnauthorizedIndexInArray]);
 
             // Act
             IHttpActionResult actionResult = _controller.DeleteUser(_userIDAuthorized);
@@ -298,7 +298,7 @@ namespace BlogAggregator.API.Tests.OAuth
         {
             // Arrange
             _userRepositoryMock.Setup(pr => pr.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
-                                                                      .Returns(_users[_userAuthorizedIndexInData]);
+                                                                      .Returns(_users[_userAuthorizedIndexInArray]);
 
             // Act
             IHttpActionResult actionResult = _controller.DeleteUser(_userIDNoExternalLogins);
@@ -311,7 +311,7 @@ namespace BlogAggregator.API.Tests.OAuth
             //  Result is OK, and content result ID matches
             _userRepositoryMock.Verify(u => u.GetByID(_userIDNoExternalLogins), Times.Once);
             _userRepositoryMock.Verify(u => u.Delete
-                                        (_users[_userNoExternalLoginsIndexInData]), Times.Once);
+                                        (_users[_userNoExternalLoginsIndexInArray]), Times.Once);
             _unitOfWorkMock.Verify(uow => uow.Commit(), Times.Once);
             Assert.IsInstanceOfType(actionResult, typeof(OkNegotiatedContentResult<UserModel>));
             var contentResult = actionResult as OkNegotiatedContentResult<UserModel>;
@@ -327,7 +327,7 @@ namespace BlogAggregator.API.Tests.OAuth
             _externalLoginRepositoryMock.Setup(pr => pr.Where(It.IsAny<Expression<Func<ExternalLogin, bool>>>()))
                                                                        .Returns(_externalLogins.AsQueryable());
             _userRepositoryMock.Setup(pr => pr.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
-                                                                      .Returns(_users[_userAuthorizedIndexInData]);
+                                                                      .Returns(_users[_userAuthorizedIndexInArray]);
 
             // Act
             IHttpActionResult actionResult = _controller.DeleteUser(_userIDWithExternalLogins);
@@ -341,7 +341,7 @@ namespace BlogAggregator.API.Tests.OAuth
             //  Result is OK, and content result ID matches
             _userRepositoryMock.Verify(u => u.GetByID(_userIDWithExternalLogins), Times.Once);
             _userRepositoryMock.Verify(u => u.Delete
-                                        (_users[_userWithExternalLoginsIndexInData]), Times.Once);
+                                        (_users[_userWithExternalLoginsIndexInArray]), Times.Once);
             _externalLoginRepositoryMock.Verify(el => el.Delete(It.IsAny<ExternalLogin>()), 
                                                     Times.Exactly(_numberOfMockExternalLogins));
             _unitOfWorkMock.Verify(uow => uow.Commit(), Times.Once);
@@ -357,7 +357,7 @@ namespace BlogAggregator.API.Tests.OAuth
         {
             // Arrange
             _userRepositoryMock.Setup(pr => pr.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
-                                                                      .Returns(_users[_userAuthorizedIndexInData]);
+                                                                      .Returns(_users[_userAuthorizedIndexInArray]);
 
             // Act
             IHttpActionResult actionResult = _controller.DeleteUser(_userIDNonexistent);

@@ -27,15 +27,15 @@ namespace BlogAggregator.API.Tests
         // Numbers for tests
         private int _blogIDNoMockPosts = 4;
         private int _blogIDMockPosts = 5;
-        private int _blogIDMockPostsIndexInData = 1;
+        private int _blogIDMockPostsIndexInArray = 1;
         private int _blogIDNonexistent = 9;
         private int _numberOfMockPosts = 3;
         private int _postIDFirst = 2;
         private int _postIDSecond = 3;
         private int _postIDThird = 4;
-        private int _postIDFirstIndexInData = 0;
-        private int _postIDSecondIndexInData = 1;
-        private int _postIDThirdIndexInData = 2;
+        private int _postIDFirstIndexInArray = 0;
+        private int _postIDSecondIndexInArray = 1;
+        private int _postIDThirdIndexInArray = 2;
         private int _postIDNonexistent = 8;
 
         [TestInitialize]
@@ -80,7 +80,7 @@ namespace BlogAggregator.API.Tests
                 new Post {
                     PostID = _postIDFirst,
                     BlogID = _blogIDMockPosts,
-                    Blog = _blogs[_blogIDMockPostsIndexInData],
+                    Blog = _blogs[_blogIDMockPostsIndexInArray],
                     Content = "Test content",
                     Description = "Interesting post",
                     Link = "http://testerson.wordpress.com/post/1",
@@ -90,7 +90,7 @@ namespace BlogAggregator.API.Tests
                 new Post {
                     PostID = _postIDSecond,
                     BlogID = _blogIDMockPosts,
-                    Blog = _blogs[_blogIDMockPostsIndexInData],
+                    Blog = _blogs[_blogIDMockPostsIndexInArray],
                     Content = "More test content",
                     Description = "More interesting post",
                     Link = "http://testerson.wordpress.com/post/2",
@@ -100,7 +100,7 @@ namespace BlogAggregator.API.Tests
                 new Post {
                     PostID = _postIDThird,
                     BlogID = _blogIDMockPosts,
-                    Blog = _blogs[_blogIDMockPostsIndexInData],
+                    Blog = _blogs[_blogIDMockPostsIndexInArray],
                     Content = "Even more test content",
                     Description = "Even more interesting post",
                     Link = "http://testerson.wordpress.com/post/3",
@@ -114,9 +114,9 @@ namespace BlogAggregator.API.Tests
             _blogRepositoryMock.Setup(br => br.Any(b => b.BlogID == _blogIDNoMockPosts)).Returns(true);
 
             _postRepositoryMock.Setup(pr => pr.GetAll()).Returns(_posts.AsQueryable());
-            _postRepositoryMock.Setup(pr => pr.GetByID(_postIDFirst)).Returns(_posts[_postIDFirstIndexInData]);
-            _postRepositoryMock.Setup(pr => pr.GetByID(_postIDSecond)).Returns(_posts[_postIDSecondIndexInData]);
-            _postRepositoryMock.Setup(pr => pr.GetByID(_postIDThird)).Returns(_posts[_postIDThirdIndexInData]);
+            _postRepositoryMock.Setup(pr => pr.GetByID(_postIDFirst)).Returns(_posts[_postIDFirstIndexInArray]);
+            _postRepositoryMock.Setup(pr => pr.GetByID(_postIDSecond)).Returns(_posts[_postIDSecondIndexInArray]);
+            _postRepositoryMock.Setup(pr => pr.GetByID(_postIDThird)).Returns(_posts[_postIDThirdIndexInArray]);
 
             // Set up unit of work and controller
             _unitOfWorkMock = new Mock<IUnitOfWork>();
@@ -314,7 +314,7 @@ namespace BlogAggregator.API.Tests
             //  Unit of work commit is called once
             //  Result is OK, and content result ID matches
             _postRepositoryMock.Verify(p => p.GetByID(_postIDFirst), Times.Once);
-            _postRepositoryMock.Verify(p => p.Delete(_posts[_postIDFirstIndexInData]), Times.Once);
+            _postRepositoryMock.Verify(p => p.Delete(_posts[_postIDFirstIndexInArray]), Times.Once);
             _unitOfWorkMock.Verify(uow => uow.Commit(), Times.Once);
             Assert.IsInstanceOfType(actionResult, typeof(OkNegotiatedContentResult<PostModel>));
             var contentResult = actionResult as OkNegotiatedContentResult<PostModel>;
