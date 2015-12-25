@@ -147,19 +147,7 @@ namespace BlogAggregator.Core.Test.BlogServices
         [TestMethod]
         public void ExtractBlogPostsReturnsBlogPosts()
         {
-            // Arrange           
-            var _blogAModel = new BlogModel
-            {
-                BlogID = _blogA.BlogID,
-                BlogType = _blogA.BlogType,
-                CreatedDate = _blogA.CreatedDate,
-                Approved = _blogA.Approved,
-                AuthorEmail = _blogA.AuthorEmail,
-                AuthorName = _blogA.AuthorName,
-                Description = _blogA.Description,
-                Link = _blogA.Link,
-                Title = _blogA.Title
-            };
+            // Arrange                      
             BlogInfo blogInfo = new BlogInfo
             {
                 Description = _blogA.Description,
@@ -170,7 +158,7 @@ namespace BlogAggregator.Core.Test.BlogServices
 
             // Act
             //blogService.ExtractAndSaveAllNewBlogPosts();
-            IEnumerable<Post> posts = _blogService.ExtractBlogPosts(_blogAModel);
+            IEnumerable<Post> posts = _blogService.ExtractBlogPosts(_blogs[_blogIDAWithPostsIndexInArray]);
 
             // Assert
             Assert.AreEqual(posts.Count(), _numBlogAPosts);

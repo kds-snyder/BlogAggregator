@@ -30,7 +30,7 @@ namespace BlogAggregator.Core.Services
         }
 
         // Extract posts of blog and save them in Post table
-        public void ExtractAndSaveBlogPosts(BlogModel blog)
+        public void ExtractAndSaveBlogPosts(Blog blog)
         {
             var blogPosts = ExtractBlogPosts(blog);
 
@@ -39,7 +39,7 @@ namespace BlogAggregator.Core.Services
 
         // Extract posts of blog, and save posts in Post table
         // that are not already in the Post table
-        public void ExtractAndSaveNewBlogPosts(BlogModel blog)
+        public void ExtractAndSaveNewBlogPosts(Blog blog)
         {
             var blogPosts = ExtractBlogPosts(blog);
 
@@ -50,8 +50,8 @@ namespace BlogAggregator.Core.Services
         // that are not already in the Post table
         public void ExtractAndSaveAllNewBlogPosts()
         {
-            // The blogs must be List type, because IQuueryable type keeps data connection open;
-            //  if the type is IQueryable, then commit (save changes) to write posts later causes exception: 
+            // In below statement, blogs must be List type, because IQuueryable type keeps data connection open;
+            //  if the type is IQueryable, then commit to write posts later causes exception: 
             //  the transaction is not allowed because there are other threads running in the session
             List<Blog> blogs = _blogRepository.GetAll().ToList();
 
@@ -60,27 +60,15 @@ namespace BlogAggregator.Core.Services
                 foreach (var blog in blogs)
                 {
                     if (blog.Approved)
-                    {
-                        var blogModel = new BlogModel
-                        {
-                            BlogID = blog.BlogID,
-                            BlogType = blog.BlogType,
-                            CreatedDate = blog.CreatedDate,
-                            Approved = blog.Approved,
-                            AuthorEmail = blog.AuthorEmail,
-                            AuthorName = blog.AuthorName,
-                            Description = blog.Description,
-                            Link = blog.Link,
-                            Title = blog.Title
-                        };
-                        ExtractAndSaveNewBlogPosts(blogModel);
+                    {                        
+                        ExtractAndSaveNewBlogPosts(blog);
                     }
                 }
             }          
         }
 
         // Extract blog posts according to blog type 
-        public IEnumerable<Post> ExtractBlogPosts(BlogModel blog)
+        public IEnumerable<Post> ExtractBlogPosts(Blog blog)
         {
             switch (blog.BlogType)
             {

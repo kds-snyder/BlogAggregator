@@ -410,7 +410,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
             //  result of update is HTTP status code with no content
             _blogRepositoryMock.Verify(b => b.GetByID(_blogIDNotApproved), Times.Once);
             _blogRepositoryMock.Verify(b => b.Update(It.IsAny<Blog>()), Times.Once);
-            _blogServiceMock.Verify(bs => bs.ExtractAndSaveBlogPosts(It.IsAny<BlogModel>()), Times.Once);
+            _blogServiceMock.Verify(bs => bs.ExtractAndSaveBlogPosts(It.IsAny<Blog>()), Times.Once);
             _unitOfWorkMock.Verify(uow => uow.Commit(), Times.AtLeastOnce);
             Assert.IsNotNull(actionResult);
             Assert.IsNotNull(statusCodeResult);
@@ -574,7 +574,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
            //  Location header is set in created result
             _blogRepositoryMock.Verify(b => b.Add(It.IsAny<Blog>()), Times.Once);
             _unitOfWorkMock.Verify(uow => uow.Commit(), Times.AtLeastOnce);
-            _blogServiceMock.Verify(bs => bs.ExtractAndSaveBlogPosts(It.IsAny<BlogModel>()), Times.Once);
+            _blogServiceMock.Verify(bs => bs.ExtractAndSaveBlogPosts(It.IsAny<Blog>()), Times.Once);
            Assert.IsInstanceOfType
                     (actionResult, typeof(CreatedAtRouteNegotiatedContentResult<BlogModel>));
             var createdResult = actionResult as CreatedAtRouteNegotiatedContentResult<BlogModel>;

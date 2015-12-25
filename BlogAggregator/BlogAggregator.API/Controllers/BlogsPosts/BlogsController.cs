@@ -98,7 +98,7 @@ namespace BlogAggregator.API.Controllers
 
             // If approved indicator was changed from true to false, 
             //   remove any posts corresponding to blog
-            if (approvedBeforeUpdate && !blog.Approved)
+            if (approvedBeforeUpdate && !dbBlog.Approved)
             {
                 deleteBlogPosts(id);
             }
@@ -123,9 +123,9 @@ namespace BlogAggregator.API.Controllers
 
             // If approved indicator was changed from false to true, 
             //  parse the blog posts and store them in DB
-            if (!approvedBeforeUpdate && blog.Approved)
+            if (!approvedBeforeUpdate && dbBlog.Approved)
             {
-                _blogService.ExtractAndSaveBlogPosts(blog);
+                _blogService.ExtractAndSaveBlogPosts(dbBlog);
  
             }
 
@@ -177,9 +177,9 @@ namespace BlogAggregator.API.Controllers
             blog.BlogID = dbBlog.BlogID;
 
             // If approved, parse the blog posts and store them in the DB
-            if (blog.Approved)
+            if (dbBlog.Approved)
             {
-                _blogService.ExtractAndSaveBlogPosts(blog);
+                _blogService.ExtractAndSaveBlogPosts(dbBlog);
             }
 
             // Return the created blog record
