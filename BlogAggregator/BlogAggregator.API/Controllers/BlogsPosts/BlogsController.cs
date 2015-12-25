@@ -14,6 +14,7 @@ using BlogAggregator.Core.Repository;
 using BlogAggregator.Core.Infrastructure;
 using BlogAggregator.Core.BlogReader.WordPress;
 using System.Web.Http.OData;
+using BlogAggregator.Core.BlogReader;
 
 namespace BlogAggregator.API.Controllers
 {
@@ -144,10 +145,15 @@ namespace BlogAggregator.API.Controllers
 
             // Get the blog information from the blog website 
             // If unable to get the information, do not create the blog record
-            if (!_wordPressBlogReader.VerifyBlog(blog))
+            BlogInfo blogInfo = _wordPressBlogReader.VerifyBlog(blog.Link);
+            if (blogInfo == null)
             {
                 return NotFound();
             }
+
+            //Set the blog description and title that was obtained from the blog website
+            blog.Description = blogInfo.Description;
+            blog.Title = blogInfo.Title;
 
             //Set up new Blog object, populated from input blog
             Blog dbBlog = new Blog();

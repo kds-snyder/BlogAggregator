@@ -13,6 +13,7 @@ using System.Net;
 using BlogAggregator.Core.Services;
 using System.Linq.Expressions;
 using BlogAggregator.Core.BlogReader.WordPress;
+using BlogAggregator.Core.BlogReader;
 
 namespace BlogAggregator.API.Tests.BlogPosts
 {
@@ -375,7 +376,12 @@ namespace BlogAggregator.API.Tests.BlogPosts
             // Arrange
             _userRepositoryMock.Setup(pr => pr.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
                                                                        .Returns(_users[_userAuthorizedIndexInArray]);
-            _wordPressBlogReaderMock.Setup(m => m.VerifyBlog(It.IsAny<BlogModel>())).Returns(true);
+            BlogInfo blogInfo = new BlogInfo
+            {
+                Description = "Stupendous Blog",              
+                Title = "KDS Blog"
+            };
+            _wordPressBlogReaderMock.Setup(m => m.VerifyBlog(It.IsAny<string>())).Returns(blogInfo);
 
             // Act
             IHttpActionResult actionResult =
@@ -493,7 +499,12 @@ namespace BlogAggregator.API.Tests.BlogPosts
         public void PostBlogNotApprovedAddsBlog()
         {
             // Arrange
-            _wordPressBlogReaderMock.Setup(m => m.VerifyBlog(It.IsAny<BlogModel>())).Returns(true);
+            BlogInfo blogInfo = new BlogInfo
+            {
+                Description = "New Testing",
+                Title = "New Testy's Blog"
+            };
+            _wordPressBlogReaderMock.Setup(m => m.VerifyBlog(It.IsAny<string>())).Returns(blogInfo);            
 
             // Act
             IHttpActionResult actionResult =
@@ -530,7 +541,12 @@ namespace BlogAggregator.API.Tests.BlogPosts
         public void PostBlogApprovedAddsBlogAndPosts()
         {
             // Arrange          
-            _wordPressBlogReaderMock.Setup(m => m.VerifyBlog(It.IsAny<BlogModel>())).Returns(true);
+            BlogInfo blogInfo = new BlogInfo
+            {
+                Description = "Stupendous Blog",
+                Title = "KDS Blog"
+            };
+            _wordPressBlogReaderMock.Setup(m => m.VerifyBlog(It.IsAny<string>())).Returns(blogInfo);
 
             // Act
             IHttpActionResult actionResult =

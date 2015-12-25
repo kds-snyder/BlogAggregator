@@ -15,7 +15,6 @@ namespace BlogAggregator.Core.Test.BlogReader
         public void GetBlogPostsReturnsPosts()
         {
             //Arrange
-            int blogIDForTest = 1;
             var wordPressBlogReader = new WordPressBlogReader();
             var posts = new List<Post>();
 
@@ -25,25 +24,12 @@ namespace BlogAggregator.Core.Test.BlogReader
                    "jeffwarddevelopment.com/index.php",
                    "kdssnyder.wordpress.com",
                    "zakdietzen.com"
-            };
-            var blogModel = new BlogModel
-            {
-                BlogID = blogIDForTest,
-                BlogType = BlogTypes.WordPress,
-                AuthorEmail = "a@b.com",
-                AuthorName = "Testy Testerson",
-                Approved = true,
-                CreatedDate = DateTime.Now,
-                Description = "Great Blog",
-                Link = "",
-                Title = "Stupendous Blog"
-            };
+            }; 
 
             for (int i = 0; i < blogLinks.Length; i++)
             {
                 //Act
-                blogModel.Link = blogLinks[i];
-                posts = wordPressBlogReader.GetBlogPosts(blogModel) as List<Post>;
+                posts = wordPressBlogReader.GetBlogPosts(blogLinks[i]) as List<Post>;
 
                 //Assert
                 if (posts.Count == 0) Assert.Inconclusive("No posts found for " + blogLinks[i]);

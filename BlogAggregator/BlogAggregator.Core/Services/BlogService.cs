@@ -85,22 +85,23 @@ namespace BlogAggregator.Core.Services
             switch (blog.BlogType)
             {
                 case BlogTypes.WordPress:
-                    return extractBlogPosts(_wordPressBlogReader, blog);
+                    return extractBlogPosts(_wordPressBlogReader, blog.Link);
                 default:
                     throw new ArgumentException(nameof(blog));
             }
         }
 
         // Extract blog posts
-        private IEnumerable<Post> extractBlogPosts(IBlogReader reader, BlogModel blog)
+        private IEnumerable<Post> extractBlogPosts(IBlogReader reader, string blogLink)
         {
-            if (reader.VerifyBlog(blog))
+            BlogInfo blogInfo = reader.VerifyBlog(blogLink);
+            if (blogInfo != null)
             {
-                return reader.GetBlogPosts(blog);
+                return reader.GetBlogPosts(blogLink);
             }
             else
             {
-                throw new Exception("Blog at " + blog.Link + " could not be verified for extraction");
+                throw new Exception("Blog at " + blogLink + " could not be verified for extraction");
             }
         }
 

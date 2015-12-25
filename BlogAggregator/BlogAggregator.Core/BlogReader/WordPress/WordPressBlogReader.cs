@@ -17,33 +17,33 @@ namespace BlogAggregator.Core.BlogReader.WordPress
         public static WordPressBlogReader Instance => new WordPressBlogReader();
 
         // Retrieve blog description and title from blog Website
-        //  according to blog link, and store in the blog record
-        // Return true if able to get the info, otherwise return false
-        public bool VerifyBlog(BlogModel blog)
-        {
-            bool result = false;
-
+        //  according to input blog link, and return in BlogInfo object
+        // Return null if unable to get blog info
+        public BlogInfo VerifyBlog(string blogLink)
+        {            
             // Get the XML of the blog
-            string xmlData = getBlogXML(blog);
+            string xmlData = getBlogXML(blogLink);
 
             // If blog XML was obtained, parse the blog information
-            // and store in the blog record
             if (xmlData != "")
             {
-                result = parseBlogInfo(xmlData, blog);
+                return parseBlogInfo(xmlData, blogLink);               
+            }
+            else
+            {
+                return null;
             }
 
-            return result;
         }
 
         // Parse the posts corresponding to blog,
         //  and return a list of the posts       
-        public IEnumerable<Post> GetBlogPosts(BlogModel blog)
+        public IEnumerable<Post> GetBlogPosts(string blogLink)
         {
             List<Post> blogPosts = new List<Post>();
 
             // Get the XML of the blog
-            string xmlData = getBlogXML(blog);
+            string xmlData = getBlogXML(blogLink);
 
             // If blog XML was obtained, parse the blog information
             // and store in the blog record
@@ -55,9 +55,9 @@ namespace BlogAggregator.Core.BlogReader.WordPress
         }
 
         // Get the XML string from the blog RSS feed
-        private string getBlogXML(BlogModel blog)
+        private string getBlogXML(string blogLink)
         {
-            string xmlUrl = getXMLUrl(blog.Link);
+            string xmlUrl = getXMLUrl(blogLink);
             string xmlData = WebData.Instance.GetWebDataFixUrl(xmlUrl);
             return xmlData;
         }
@@ -81,12 +81,10 @@ namespace BlogAggregator.Core.BlogReader.WordPress
         }
 
         // Get the blog information from the input XML data,
-        //  and set it in the blog record
-        // Return true if no error occurs, otherwise return false
-        private bool parseBlogInfo(string xmlData, BlogModel blog)
-        {
-            bool result = true;
-
+        //  and return it as BlogInfo object
+        // Return null if unable to get the blog info
+        private BlogInfo parseBlogInfo(string xmlData, string blogLink)
+        {            
             try
             {
                 using (var xmlStream = xmlData.ToStream())
@@ -96,17 +94,17 @@ namespace BlogAggregator.Core.BlogReader.WordPress
                     // Get the blog information XML node
                     var blogInfoXML = xmlDoc.Element("rss").Element("channel");
 
-                    // Get the blog information and store it in the blog record  
-                    blog.Description = blogInfoXML.Element("description").Value.ScrubHtml();                   
-                    blog.Title = blogInfoXML.Element("title").Value.ScrubHtml();
+                    // Get the blog description and title 
+                    var blogInfo = new BlogInfo();
+                    blogInfo.Description = blogInfoXML.Element("description").Value.ScrubHtml();
+                    blogInfo.Title = blogInfoXML.Element("title").Value.ScrubHtml();
+                    return blogInfo;
                 }
             }
             catch (Exception e)
             {
-                result = false;
-            }
-
-            return result;
+                return null;
+            }          
         }
 
         // Get the blog posts from the input XML data,

@@ -10,6 +10,7 @@ using BlogAggregator.Core.Domain;
 using System.Linq;
 using System.Collections.Generic;
 using BlogAggregator.Core.Models;
+using BlogAggregator.Core.BlogReader;
 
 namespace BlogAggregator.Core.Test.BlogServices
 {
@@ -159,9 +160,13 @@ namespace BlogAggregator.Core.Test.BlogServices
                 Link = _blogA.Link,
                 Title = _blogA.Title
             };
-            _wordPressBlogReaderMock.Setup(wp => wp.VerifyBlog(It.IsAny<BlogModel>())).Returns(true);
-            _wordPressBlogReaderMock.Setup(wp => wp.GetBlogPosts(It.IsAny<BlogModel>())).Returns(_posts.AsQueryable());
-
+            BlogInfo blogInfo = new BlogInfo
+            {
+                Description = _blogA.Description,
+                Title = _blogA.Title
+            };
+            _wordPressBlogReaderMock.Setup(m => m.VerifyBlog(It.IsAny<string>())).Returns(blogInfo);
+            _wordPressBlogReaderMock.Setup(wp => wp.GetBlogPosts(It.IsAny<string>())).Returns(_posts.AsQueryable());
 
             // Act
             //blogService.ExtractAndSaveAllNewBlogPosts();
