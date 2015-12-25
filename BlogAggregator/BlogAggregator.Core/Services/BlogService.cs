@@ -127,13 +127,13 @@ namespace BlogAggregator.Core.Services
         // Save blog posts that are not already in Post table
         public void SaveNewBlogPosts(int blogId, IEnumerable<Post> posts)
         {
-            bool addedToPosts = false;
+            bool savedPosts = false;
             foreach (var post in posts)
             {
                 // Add post to Post table if its Guid does not match any post
                 if (!_postRepository.Any(p => p.Guid == post.Guid))
                 {
-                    addedToPosts = true;
+                    savedPosts = true;
                     _postRepository.Add(new Post
                     {
                         BlogID = blogId,
@@ -147,7 +147,7 @@ namespace BlogAggregator.Core.Services
                 }
             }
 
-            if (addedToPosts)
+            if (savedPosts)
             {
                 _unitOfWork.Commit();
 
