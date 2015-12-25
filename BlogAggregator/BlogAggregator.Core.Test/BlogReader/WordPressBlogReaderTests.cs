@@ -20,10 +20,12 @@ namespace BlogAggregator.Core.Test.BlogReader
             var posts = new List<Post>();
 
             // Real blog links
-            string[] blogLinks = { "bracken.design",
-                                "jeffwarddevelopment.com/index.php",
-                                "kdssnyder.wordpress.com",
-                                "zakdietzen.com" };
+            string[] blogLinks =
+                { "bracken.design",
+                   "jeffwarddevelopment.com/index.php",
+                   "kdssnyder.wordpress.com",
+                   "zakdietzen.com"
+            };
             var blogModel = new BlogModel
             {
                 BlogID = blogIDForTest,
@@ -33,19 +35,18 @@ namespace BlogAggregator.Core.Test.BlogReader
                 Approved = true,
                 CreatedDate = DateTime.Now,
                 Description = "Great Blog",
-                Link = blogLinks[0],  // Must be real blog link
+                Link = "",
                 Title = "Stupendous Blog"
             };
 
             for (int i = 0; i < blogLinks.Length; i++)
             {
-
                 //Act
                 blogModel.Link = blogLinks[i];
                 posts = wordPressBlogReader.GetBlogPosts(blogModel) as List<Post>;
 
                 //Assert
-                if (posts.Count == 0) Assert.Inconclusive("No posts found for " + blogLinks[i]);               
+                if (posts.Count == 0) Assert.Inconclusive("No posts found for " + blogLinks[i]);
                 Assert.IsTrue(posts[0].Link.Contains(blogLinks[i]));
             }
         }

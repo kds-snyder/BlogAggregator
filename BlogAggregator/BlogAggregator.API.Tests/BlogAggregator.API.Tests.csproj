@@ -74,6 +74,7 @@
     <Compile Include="BlogsPosts\PostsControllerTests.cs" />
     <Compile Include="BlogsPosts\BlogsControllerTests.cs" />
     <Compile Include="OAuth\ExternalLoginsControllerTests.cs" />
+    <Compile Include="OAuth\UsersControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
