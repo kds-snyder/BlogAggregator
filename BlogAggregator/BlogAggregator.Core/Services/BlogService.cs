@@ -7,8 +7,6 @@ using BlogAggregator.Core.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BlogAggregator.Core.Services
 {
@@ -17,19 +15,19 @@ namespace BlogAggregator.Core.Services
         private readonly IBlogRepository _blogRepository;
         private readonly IPostRepository _postRepository;
         private readonly IUnitOfWork _unitOfWork;
-        //private readonly IWordPressBlogReader _wordPressBlogReader;
+        private readonly IWordPressBlogReader _wordPressBlogReader;
 
         public BlogService(
             IBlogRepository blogRepository,
             IPostRepository postRepository,
-            IUnitOfWork unitOfWork)
-            //IUnitOfWork unitOfWork,
-            //IWordPressBlogReader wordPressBlogReader)
+            //IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork,
+            IWordPressBlogReader wordPressBlogReader)
         {
             _blogRepository = blogRepository;
             _postRepository = postRepository;
             _unitOfWork = unitOfWork;
-           //_wordPressBlogReader = wordPressBlogReader;
+            _wordPressBlogReader = wordPressBlogReader;
         }
 
         // Extract posts of blog and save them in Post table
@@ -88,8 +86,8 @@ namespace BlogAggregator.Core.Services
             switch (blog.BlogType)
             {
                 case BlogTypes.WordPress:
-//                    return extractBlogPosts(_wordPressBlogReader, blog);
-                    return extractBlogPosts(WordPressBlogReader.Instance, blog);
+                    return extractBlogPosts(_wordPressBlogReader, blog);
+                    //return extractBlogPosts(WordPressBlogReader.Instance, blog);
                 default:
                     throw new ArgumentException(nameof(blog));
             }
