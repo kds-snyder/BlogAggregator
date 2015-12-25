@@ -35,7 +35,6 @@ namespace BlogAggregator.API.Tests.BlogPosts
         private int _blogIDApprovedNoMockPosts = 4;
         private int _blogIDApprovedMockPosts = 5;
         private int _blogIDNotApproved = 6;
-        private int _numberOfMockBlogs = 3;
         private int _blogIDApprovedNoMockPostsIndexInArray = 0;
         private int _blogIDApprovedMockPostsIndexInArray = 1;
         private int _blogIDNotApprovedIndexInArray = 2;
@@ -43,7 +42,6 @@ namespace BlogAggregator.API.Tests.BlogPosts
         private int _postIDFirst = 2;
         private int _postIDSecond = 3;
         private int _postIDThird = 4;
-        private int _numberOfMockPosts = 3;
         private int _postIDFirstIndexInArray = 0;
         private int _postIDSecondIndexInArray = 1;
         private int _postIDThirdIndexInArray = 2;
@@ -107,6 +105,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
                     Blog = _blogs[_blogIDApprovedMockPostsIndexInArray],
                     Content = "Test content",
                     Description = "Interesting post",
+                    Guid = _postIDFirst.ToString(),
                     Link = "http://testerson.wordpress.com/post/1",
                     PublicationDate = new DateTime(2015, 11, 2, 9, 55, 32),
                     Title = "Interesting Title"
@@ -117,6 +116,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
                     Blog = _blogs[_blogIDApprovedMockPostsIndexInArray],
                     Content = "More test content",
                     Description = "More interesting post",
+                    Guid = _postIDSecond.ToString(),
                     Link = "http://testerson.wordpress.com/post/2",
                     PublicationDate = new DateTime(2015, 11, 3, 9, 55, 32),
                     Title = "More Interesting Title"
@@ -127,6 +127,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
                     Blog = _blogs[_blogIDApprovedMockPostsIndexInArray],
                     Content = "Even more test content",
                     Description = "Even more interesting post",
+                    Guid = _postIDThird.ToString(),
                     Link = "http://testerson.wordpress.com/post/3",
                     PublicationDate = new DateTime(2015, 11, 5, 9, 55, 32),
                     Title = "Even More Interesting Title"
@@ -184,7 +185,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
             // Verify that GetAll is called just once
             // Verify that the correct number of blogs are returned
             _blogRepositoryMock.Verify(p => p.GetAll(), Times.Once);
-            Assert.AreEqual(content.Count(), _numberOfMockBlogs);
+            Assert.AreEqual(content.Count(), _blogs.Length);
         }
 
         [TestMethod]
@@ -454,7 +455,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
             //  result of update is HTTP status code with no content
             _blogRepositoryMock.Verify(b => b.GetByID(_blogIDApprovedMockPosts), Times.Once);
             _blogRepositoryMock.Verify(b => b.Update(It.IsAny<Blog>()), Times.Once);
-            _postRepositoryMock.Verify(p => p.Delete(It.IsAny<Post>()), Times.Exactly(_numberOfMockPosts));
+            _postRepositoryMock.Verify(p => p.Delete(It.IsAny<Post>()), Times.Exactly(_posts.Length));
             _unitOfWorkMock.Verify(uow => uow.Commit(), Times.AtLeastOnce);
             Assert.IsNotNull(actionResult);
             Assert.IsNotNull(statusCodeResult);
@@ -645,7 +646,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
             //  Result is OK, and content result ID matches
             _blogRepositoryMock.Verify(p => p.GetByID(_blogIDApprovedMockPosts), Times.Once);
             _blogRepositoryMock.Verify(p => p.Delete(_blogs[_blogIDApprovedMockPostsIndexInArray]), Times.Once);
-            _postRepositoryMock.Verify(p => p.Delete(It.IsAny<Post>()), Times.Exactly(_numberOfMockPosts));
+            _postRepositoryMock.Verify(p => p.Delete(It.IsAny<Post>()), Times.Exactly(_posts.Length));
             _unitOfWorkMock.Verify(uow => uow.Commit(), Times.AtLeastOnce);
             Assert.IsInstanceOfType(actionResult, typeof(OkNegotiatedContentResult<BlogModel>));
             var contentResult = actionResult as OkNegotiatedContentResult<BlogModel>;

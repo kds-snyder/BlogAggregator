@@ -83,6 +83,7 @@ namespace BlogAggregator.API.Tests
                     Blog = _blogs[_blogIDMockPostsIndexInArray],
                     Content = "Test content",
                     Description = "Interesting post",
+                    Guid = _postIDFirst.ToString(),
                     Link = "http://testerson.wordpress.com/post/1",
                     PublicationDate = new DateTime(2015, 11, 2, 9, 55, 32),
                     Title = "Interesting Title"
@@ -93,6 +94,7 @@ namespace BlogAggregator.API.Tests
                     Blog = _blogs[_blogIDMockPostsIndexInArray],
                     Content = "More test content",
                     Description = "More interesting post",
+                    Guid = _postIDSecond.ToString(),
                     Link = "http://testerson.wordpress.com/post/2",
                     PublicationDate = new DateTime(2015, 11, 3, 9, 55, 32),
                     Title = "More Interesting Title"
@@ -103,6 +105,7 @@ namespace BlogAggregator.API.Tests
                     Blog = _blogs[_blogIDMockPostsIndexInArray],
                     Content = "Even more test content",
                     Description = "Even more interesting post",
+                    Guid = _postIDThird.ToString(),
                     Link = "http://testerson.wordpress.com/post/3",
                     PublicationDate = new DateTime(2015, 11, 5, 9, 55, 32),
                     Title = "Even More Interesting Title"
