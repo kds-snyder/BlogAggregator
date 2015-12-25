@@ -36,6 +36,7 @@ namespace BlogAggregator.WebJob
             Console.WriteLine("Calling SaveNewBlogPosts");
             jobHost.Call(typeof(Functions).GetMethod("SaveNewBlogPosts"));
             Console.WriteLine("Completed SaveNewBlogPosts");
+            // Console.ReadLine commented out as it causes WebJob to fail with timeout error although SaveNewBlogPosts is successful
             //Console.ReadLine();
         }
 
