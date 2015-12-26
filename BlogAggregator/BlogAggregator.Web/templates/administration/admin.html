@@ -1,21 +1,3 @@
-<md-toolbar class="md-primary">
-    <div class="md-toolbar-tools">
-        <span>Blog Aggregator Administration</span>
-        <span flex></span>
-        <div ng-show="authenticationData.userName.length > 0">
-        <span class="md-body-2">
-            Logged in: {{authenticationData.userName}}
-        </span>
-             <md-button class="md-raised md-warn md-hue-2" ng-click="logout()">
-                Log Out
-            </md-button>
-        </div><!-- end ng-show="user"-->
-        <md-button class="md-raised md-accent">
-            <a ui-sref="app.posts">Home</a>
-        </md-button>
-    </div>
-</md-toolbar>
-
 <md-tabs md-border-bottom md-dynamic-height class="md-primary">
     <md-tab ng-repeat="tab in tabs"
             label="{{tab.heading}}"
@@ -26,11 +8,3 @@
 <md-content>
     <div ui-view flex></div>
 </md-content>
-<footer>
-    <div layout="row">
-        <p class="md-caption">
-            Blog Aggregator created by <a target="_blank" href="https://linkedin.com/in/kdsnyder">Karen Snyder</a> in the Fall 2015 cohort of <img src="../../img/origin.png" class="origin-image" />
-            <a target="_blank" href="http://origincodeacademy.com/">Origin Code Academy</a>
-        </p>
-    </div>
-</footer>

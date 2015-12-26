@@ -48,7 +48,7 @@
             // Redirect to admin if authorized, otherwise to home
             authService.loadAuthData();
             if (authService.authentication.isAuthenticated && authService.authentication.isAuthorized) {
-                $state.go('admin');
+                $state.go('app.admin');
             }
             else {
                 $state.go('app.posts');

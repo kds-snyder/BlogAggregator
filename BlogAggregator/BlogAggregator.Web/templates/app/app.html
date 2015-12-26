@@ -3,18 +3,21 @@
         <div class="md-toolbar-tools">
             <h1>Blog Aggregator</h1>
             <span flex></span>
-            <div ng-show="authenticationData.userName.length > 0">
+            <div ng-show="authenticationData.userName.length >= 0">
                 <span class="md-body-2">
                     Logged in: {{authenticationData.userName}}
                 </span>
                 <md-button class="md-raised md-warn md-hue-2" ng-click="logout()">
                     Log Out
                 </md-button>
-            </div><!-- end ng-show="user"-->
+                <md-button class="md-raised md-accent md-hue-1">
+                    <a ui-sref="app.admin">Admin</a>
+                </md-button>
+            </div><!-- end ng-show for user -->
             <md-button class="md-raised md-accent">
                 <a ui-sref="app.addblog">Add Blog</a>
             </md-button>
-            <md-button class="md-raised md-accent">
+            <md-button class="md-raised md-accent md-hue-2">
                 <a ui-sref="app.posts">Home</a>
             </md-button>
         </div>
@@ -25,7 +28,8 @@
     <footer>
         <div layout="row">
             <p class="md-caption">
-                Blog Aggregator created by <a target="_blank" href="https://linkedin.com/in/kdsnyder">Karen Snyder</a> in the Fall 2015 cohort of <img src="../../img/origin.png" class="origin-image" />
+                Blog Aggregator created by <a target="_blank" href="https://linkedin.com/in/kdsnyder">Karen Snyder</a>
+                 in the Fall 2015 cohort of <img src="../../img/origin.png" class="origin-image" />
                 <a target="_blank" href="http://origincodeacademy.com/">Origin Code Academy</a>
             </p>
         </div>
