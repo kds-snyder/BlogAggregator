@@ -14,23 +14,27 @@ using BlogAggregator.Core.Repository;
 using BlogAggregator.Core.Infrastructure;
 using BlogAggregator.Core.BlogReader.WordPress;
 using System.Web.Http.OData;
+using BlogAggregator.Core.BlogReader;
 
 namespace BlogAggregator.API.Controllers
 {
     public class BlogsController : ApiController
     {
         private readonly IBlogRepository _blogRepository;
-        private readonly IPostRepository _postRepository;       
+        private readonly IPostRepository _postRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IBlogService _blogService;
         private readonly IWordPressBlogReader _wordPressBlogReader;
 
         public BlogsController(IBlogRepository blogRepository, IPostRepository postRepository,
+                                    IUserRepository userRepository,
                                     IUnitOfWork unitOfWork, IBlogService blogService, 
                                     IWordPressBlogReader wordPressBlogReader)
         {
             _blogRepository = blogRepository;
             _postRepository = postRepository;
+            _userRepository = userRepository;
             _unitOfWork = unitOfWork;
             _blogService = blogService;
             _wordPressBlogReader = wordPressBlogReader;
@@ -57,9 +61,17 @@ namespace BlogAggregator.API.Controllers
         }
 
         // PUT: api/Blogs/5
+        [Authorize]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutBlog(int id, BlogModel blog)
         {
+            //Allow only for authorized user
+            var userToCheck = _userRepository.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            if (!userToCheck.Authorized)
+            {
+                return Unauthorized();
+            }
+
             // Validate the request
             if (!ModelState.IsValid)
             {
@@ -86,7 +98,7 @@ namespace BlogAggregator.API.Controllers
 
             // If approved indicator was changed from true to false, 
             //   remove any posts corresponding to blog
-            if (approvedBeforeUpdate && !blog.Approved)
+            if (approvedBeforeUpdate && !dbBlog.Approved)
             {
                 deleteBlogPosts(id);
             }
@@ -111,15 +123,10 @@ namespace BlogAggregator.API.Controllers
 
             // If approved indicator was changed from false to true, 
             //  parse the blog posts and store them in DB
-            if (!approvedBeforeUpdate && blog.Approved)
+            if (!approvedBeforeUpdate && dbBlog.Approved)
             {
-                _blogService.ExtractAndSaveBlogPosts(blog);
-                //var wordPressBlogReader = new WordPressBlogReader();
-                //var blogService = new BlogService(_blogRepository, _postRepository,
-                //                                        _unitOfWork, wordPressBlogReader);
-                //var blogService = new BlogService(_blogRepository, _postRepository,
-                //                                       _unitOfWork);
-                //blogService.ExtractAndSaveBlogPosts(blog);
+                _blogService.ExtractAndSaveBlogPosts(dbBlog);
+ 
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -129,11 +136,6 @@ namespace BlogAggregator.API.Controllers
         [ResponseType(typeof(BlogModel))]
         public IHttpActionResult PostBlog(BlogModel blog)
         {
-            string emailInfo = "PostBlog" + DateTime.Now;
-            var emailLog = new EmailLog();
-            string emailLogSentTo = "kds_snyder@yahoo.com";
-            string emailLogSubject = "PostBlog Email Log";
-            emailLog.SendEmail(emailLogSentTo, emailLogSubject, emailInfo);
 
             // Validate request
             if (!ModelState.IsValid)
@@ -143,12 +145,15 @@ namespace BlogAggregator.API.Controllers
 
             // Get the blog information from the blog website 
             // If unable to get the information, do not create the blog record
-            //var wordPressBlogReader = new WordPressBlogReader();
-            //if (!WordPressBlogReader.Instance.VerifyBlog(blog))
-            if (!_wordPressBlogReader.VerifyBlog(blog))
+            BlogInfo blogInfo = _wordPressBlogReader.VerifyBlog(blog.Link);
+            if (blogInfo == null)
             {
                 return NotFound();
             }
+
+            //Set the blog description and title that was obtained from the blog website
+            blog.Description = blogInfo.Description;
+            blog.Title = blogInfo.Title;
 
             //Set up new Blog object, populated from input blog
             Blog dbBlog = new Blog();
@@ -172,14 +177,9 @@ namespace BlogAggregator.API.Controllers
             blog.BlogID = dbBlog.BlogID;
 
             // If approved, parse the blog posts and store them in the DB
-            if (blog.Approved)
+            if (dbBlog.Approved)
             {
-                _blogService.ExtractAndSaveBlogPosts(blog);
-                //var blogService = new BlogService(_blogRepository, _postRepository,
-                //                                        _unitOfWork, wordPressBlogReader);
-                //var blogService = new BlogService(_blogRepository, _postRepository,
-                //                                       _unitOfWork);
-                //blogService.ExtractAndSaveBlogPosts(blog);
+                _blogService.ExtractAndSaveBlogPosts(dbBlog);
             }
 
             // Return the created blog record
@@ -187,9 +187,17 @@ namespace BlogAggregator.API.Controllers
         }
 
         // DELETE: api/Blogs/5
+        [Authorize]
         [ResponseType(typeof(BlogModel))]
         public IHttpActionResult DeleteBlog(int id)
         {
+            //Allow only for authorized user
+            var userToCheck = _userRepository.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            if (!userToCheck.Authorized)
+            {
+                return Unauthorized();
+            }
+
             // Get the DB blog corresponding to the blog ID
             Blog dbBlog = _blogRepository.GetByID(id);
             if (dbBlog == null)

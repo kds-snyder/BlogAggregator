@@ -10,7 +10,7 @@ namespace BlogAggregator.Core.BlogReader
 {
     public interface IBlogReader
     {
-        bool VerifyBlog(BlogModel blog);
-        IEnumerable<Post> GetBlogPosts(BlogModel blog);
+        BlogInfo VerifyBlog(string blogLink);
+        IEnumerable<Post> GetBlogPosts(string blogLink);
     }
 }

@@ -74,6 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlogReader\BlogInfo.cs" />
     <Compile Include="BlogReader\WordPress\IWordPressBlogReader.cs" />
     <Compile Include="Domain\Blog.cs" />
     <Compile Include="Domain\Enums.cs" />

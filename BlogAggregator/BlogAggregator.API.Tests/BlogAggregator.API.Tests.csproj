@@ -73,6 +73,8 @@
   <ItemGroup>
     <Compile Include="BlogsPosts\PostsControllerTests.cs" />
     <Compile Include="BlogsPosts\BlogsControllerTests.cs" />
+    <Compile Include="OAuth\ExternalLoginsControllerTests.cs" />
+    <Compile Include="OAuth\UsersControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -89,6 +91,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

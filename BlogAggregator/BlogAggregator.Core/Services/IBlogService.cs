@@ -6,10 +6,10 @@ namespace BlogAggregator.Core.Services
 {
     public interface IBlogService
     {
-        void ExtractAndSaveBlogPosts(BlogModel blog);       
-        void ExtractAndSaveNewBlogPosts(BlogModel blog);
+        void ExtractAndSaveBlogPosts(Blog blog);       
+        void ExtractAndSaveNewBlogPosts(Blog blog);
         void ExtractAndSaveAllNewBlogPosts();
-        IEnumerable<Post> ExtractBlogPosts(BlogModel blog);
+        IEnumerable<Post> ExtractBlogPosts(Blog blog);
         void SaveBlogPosts(int blogId, IEnumerable<Post> posts);
         void SaveNewBlogPosts(int blogId, IEnumerable<Post> posts);
     }

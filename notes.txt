@@ -14,52 +14,6 @@ posts?$orderby=PublicationDate desc
 http://originblogs.azurewebsites.net/
 http://blogaggregator.azurewebsites.net/api/
 
-BlogAggregator_oauth DB:
-Server=tcp:originstudents.database.windows.net,1433;Database=BlogAggregator_oauth;User ID=azure@originstudents;Password=OCA_azur3;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
-
-https://YOURSITE.scm.azurewebsites.net/azurejobs
-
-https://microsoft-apiappc17fc6a308404673b96dabcfab653613.azurewebsites.net/api/account/ObtainLocalAccessToken?externalAccessToken=ya29.RwI3lIJSklooGQjRSlbOHyXFR_D_Nf5DmR-s7P4o-5pA-6to3q-ikL7e2vXtjasa-123&provider=Google
-
-http://localhost:3000/api/account/ObtainLocalAccessToken?externalAccessToken=ya29.RwI3lIJSklooGQjRSlbOHyXFR_D_Nf5DmR-s7P4o-5pA-6to3q-ikL7e2vXtjasa-123&provider=Google
-
-https://accounts.google.com/o/oauth2/auth?client_id=620597621300-lt136jc3pa1i94v0cbqgtjvpsjda00hd.apps.googleusercontent.com&redirect_uri=postmessage&response_type=code%20token%20id_token%20gsession&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.login%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&request_visible_actions=http%3A%2F%2Fschemas.google.com%2FAddActivity&cookie_policy=single_host_origin&include_granted_scopes=true&proxy=oauth2relay333692115&origin=http%3A%2F%2Flocalhost%3A3200&state=604608205%7C0.979808004&&e=3100077
-
-data: Object
-email: "tovahks@gmail.com"
-family_name: "Snyder"
-gender: "female"
-given_name: "Karen"
-id: "114142399122115436007"
-link: "https://plus.google.com/114142399122115436007"
-locale: "en"
-name: "Karen Snyder"
-picture: "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg"
-verified_email: true
-
-private readonly IUserRepository _userRepository;
-
-// GET: api/Blogs
-        [EnableQuery]
-        public IQueryable<BlogModel> GetBlogs()
-        {
-            var user = _userRepository.FirstOrDefault(u => u.UserName == User.Identity.Name);
-
-            if(user.IsAuthenticated)
-            {
-                return _blogRepository.GetAll().ProjectTo<BlogModel>();
-            }
-            else
-            {
-                return null;
-            }
-
-string emailInfo = "PostBlog";
-            var emailLog = new EmailLog();
-            string emailLogSentTo = "kds_snyder@yahoo.com";
-            string emailLogSubject = "PostBlog Email Log";            
-            emailLog.SendEmail(emailLogSentTo, emailLogSubject, emailInfo);
-
  var blogPosts = xmlDoc.Element("rss").Element("channel").Descendants("item");
                     foreach (var post in blogPosts)
                     {
@@ -75,33 +29,9 @@ string emailInfo = "PostBlog";
                         posts.Add(newPost);
 }
 
+_postRepositoryMock.Setup(pr => pr.Where(It.IsAny<Expression<Func<Post, bool>>>()))
+                                                                        .Returns(_posts.AsQueryable());
+_userRepositoryMock.Setup(pr => pr.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
+                                                                       .Returns(_user[_userAuthorizedIndexInData]);
 
-authResult: Object
-access_token: "ya29.RwL6n0lrTM7d51u6dDEwoMhXdKqeI2zf6CV5nzNKzFbNhaMnWYLKne_b3FwrvJeVXm1u"
-authuser: "0"
-client_id: "620597621300-lt136jc3pa1i94v0cbqgtjvpsjda00hd.apps.googleusercontent.com"
-code: "4/ZOE9sRW8xp4eHz0OKk00DeLtS1BHHG4ZE3RWIG5ECUM"
-cookie_policy: "single_host_origin"
-expires_at: "1449869672"
-expires_in: "3600"
-g-oauth-window: Window
-g_user_cookie_policy: "single_host_origin"
-id_token: "eyJhbGciOiJSUzI1NiIsImtpZCI6IjYzMWY0ZmJkNGVlMTg3YWNjYmI3MDhkYmM5MTcxYWRkOTUyZDc0ZTcifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXRfaGFzaCI6InVQbzNIU041Mmg2c3Z4YVQzdm50a3ciLCJhdWQiOiI2MjA1OTc2MjEzMDAtbHQxMzZqYzNwYTFpOTR2MGNicWd0anZwc2pkYTAwaGQuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJjX2hhc2giOiJxT19JVjlGSU8tai1mTUZPVFJPUm9RIiwic3ViIjoiMTE0MTQyMzk5MTIyMTE1NDM2MDA3IiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF6cCI6IjYyMDU5NzYyMTMwMC1sdDEzNmpjM3BhMWk5NHYwY2JxZ3RqdnBzamRhMDBoZC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsImVtYWlsIjoidG92YWhrc0BnbWFpbC5jb20iLCJpYXQiOjE0NDk4NjYwNzIsImV4cCI6MTQ0OTg2OTY3Mn0.X4h_Hvynz1XLnaax1bvZ1W-YaXFpeKJWSv9LOEcl-e_14F3mJ7XFJjsIn2aISpKA8ZV2uEPSkWPWcXrDzQzuhw94vEbrtBhp8brz0QtHLFG1hegQBiZIDX32SLfR6DakoC9BL4KMiXGZorlPevShQTBFUfNEQclSEL0jMRiDoDqp3zkf3PmEpoXJ-Rs2rcbZQra57_dwi3hzK_XBt3IFHtPMoLXehq4RNKx_VNcnnO711_cm2q1NU3k41mjvIJKotp2kVbj6LFwBw70Zhu64EO0K_F0Y6TWtI8EFgK2M_PbVpKKHDPLmHTLVaPKyvMLCWaOHdBkOwIGqlTcJzMdImw"
-issued_at: "1449866072"
-prompt: "none"
-response_type: "code token id_token gsession"
-scope: "https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/plus.moments.write https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/plus.profile.agerange.read https://www.googleapis.com/auth/plus.profile.language.read https://www.googleapis.com/auth/plus.circles.members.read https://www.googleapis.com/auth/userinfo.profile"
-session_state: "43290cf58dd79d57efed72f34a12e3f0bf749c07..3dc4"
-state: ""
-status: Object
-token_type: "Bearer"
-event: Object
-currentScope: ChildScope
-defaultPrevented: false
-name: "event:google-plus-signin-success"
-preventDefault: ()
-targetScope: Scope
-__proto__: Object
-
-<add key="SCM_COMMAND_IDLE_TIMEOUT" value="1800" />
-<add key="WEBJOBS_IDLE_TIMEOUT" value="1800" />
+_wordPressBlogReaderMock.Setup(m => m.VerifyBlog(It.IsAny<BlogModel>())).Returns(true);

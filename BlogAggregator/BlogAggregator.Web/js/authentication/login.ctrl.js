@@ -83,7 +83,8 @@
 
     $scope.$on('event:google-plus-signin-failure', function (event, authResult) {
         // Auth failure or signout detected
-        console.log('Google signin failure');
+        console.log('Google signin failure, error: ' + authResult.error +
+                        ', error_subtype: ' + authResult.error_subtype);
 
         // Log out to clear token if any
         authService.logOut('login');

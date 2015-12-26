@@ -7,8 +7,6 @@ using BlogAggregator.Core.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BlogAggregator.Core.Services
 {
@@ -17,23 +15,22 @@ namespace BlogAggregator.Core.Services
         private readonly IBlogRepository _blogRepository;
         private readonly IPostRepository _postRepository;
         private readonly IUnitOfWork _unitOfWork;
-        //private readonly IWordPressBlogReader _wordPressBlogReader;
+        private readonly IWordPressBlogReader _wordPressBlogReader;
 
         public BlogService(
             IBlogRepository blogRepository,
             IPostRepository postRepository,
-            IUnitOfWork unitOfWork)
-            //IUnitOfWork unitOfWork,
-            //IWordPressBlogReader wordPressBlogReader)
+            IUnitOfWork unitOfWork,
+            IWordPressBlogReader wordPressBlogReader)
         {
             _blogRepository = blogRepository;
             _postRepository = postRepository;
             _unitOfWork = unitOfWork;
-           //_wordPressBlogReader = wordPressBlogReader;
+            _wordPressBlogReader = wordPressBlogReader;
         }
 
         // Extract posts of blog and save them in Post table
-        public void ExtractAndSaveBlogPosts(BlogModel blog)
+        public void ExtractAndSaveBlogPosts(Blog blog)
         {
             var blogPosts = ExtractBlogPosts(blog);
 
@@ -42,7 +39,7 @@ namespace BlogAggregator.Core.Services
 
         // Extract posts of blog, and save posts in Post table
         // that are not already in the Post table
-        public void ExtractAndSaveNewBlogPosts(BlogModel blog)
+        public void ExtractAndSaveNewBlogPosts(Blog blog)
         {
             var blogPosts = ExtractBlogPosts(blog);
 
@@ -53,8 +50,8 @@ namespace BlogAggregator.Core.Services
         // that are not already in the Post table
         public void ExtractAndSaveAllNewBlogPosts()
         {
-            // The blogs must be List type, because IQuueryable type keeps data connection open;
-            //  if the type is IQueryable, then commit (save changes) to write posts later causes exception: 
+            // In below statement, blogs must be List type, because IQuueryable type keeps data connection open;
+            //  if the type is IQueryable, then commit to write posts later causes exception: 
             //  the transaction is not allowed because there are other threads running in the session
             List<Blog> blogs = _blogRepository.GetAll().ToList();
 
@@ -63,48 +60,36 @@ namespace BlogAggregator.Core.Services
                 foreach (var blog in blogs)
                 {
                     if (blog.Approved)
-                    {
-                        var blogModel = new BlogModel
-                        {
-                            BlogID = blog.BlogID,
-                            BlogType = blog.BlogType,
-                            CreatedDate = blog.CreatedDate,
-                            Approved = blog.Approved,
-                            AuthorEmail = blog.AuthorEmail,
-                            AuthorName = blog.AuthorName,
-                            Description = blog.Description,
-                            Link = blog.Link,
-                            Title = blog.Title
-                        };
-                        ExtractAndSaveNewBlogPosts(blogModel);
+                    {                        
+                        ExtractAndSaveNewBlogPosts(blog);
                     }
                 }
             }          
         }
 
         // Extract blog posts according to blog type 
-        public IEnumerable<Post> ExtractBlogPosts(BlogModel blog)
+        public IEnumerable<Post> ExtractBlogPosts(Blog blog)
         {
             switch (blog.BlogType)
             {
                 case BlogTypes.WordPress:
-//                    return extractBlogPosts(_wordPressBlogReader, blog);
-                    return extractBlogPosts(WordPressBlogReader.Instance, blog);
+                    return extractBlogPosts(_wordPressBlogReader, blog.Link);
                 default:
                     throw new ArgumentException(nameof(blog));
             }
         }
 
         // Extract blog posts
-        private IEnumerable<Post> extractBlogPosts(IBlogReader reader, BlogModel blog)
+        private IEnumerable<Post> extractBlogPosts(IBlogReader reader, string blogLink)
         {
-            if (reader.VerifyBlog(blog))
+            BlogInfo blogInfo = reader.VerifyBlog(blogLink);
+            if (blogInfo != null)
             {
-                return reader.GetBlogPosts(blog);
+                return reader.GetBlogPosts(blogLink);
             }
             else
             {
-                throw new Exception("Blog at " + blog.Link + " could not be verified for extraction");
+                throw new Exception("Blog at " + blogLink + " could not be verified for extraction");
             }
         }
 
@@ -131,13 +116,13 @@ namespace BlogAggregator.Core.Services
         // Save blog posts that are not already in Post table
         public void SaveNewBlogPosts(int blogId, IEnumerable<Post> posts)
         {
-            bool addedToPosts = false;
+            bool savedPosts = false;
             foreach (var post in posts)
             {
                 // Add post to Post table if its Guid does not match any post
                 if (!_postRepository.Any(p => p.Guid == post.Guid))
                 {
-                    addedToPosts = true;
+                    savedPosts = true;
                     _postRepository.Add(new Post
                     {
                         BlogID = blogId,
@@ -151,7 +136,7 @@ namespace BlogAggregator.Core.Services
                 }
             }
 
-            if (addedToPosts)
+            if (savedPosts)
             {
                 _unitOfWork.Commit();
 
