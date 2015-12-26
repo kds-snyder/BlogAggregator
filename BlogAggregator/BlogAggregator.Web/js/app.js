@@ -30,8 +30,6 @@ angular.module('app').value('apiUrl', 'http://localhost:3000/');
 // Load authentication data
 angular.module('app').run(function ($rootScope, authService, $state) {
     authService.loadAuthData();
-
-    console.log('state: ' + $state.current.name);
    
     $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {       
         //if (toState.authenticate && !(authService.authentication.isAuthenticated

@@ -62,6 +62,6 @@
     };
 
     // After all definitions, load the users
-    $scope.load();
+    //$scope.load();
 
 });
