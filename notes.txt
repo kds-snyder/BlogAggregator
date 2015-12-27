@@ -35,3 +35,10 @@ _userRepositoryMock.Setup(pr => pr.FirstOrDefault(It.IsAny<Expression<Func<User,
                                                                        .Returns(_user[_userAuthorizedIndexInData]);
 
 _wordPressBlogReaderMock.Setup(m => m.VerifyBlog(It.IsAny<BlogModel>())).Returns(true);
+
+<div layout="row">
+</div>  <!-- end div layout="row" --> 
+bootstrap snippet pack:
+https://visualstudiogallery.msdn.microsoft.com/e82e7862-f731-4183-a27a-3a44b261bfe5
+glyphfriend:  
+https://visualstudiogallery.msdn.microsoft.com/5fd24afb-b3b2-4cec-9b03-1cfcec6123aa

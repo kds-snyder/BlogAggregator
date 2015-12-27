@@ -10,7 +10,7 @@
                 <md-button class="md-raised md-warn md-hue-2" ng-click="logout()">
                     Log Out
                 </md-button>
-                <md-button class="md-raised md-accent md-hue-1" ng-click="gotoAdmin()" ng-show="authenticationData.isAuthorized">
+                <md-button class="md-raised md-accent md-hue-1" ng-click="gotoAdmin()" ng-class="{hide: !authenticationData.isAuthorized}">
                     Admin
                 </md-button>
             </div><!-- end ng-show userName length > 0 -->

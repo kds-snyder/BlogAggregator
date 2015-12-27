@@ -1,7 +1,5 @@
 ﻿angular.module('app').controller('AdminController', function (authService, $rootScope, $scope, $state) {
-
-    console.log('admin.ctrl.js state: ' + $state.current.name);
-
+   
     $scope.authenticationData = authService.authentication;  
 
     $scope.tabs = [
