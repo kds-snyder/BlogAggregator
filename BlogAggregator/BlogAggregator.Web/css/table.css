@@ -18,11 +18,11 @@
 }
 
 .md-table {
-  min-width: 100%;
+  min-width: 38%;
   border-collapse: collapse;
 }
 
-.md-table tbody tr:hover, .md-table tbody tr:focus {
+.md-table tbody tr:hover, .md-table tbody tr:focus, .md-table tbody div tr:hover {
   cursor:pointer;
   background-color:rgba(63,81,181,0.2);
 }
@@ -33,7 +33,7 @@
   text-align: left;
   font-size: 0.75em;
   font-weight: 700;
-  padding: 16px 16px 16px 0;
+  padding: 8px 18px 8px 0;
 }
 
 .md-table-header a{
@@ -44,20 +44,20 @@
 .md-table-content {
   white-space: nowrap;
   font-size: 0.8em;
-  padding: 16px 16px 16px 0;
-  height: 72px;
+  padding: 8px 18px 8px 0;
+  height: 60px;
 }
 
 .md-table-td-more {
   max-width:72px;
   width:72px;
-  padding:16px;
+  padding:8px;
 }
 
 .md-table-thumbs {
   max-width: 104px;
   width: 104px;
-  padding: 16px 32px;
+  padding: 8px 16px;
 }
 
 .md-table-thumbs div {

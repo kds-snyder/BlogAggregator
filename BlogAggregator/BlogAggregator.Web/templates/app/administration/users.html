@@ -12,23 +12,27 @@
             <table id="table" class="md-table md-colresize">
                 <thead>
                     <tr class="md-table-headers-row">
-                        <th class="md-table-header">Username</th>                       
+
+                        <th class="md-table-header">Username</th>
                         <th class="md-table-header">Action</th>
+
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="md-table-content-row" ng-repeat="user in users">
-                      <td class="md-table-content">{{user.UserName}}</td>
+                        <td class="md-table-content">{{user.UserName}}</td>
                         <td class="md-table-content">
-                            <md-button class="md-raised md-accent" ng-click="authorizeUser(user)" ng-class="{hide: user.Authorized}">
-                                Authorize
-                            </md-button>
-                            <md-button class="md-raised md-warn md-hue-1" ng-click="deauthorizeUser(user)" ng-class="{hide: !user.Authorized}">
-                                Deauthorize
-                            </md-button>
-                            <md-button class="md-raised md-warn md-hue-2" ng-click="deleteUser(user)">
-                                Delete
-                            </md-button>
+                            <div layout="row" layout-align="space-between center">
+                                <md-button class="md-raised md-accent btnNoLeftMargin" ng-click="authorizeUser(user)" ng-class="{hide: user.Authorized}">
+                                    Authorize
+                                </md-button>
+                                <md-button class="md-raised md-warn md-hue-1 btnNoLeftMargin" ng-click="deauthorizeUser(user)" ng-class="{hide: !user.Authorized}">
+                                    Deauthorize
+                                </md-button>
+                                <md-button class="md-raised md-warn md-hue-2" ng-click="deleteUser(user)">
+                                    Delete
+                                </md-button>
+                            </div>
                         </td>
                     </tr>
                 </tbody>

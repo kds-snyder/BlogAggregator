@@ -1,0 +1,10 @@
+<md-tabs md-border-bottom md-dynamic-height class="md-primary">
+    <md-tab ng-repeat="tab in tabs"
+            label="{{tab.heading}}"
+            data-ui-sref="{{tab.state}}">
+    </md-tab>
+</md-tabs>
+
+<md-content>
+    <div ui-view flex></div>
+</md-content>

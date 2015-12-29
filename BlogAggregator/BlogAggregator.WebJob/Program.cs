@@ -34,8 +34,18 @@ namespace BlogAggregator.WebJob
 
             // Call the scheduled blog post updating method
             Console.WriteLine("Calling SaveNewBlogPosts");
-            jobHost.Call(typeof(Functions).GetMethod("SaveNewBlogPosts"));
-            Console.WriteLine("Completed SaveNewBlogPosts");
+            try
+            {
+                jobHost.Call(typeof(Functions).GetMethod("SaveNewBlogPosts"));
+                Console.WriteLine("Completed SaveNewBlogPosts");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception occurred: {0}", e.Message);
+                Console.WriteLine("Source: {0}", e.Source);
+                Console.WriteLine("StackTrace: {0}", e.StackTrace);                
+                throw;
+            }                      
             // Console.ReadLine commented out as it causes WebJob to fail with timeout error although SaveNewBlogPosts is successful
             //Console.ReadLine();
         }
@@ -52,6 +62,7 @@ namespace BlogAggregator.WebJob
             container.Register<IUnitOfWork, UnitOfWork>();
 
             container.Register<IBlogService, BlogService>();
+            container.Register<IWordPressBlogReader, WordPressBlogReader>();
 
             container.Verify();
 

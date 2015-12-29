@@ -14,14 +14,14 @@ angular.module('app', ['directive.g+signin', 'LocalStorageModule', 'ngMaterial',
     $stateProvider
         .state('login', { url: '/login', templateUrl: '/templates/authentication/login.html', controller: 'LoginController', authenticate: false })
 
-         .state('admin', { url: '/admin', templateUrl: '/templates/administration/admin.html', controller: 'AdminController' })
-
-            .state('admin.blogs', { url: '/blogs', templateUrl: '/templates/administration/blogs.html', controller: 'AdminBlogsController', authenticate: true })
-            .state('admin.users', { url: '/users', templateUrl: '/templates/administration/users.html', controller: 'AdminUsersController', authenticate: true })
+         .state('app', { url: '/app', templateUrl: '/templates/app/app.html', controller: 'AppController' })
+            .state('app.admin', { url: '/admin', templateUrl: '/templates/app/administration/admin.html', controller: 'AdminController' })
+                .state('app.admin.blogs', { url: '/blogs', templateUrl: '/templates/app/administration/blogs.html', controller: 'AdminBlogsController', authenticate: true })
+                .state('app.admin.users', { url: '/users', templateUrl: '/templates/app/administration/users.html', controller: 'AdminUsersController', authenticate: true })
  
-        .state('app', { url: '/app', templateUrl: '/templates/app/app.html', controller: 'AppController' })
-            .state('app.posts', { url: '/posts', templateUrl: '/templates/app/posts.html', controller: 'PostsController', authenticate: false })
             .state('app.addblog', { url: '/addblog', templateUrl: '/templates/app/addblog.html', controller: 'AddBlogController', authenticate: false })
+
+            .state('app.posts', { url: '/posts', templateUrl: '/templates/app/posts.html', controller: 'PostsController', authenticate: false })
 });
 
 //API link
