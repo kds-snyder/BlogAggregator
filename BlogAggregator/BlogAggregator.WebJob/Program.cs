@@ -62,6 +62,7 @@ namespace BlogAggregator.WebJob
             container.Register<IUnitOfWork, UnitOfWork>();
 
             container.Register<IBlogService, BlogService>();
+            container.Register<IWordPressBlogReader, WordPressBlogReader>();
 
             container.Verify();
 

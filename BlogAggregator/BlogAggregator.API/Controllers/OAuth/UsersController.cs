@@ -11,8 +11,6 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using System.Data;
 using System.Web.Http.OData;
-using System.Collections.Generic;
-using System.Net.Http.Headers;
 
 namespace BlogAggregator.API.Controllers.OAuth
 {

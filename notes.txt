@@ -29,12 +29,6 @@ http://blogaggregator.azurewebsites.net/api/
                         posts.Add(newPost);
 }
 
-_postRepositoryMock.Setup(pr => pr.Where(It.IsAny<Expression<Func<Post, bool>>>()))
-                                                                        .Returns(_posts.AsQueryable());
-_userRepositoryMock.Setup(pr => pr.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
-                                                                       .Returns(_user[_userAuthorizedIndexInData]);
-
-_wordPressBlogReaderMock.Setup(m => m.VerifyBlog(It.IsAny<BlogModel>())).Returns(true);
 
 <div layout="row">
 </div>  <!-- end div layout="row" --> 
@@ -42,3 +36,10 @@ bootstrap snippet pack:
 https://visualstudiogallery.msdn.microsoft.com/e82e7862-f731-4183-a27a-3a44b261bfe5
 glyphfriend:  
 https://visualstudiogallery.msdn.microsoft.com/5fd24afb-b3b2-4cec-9b03-1cfcec6123aa
+
+
+app.js: apiURL & auth
+app.html: <div ng-show="authenticationData.userName.length > 0">
+	  <md-button class="md-raised md-accent md-hue-1" ng-click="gotoAdmin()" ng-class="{hide: !authenticationData.isAuthorized}">
+API User controller: [Authorize],  GetUsers: check for auth user
+    PutBlog: [Authorize], check for auth user

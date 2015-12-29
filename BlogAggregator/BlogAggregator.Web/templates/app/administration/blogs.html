@@ -36,15 +36,15 @@
                         <td class="md-table-content">{{blog.Title}}</td>
                         <td class="md-table-content">{{blog.Description}}</td>
                         <td class="md-table-content">
-                            <a href="{{blog.Link}}" target="_blank">{{blog.Link}}</a>                       
+                            <a href="{{blog.Link}}" target="_blank">{{blog.Link}}</a>
                         </td>
                         <td class="md-table-content">{{blog.AuthorName}}</td>
                         <td class="md-table-content">{{blog.AuthorEmail}}</td>
                         <td class="md-table-content">
-                            <md-button class="md-raised md-accent" ng-click="approveBlog(blog)" ng-class="{hide: blog.Approved}">
+                            <md-button class="md-raised md-accent btnNoLeftMargin" ng-click="approveBlog(blog)" ng-class="{hide: blog.Approved}">
                                 Approve
                             </md-button>
-                            <md-button class="md-raised md-warn md-hue-1" ng-click="rejectBlog(blog)" ng-class="{hide: !blog.Approved}">
+                            <md-button class="md-raised md-warn md-hue-1 btnNoLeftMargin" ng-click="rejectBlog(blog)" ng-class="{hide: !blog.Approved}">
                                 Reject
                             </md-button>
                             <md-button class="md-raised md-warn md-hue-2" ng-click="deleteBlog(blog)">

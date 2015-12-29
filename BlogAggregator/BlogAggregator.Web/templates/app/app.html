@@ -1,28 +1,29 @@
 ﻿<div layout-fill>
     <md-toolbar class="md-primary">
-        <div class="md-toolbar-tools">
+        <div class="md-toolbar-tools" layout="row">
             <h1>Blog Aggregator</h1>
-            <span flex></span>
-            <div ng-show="authenticationData.userName.length > 0">
-                <span class="md-body-2">
+            <span flex></span>           
+                <span class="md-body-2" ng-class="{hide: authenticationData.userName.length == 0}">
                     Logged in: {{authenticationData.userName}}
                 </span>
-                <md-button class="md-raised md-warn md-hue-2" ng-click="logout()">
+                <md-button class="md-raised md-warn md-hue-2" ng-click="logout()"
+                           ng-class="{hide: authenticationData.userName.length == 0}">
                     Log Out
                 </md-button>
-                <md-button class="md-raised md-accent md-hue-1" ng-click="gotoAdmin()" ng-class="{hide: !authenticationData.isAuthorized}">
+                <md-button class="md-raised md-accent md-hue-1" ng-click="gotoAdmin()"
+                           ng-class="{hide: !authenticationData.isAuthorized || authenticationData.userName.length == 0}">
                     Admin
-                </md-button>
-            </div><!-- end ng-show userName length > 0 -->
+                </md-button>                   
             <md-button class="md-raised md-accent">
                 <a ui-sref="app.addblog">Add Blog</a>
             </md-button>
             <md-button class="md-raised md-accent md-hue-2">
                 <a ui-sref="app.posts">Home</a>
             </md-button>
+            <span flex="1"></span>  
         </div>
     </md-toolbar>
-
+    
     <div ui-view></div>
 
     <footer>
