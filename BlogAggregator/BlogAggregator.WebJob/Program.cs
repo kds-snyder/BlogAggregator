@@ -22,30 +22,35 @@ namespace BlogAggregator.WebJob
         // AzureWebJobsDashboard and AzureWebJobsStorage
         static void Main()
         {
-            // Configure SimpleInjector                     
-            Container container = configureSimpleInjector();
-
-            // Configure JobHost.
-            var jobHostConfiguration = new JobHostConfiguration
-            {
-                JobActivator = new BlogAggregatorJobActivator(container)
-            };
-            var jobHost = new JobHost(jobHostConfiguration);
-
-            // Call the scheduled blog post updating method
-            Console.WriteLine("Calling SaveNewBlogPosts");
             try
             {
+                // Configure SimpleInjector                     
+                Container container = configureSimpleInjector();
+
+                // Configure JobHost.
+                var jobHostConfiguration = new JobHostConfiguration
+                {
+                    JobActivator = new BlogAggregatorJobActivator(container)
+                };
+
+                var jobHost = new JobHost(jobHostConfiguration);
+
+                // Call the scheduled blog post updating method
+                Console.WriteLine("Calling SaveNewBlogPosts");
                 jobHost.Call(typeof(Functions).GetMethod("SaveNewBlogPosts"));
                 Console.WriteLine("Completed SaveNewBlogPosts");
             }
             catch (Exception e)
             {
-                Console.WriteLine("Exception occurred: {0}", e.Message);
-                Console.WriteLine("Source: {0}", e.Source);
-                Console.WriteLine("StackTrace: {0}", e.StackTrace);                
+                Console.WriteLine("Exception occurred: {0}\nSource: {1}\nStackTrace: {2}", 
+                                    e.Message, e.Source, e.StackTrace);
+                if (e.InnerException != null)
+                {
+                    Console.WriteLine("InnerException: {0}\n{1}",
+                                e.InnerException, e.InnerException.StackTrace);
+               }              
                 throw;
-            }                      
+            }
             // Console.ReadLine commented out as it causes WebJob to fail with timeout error although SaveNewBlogPosts is successful
             //Console.ReadLine();
         }
