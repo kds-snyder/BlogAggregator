@@ -1,21 +1,15 @@
 ﻿using BlogAggregator.Core.Domain;
-using BlogAggregator.Core.Infrastructure;
-using BlogAggregator.Core.Models;
 using BlogAggregator.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace BlogAggregator.Core.BlogReader.WordPress
 {
     // Handle Word Press blogs
     public class WordPressBlogReader : IWordPressBlogReader
-    {
-        public static WordPressBlogReader Instance => new WordPressBlogReader();
-
+    {      
         // Retrieve blog description and title from blog Website
         //  according to input blog link, and return in BlogInfo object
         // Return null if unable to get blog info
