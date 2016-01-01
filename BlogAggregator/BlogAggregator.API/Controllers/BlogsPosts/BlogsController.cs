@@ -60,16 +60,16 @@ namespace BlogAggregator.API.Controllers
         }
 
         // PUT: api/Blogs/5
-        [Authorize]
+        //[Authorize]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutBlog(int id, BlogModel blog)
         {
             //Allow only for authorized user
-            var userToCheck = _userRepository.FirstOrDefault(u => u.UserName == User.Identity.Name);
-            if (!userToCheck.Authorized)
-            {
-                return Unauthorized();
-            }
+            //var userToCheck = _userRepository.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            //if (!userToCheck.Authorized)
+            //{
+            //    return Unauthorized();
+            //}
 
             // Validate the request
             if (!ModelState.IsValid)
@@ -108,7 +108,7 @@ namespace BlogAggregator.API.Controllers
                 _unitOfWork.Commit();
             }
 
-            catch (DBConcurrencyException e)
+            catch (DBConcurrencyException ex)
             {
                 if (!BlogExists(id))
                 {
@@ -116,7 +116,7 @@ namespace BlogAggregator.API.Controllers
                 }
                 else
                 {
-                    throw new Exception("Unable to update the blog in the database", e);
+                    throw new Exception("Unable to update the blog in the database", ex);
                 }
             }
 
@@ -154,6 +154,9 @@ namespace BlogAggregator.API.Controllers
             blog.Description = blogInfo.Description;
             blog.Title = blogInfo.Title;
 
+            // Set blog as not approved
+            blog.Approved = false;
+
             //Set up new Blog object, populated from input blog
             Blog dbBlog = new Blog();
             dbBlog.Update(blog);
@@ -173,29 +176,23 @@ namespace BlogAggregator.API.Controllers
 
             // Set blog ID in BlogModel object with the ID 
             //  that was placed in the DB blog after it was added to DB
-            blog.BlogID = dbBlog.BlogID;
-
-            // If approved, parse the blog posts and store them in the DB
-            if (dbBlog.Approved)
-            {
-                _blogService.ExtractAndSaveBlogPosts(dbBlog);
-            }
+            blog.BlogID = dbBlog.BlogID;           
 
             // Return the created blog record
             return CreatedAtRoute("DefaultApi", new { id = blog.BlogID }, blog);
         }
 
         // DELETE: api/Blogs/5
-        [Authorize]
+        //[Authorize]
         [ResponseType(typeof(BlogModel))]
         public IHttpActionResult DeleteBlog(int id)
         {
             //Allow only for authorized user
-            var userToCheck = _userRepository.FirstOrDefault(u => u.UserName == User.Identity.Name);
-            if (!userToCheck.Authorized)
-            {
-                return Unauthorized();
-            }
+            //var userToCheck = _userRepository.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            //if (!userToCheck.Authorized)
+            //{
+            //    return Unauthorized();
+            //}
 
             // Get the DB blog corresponding to the blog ID
             Blog dbBlog = _blogRepository.GetByID(id);

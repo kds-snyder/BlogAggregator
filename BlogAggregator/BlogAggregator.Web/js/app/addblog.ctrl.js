@@ -6,10 +6,7 @@ angular.module('app').controller('AddBlogController', function (Blog, $mdToast, 
     $scope.addBlog = function () {
 
         // Set blog type to Word Press
-        $scope.blog.BlogType = 1;
-
-        // Add blog as not approved
-        $scope.blog.Approved = false;
+        $scope.blog.BlogType = 1;        
 
         // Set loading indicator and save the new blog
         $scope.loading = true;
