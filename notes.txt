@@ -37,7 +37,8 @@ https://visualstudiogallery.msdn.microsoft.com/e82e7862-f731-4183-a27a-3a44b261b
 glyphfriend:  
 https://visualstudiogallery.msdn.microsoft.com/5fd24afb-b3b2-4cec-9b03-1cfcec6123aa
 
-
+extractBlogPosts: verifyBlog
+WebJob: ReadLine
 app.js: apiURL & auth
 app.ctrl.js: set authenticationData.userName & authenticationData.isAuthorized
 app.html: <div ng-show="authenticationData.userName.length > 0">

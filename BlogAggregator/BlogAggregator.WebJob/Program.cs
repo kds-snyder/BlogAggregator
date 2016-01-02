@@ -43,11 +43,13 @@ namespace BlogAggregator.WebJob
                 {
                     Console.WriteLine("InnerException: {0}\n{1}",
                                 e.InnerException, e.InnerException.StackTrace);
-               }              
+               }
+                // Console.ReadLine must be commented out when deployed as it causes WebJob to fail with timeout error
+                Console.ReadLine();
                 throw;
             }
-            // Console.ReadLine commented out as it causes WebJob to fail with timeout error although SaveNewBlogPosts is successful
-            //Console.ReadLine();
+            // Console.ReadLine must be commented out when deployed as it causes WebJob to fail with timeout error
+            Console.ReadLine();
         }
 
         // Configure Simple Injector dependencies

@@ -29,7 +29,9 @@ namespace BlogAggregator.Core.Services
             catch (WebException ex)
             {
                 webData = "";
-                HTTPresult = ((HttpWebResponse)ex.Response).StatusCode;
+                // Return HTTP status code if available
+                HTTPresult = ex.Response == null ? HttpStatusCode.Unused :
+                                        ((HttpWebResponse)ex.Response).StatusCode;                
             }
             return webData;
             

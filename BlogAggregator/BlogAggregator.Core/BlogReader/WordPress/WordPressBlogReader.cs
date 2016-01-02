@@ -61,7 +61,7 @@ namespace BlogAggregator.Core.BlogReader.WordPress
                 {
                     // Parse the posts and append them to blogPosts
                     // Increment post page counter                    
-                    blogPosts.AddRange(parseBlogPosts(feedData));
+                    blogPosts.AddRange(parseBlogPosts(blogLink, feedData));
                     ++postPage;
                 }
             }
@@ -133,15 +133,13 @@ namespace BlogAggregator.Core.BlogReader.WordPress
             }
             catch (Exception ex)
             {
-                throw new Exception("Unable to parse blog info from blog at " + blogLink +
-                          "/nException message: " + ex.Message + 
-                          "/nStacktrace: " + ex.StackTrace);
+                return null;
             }
         }
 
-        // Get the blog posts from the input XML data,
+        // Get the blog posts from the input feed XML data,
         //  and return as list of Post objects        
-        private List<Post> parseBlogPosts(string xmlData)
+        private List<Post> parseBlogPosts(string blogLink, string xmlData)
         {
             var posts = new List<Post>();
 
@@ -156,7 +154,6 @@ namespace BlogAggregator.Core.BlogReader.WordPress
 
                     // Get the blog posts from the XML document
                     // They are in <item> tags, which are under <channel> under <rss> 
-
                     posts =
                        xmlDoc.Element("rss").Element("channel").Descendants("item").Select(post => new Post
                        {
@@ -168,17 +165,13 @@ namespace BlogAggregator.Core.BlogReader.WordPress
                            Title = post.Element("title").Value.ScrubHtml()
                        }).ToList();
                 }
+                return posts;
+
             }
             catch (Exception ex)
             {
-                // If error occurred, ensure that null object is returned
-                if (posts != null)
-                {
-                    posts = new List<Post>();
-                }
-            }
-
-            return posts;
+                throw new Exception("Unable to parse blog posts from blog at " + blogLink);
+            }           
         }
 
         // Get the content namespace specified in the input XML document,
