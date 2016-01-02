@@ -82,15 +82,15 @@ namespace BlogAggregator.Core.Services
         // Extract blog posts
         private IEnumerable<Post> extractBlogPosts(IBlogReader reader, string blogLink)
         {
-            //BlogInfo blogInfo = reader.VerifyBlog(blogLink);
-            //if (blogInfo != null)
-            //{
+            BlogInfo bloginfo = reader.VerifyBlog(blogLink);
+            if (bloginfo != null)
+            {
                 return reader.GetBlogPosts(blogLink);
-            //}
-            //else
-            //{
-            //    throw new Exception("Blog at " + blogLink + " could not be verified for extraction");
-            //}
+            }
+            else
+            {
+                throw new Exception("blog at " + blogLink + " could not be verified for extraction");
+            }
         }
 
         // Save blog posts in Post table

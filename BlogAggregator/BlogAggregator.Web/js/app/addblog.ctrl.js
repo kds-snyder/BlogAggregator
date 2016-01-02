@@ -27,7 +27,7 @@ angular.module('app').controller('AddBlogController', function (Blog, $mdToast, 
             //  Clear loading indicator and display error message
             $scope.loading = false;
             $mdToast.show($mdToast.simple()
-                           .content('Error adding blog: Please verify that you entered a link to a valid blog')
+                           .content('Error adding blog; please verify that you entered a link to a valid blog')
                            .position('top left').theme("toast-error"));
         });
     };
