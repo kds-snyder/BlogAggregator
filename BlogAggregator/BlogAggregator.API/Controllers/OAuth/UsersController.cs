@@ -14,7 +14,7 @@ using System.Web.Http.OData;
 
 namespace BlogAggregator.API.Controllers.OAuth
 {
-    //[Authorize]
+    [Authorize]
     public class UsersController : ApiController
     {
         private readonly IExternalLoginRepository _externalLoginRepository;
@@ -32,16 +32,16 @@ namespace BlogAggregator.API.Controllers.OAuth
         [EnableQuery]
         public IQueryable<UserModel> GetUsers()
         {
-            // Allow only for authorized user
-            //var userToCheck = _userRepository.FirstOrDefault(u => u.UserName == User.Identity.Name);
-            //if (!userToCheck.Authorized)
-            //{
-            //    return Enumerable.Empty<UserModel>().AsQueryable();
-            //}
-            //else
-            //{
+            //Allow only for authorized user
+            var userToCheck = _userRepository.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            if (!userToCheck.Authorized)
+            {
+                return Enumerable.Empty<UserModel>().AsQueryable();
+            }
+            else
+            {
                 return _userRepository.GetAll().ProjectTo<UserModel>();
-            //}            
+            }            
         }
 
         // GET: api/Users/5

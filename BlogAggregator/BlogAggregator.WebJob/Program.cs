@@ -34,6 +34,9 @@ namespace BlogAggregator.WebJob
                 Console.WriteLine("Calling SaveNewBlogPosts");
                 jobHost.Call(typeof(Functions).GetMethod("SaveNewBlogPosts"));
                 Console.WriteLine("Completed SaveNewBlogPosts");
+
+                // Console.ReadLine must be commented out when deployed as it causes WebJob to fail with timeout error
+                //Console.ReadLine();
             }
             catch (Exception e)
             {
@@ -45,11 +48,9 @@ namespace BlogAggregator.WebJob
                                 e.InnerException, e.InnerException.StackTrace);
                }
                 // Console.ReadLine must be commented out when deployed as it causes WebJob to fail with timeout error
-                Console.ReadLine();
+                //Console.ReadLine();
                 throw;
-            }
-            // Console.ReadLine must be commented out when deployed as it causes WebJob to fail with timeout error
-            Console.ReadLine();
+            }           
         }
 
         // Configure Simple Injector dependencies

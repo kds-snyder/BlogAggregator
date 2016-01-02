@@ -1,9 +1,9 @@
 angular.module('app').controller('AppController', function (authService, $scope, $state) {
     $scope.authenticationData = authService.authentication;
 
-    // FOR TESTING
-    $scope.authenticationData.userName = "KDS@k.com";
-    $scope.authenticationData.isAuthorized = true;
+    // FOR LOCAL TESTING
+    //$scope.authenticationData.userName = "KDS@kds.com";
+    //$scope.authenticationData.isAuthorized = true;
 
     // Log out: change the state to home if in an admin state
     $scope.logout = function () {

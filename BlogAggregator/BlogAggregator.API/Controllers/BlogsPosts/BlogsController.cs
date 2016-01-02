@@ -60,16 +60,16 @@ namespace BlogAggregator.API.Controllers
         }
 
         // PUT: api/Blogs/5
-        //[Authorize]
+        [Authorize]
         [ResponseType(typeof(void))]
         public IHttpActionResult PutBlog(int id, BlogModel blog)
         {
             //Allow only for authorized user
-            //var userToCheck = _userRepository.FirstOrDefault(u => u.UserName == User.Identity.Name);
-            //if (!userToCheck.Authorized)
-            //{
-            //    return Unauthorized();
-            //}
+            var userToCheck = _userRepository.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            if (!userToCheck.Authorized)
+            {
+                return Unauthorized();
+            }
 
             // Validate the request
             if (!ModelState.IsValid)
@@ -183,16 +183,16 @@ namespace BlogAggregator.API.Controllers
         }
 
         // DELETE: api/Blogs/5
-        //[Authorize]
+        [Authorize]
         [ResponseType(typeof(BlogModel))]
         public IHttpActionResult DeleteBlog(int id)
         {
             //Allow only for authorized user
-            //var userToCheck = _userRepository.FirstOrDefault(u => u.UserName == User.Identity.Name);
-            //if (!userToCheck.Authorized)
-            //{
-            //    return Unauthorized();
-            //}
+            var userToCheck = _userRepository.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            if (!userToCheck.Authorized)
+            {
+                return Unauthorized();
+            }
 
             // Get the DB blog corresponding to the blog ID
             Blog dbBlog = _blogRepository.GetByID(id);
