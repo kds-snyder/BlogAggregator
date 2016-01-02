@@ -38,11 +38,9 @@ glyphfriend:
 https://visualstudiogallery.msdn.microsoft.com/5fd24afb-b3b2-4cec-9b03-1cfcec6123aa
 
 
-WebJob: ReadLine
+WebJob: ReadLine 2x
 app.js: apiURL & auth
 app.ctrl.js: set authenticationData.userName & authenticationData.isAuthorized
-app.html: <div ng-show="authenticationData.userName.length > 0">
-	  <md-button class="md-raised md-accent md-hue-1" ng-click="gotoAdmin()" ng-class="{hide: !authenticationData.isAuthorized}">
-API User controller: [Authorize],  GetUsers: check for auth user
+API: User controller: [Authorize],  GetUsers: check for auth user
     DeleteBlog & PutBlog: [Authorize], check for auth user    
 	
