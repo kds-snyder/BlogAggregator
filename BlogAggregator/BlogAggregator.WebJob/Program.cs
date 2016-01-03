@@ -7,7 +7,6 @@ using BlogAggregator.Data.Infrastructure;
 using BlogAggregator.Core.Infrastructure;
 using BlogAggregator.Core.Repository;
 using BlogAggregator.Data.Repository;
-using NLog;
 
 namespace BlogAggregator.WebJob
 {

@@ -18,7 +18,8 @@ namespace BlogAggregator.Core.BlogReader.WordPress
         //  according to input blog link, and return in BlogInfo object
         // Return null if unable to get blog info
         public BlogInfo VerifyBlog(string blogLink)
-        {
+        {           
+
             // Get the blog feed
             string feedData = getBlogFeed(blogLink);
 
@@ -55,12 +56,11 @@ namespace BlogAggregator.Core.BlogReader.WordPress
                     }
                     else
                     {
-                        _logger.Error("Unable to get blog feed from blog at {0}, postPage: {1}, HTTP status code: {2}",
+                        _logger.Error("Unable to get blog feed from {0}, postPage: {1}, HTTP status code: {2}",
                                         blogLink, postPage, HTTPresult);
-                        throw new Exception("Unable to get blog feed from blog at " + blogLink +
+                        throw new Exception("Unable to get feed from blog at " + blogLink +
                                                 ", postPage: " + postPage +
                                                 ", HTTP status code: " + HTTPresult);
-
                     }
                 }
                 else
@@ -175,7 +175,6 @@ namespace BlogAggregator.Core.BlogReader.WordPress
                        }).ToList();
                 }
                 return posts;
-
             }
             catch (Exception ex)
             {

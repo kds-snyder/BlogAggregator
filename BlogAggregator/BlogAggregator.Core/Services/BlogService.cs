@@ -33,7 +33,6 @@ namespace BlogAggregator.Core.Services
             _wordPressBlogReader = wordPressBlogReader;
             //_logger = logger;
             _logger = LogManager.GetCurrentClassLogger();
-
         }
 
         // Extract posts of blog and save them in Post table
@@ -99,7 +98,7 @@ namespace BlogAggregator.Core.Services
             BlogInfo bloginfo = reader.VerifyBlog(blogLink);
             if (bloginfo != null)
             {
-                _logger.Trace("Attempting to get posts from {0}", blogLink);
+                _logger.Trace("Getting posts from {0}", blogLink);
 
                 return reader.GetBlogPosts(blogLink);
             }
@@ -127,6 +126,7 @@ namespace BlogAggregator.Core.Services
             }
 
             _unitOfWork.Commit();
+            _logger.Trace("Saved {0} posts for blog ID {1}", posts.Count(), blogId);
         }
 
         // Save blog posts that are not already in Post table
