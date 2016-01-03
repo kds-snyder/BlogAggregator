@@ -12,6 +12,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Facebook;
 using Microsoft.Owin.Security.Google;
 using Microsoft.Owin.Security.OAuth;
+using NLog;
 using Owin;
 using SimpleInjector;
 using SimpleInjector.Extensions.ExecutionContextScoping;
@@ -64,7 +65,7 @@ namespace BlogAggregator.API
             };
 
             // Token Generation
-            app.UseOAuthAuthorizationServer(oAuthServerOptions);           
+            app.UseOAuthAuthorizationServer(oAuthServerOptions);
             app.UseOAuthBearerAuthentication(OAuthBearerOptions);
 
             // Set third-party login provider options
@@ -98,7 +99,7 @@ namespace BlogAggregator.API
             container.Register<IDatabaseFactory, DatabaseFactory>(Lifestyle.Scoped);
 
             container.Register<IUnitOfWork, UnitOfWork>();
-          
+
             container.Register<IBlogRepository, BlogRepository>();
             container.Register<IPostRepository, PostRepository>();
             container.Register<IUserRepository, UserRepository>();
@@ -107,7 +108,14 @@ namespace BlogAggregator.API
             container.Register<IBlogService, BlogService>();
             container.Register<IWordPressBlogReader, WordPressBlogReader>();
 
-            app.Use(async (context, next) => {
+            //container.RegisterConditional(
+            //    typeof(ILogger),
+            //    c => typeof(Logger).MakeGenericType(c.Consumer.ImplementationType),
+            //                  Lifestyle.Transient,
+            //                    c => true);
+
+            app.Use(async (context, next) =>
+            {
                 using (container.BeginExecutionContextScope())
                 {
                     await next();

@@ -7,6 +7,7 @@ using BlogAggregator.Data.Infrastructure;
 using BlogAggregator.Core.Infrastructure;
 using BlogAggregator.Core.Repository;
 using BlogAggregator.Data.Repository;
+using NLog;
 
 namespace BlogAggregator.WebJob
 {
@@ -36,7 +37,7 @@ namespace BlogAggregator.WebJob
                 Console.WriteLine("Completed SaveNewBlogPosts");
 
                 // Console.ReadLine must be commented out when deployed as it causes WebJob to fail with timeout error
-                //Console.ReadLine();
+                Console.ReadLine();
             }
             catch (Exception e)
             {
@@ -48,7 +49,7 @@ namespace BlogAggregator.WebJob
                                 e.InnerException, e.InnerException.StackTrace);
                }
                 // Console.ReadLine must be commented out when deployed as it causes WebJob to fail with timeout error
-                //Console.ReadLine();
+                Console.ReadLine();
                 throw;
             }           
         }
@@ -66,6 +67,8 @@ namespace BlogAggregator.WebJob
 
             container.Register<IBlogService, BlogService>();
             container.Register<IWordPressBlogReader, WordPressBlogReader>();
+
+            //container.Register<ILogger, Logger>();
 
             container.Verify();
 

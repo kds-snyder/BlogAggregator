@@ -1,5 +1,6 @@
 ﻿using BlogAggregator.Core.Domain;
 using BlogAggregator.Core.Services;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace BlogAggregator.Core.BlogReader.WordPress
     // Handle Word Press blogs
     public class WordPressBlogReader : IWordPressBlogReader
     {
+        private static ILogger _logger = LogManager.GetCurrentClassLogger();
+
         // Retrieve blog description and title from blog Website
         //  according to input blog link, and return in BlogInfo object
         // Return null if unable to get blog info
@@ -52,9 +55,12 @@ namespace BlogAggregator.Core.BlogReader.WordPress
                     }
                     else
                     {
+                        _logger.Error("Unable to get blog feed from blog at {0}, postPage: {1}, HTTP status code: {2}",
+                                        blogLink, postPage, HTTPresult);
                         throw new Exception("Unable to get blog feed from blog at " + blogLink +
-                                                ", postPage: " + postPage +                               
+                                                ", postPage: " + postPage +
                                                 ", HTTP status code: " + HTTPresult);
+
                     }
                 }
                 else
@@ -76,6 +82,7 @@ namespace BlogAggregator.Core.BlogReader.WordPress
         {
             string feedUrl = getFeedUrl(blogLink, postPage);
             string feedData = WebData.Instance.GetWebData(feedUrl, out HTTPresult);
+
             return feedData;
         }
 
@@ -113,7 +120,7 @@ namespace BlogAggregator.Core.BlogReader.WordPress
 
         // Get the blog information from the input XML data,
         //  and return it as BlogInfo object
-         private BlogInfo parseBlogInfo(string xmlData, string blogLink)
+        private BlogInfo parseBlogInfo(string xmlData, string blogLink)
         {
             try
             {
@@ -133,13 +140,15 @@ namespace BlogAggregator.Core.BlogReader.WordPress
             }
             catch (Exception ex)
             {
+                _logger.Error("Unable to parse blog info from {0}\nException: {1}\nStackTrace: {2}",
+                                        blogLink, ex.Message, ex.StackTrace);
                 return null;
             }
         }
 
         // Get the blog posts from the input feed XML data,
         //  and return as list of Post objects        
-        private List<Post> parseBlogPosts(string blogLink, string xmlData)
+        private List<Post> parseBlogPosts(string feedLink, string xmlData)
         {
             var posts = new List<Post>();
 
@@ -170,8 +179,10 @@ namespace BlogAggregator.Core.BlogReader.WordPress
             }
             catch (Exception ex)
             {
-                throw new Exception("Unable to parse blog posts from blog at " + blogLink);
-            }           
+                _logger.Error("Unable to parse blog posts from {0}\nException: {1}\nStackTrace: {2}",
+                                        feedLink, ex.Message, ex.StackTrace);
+                throw new Exception("Unable to parse blog posts from " + feedLink);
+            }
         }
 
         // Get the content namespace specified in the input XML document,
