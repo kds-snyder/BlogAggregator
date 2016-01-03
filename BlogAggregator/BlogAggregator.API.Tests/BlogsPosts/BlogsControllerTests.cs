@@ -497,7 +497,7 @@ namespace BlogAggregator.API.Tests.BlogPosts
         }
 
         [TestMethod]
-        public void PostBlogNotApprovedAddsBlog()
+        public void PostBlogAddsBlog()
         {
             // Arrange
             BlogInfo blogInfo = new BlogInfo
@@ -536,66 +536,6 @@ namespace BlogAggregator.API.Tests.BlogPosts
             var createdResult = actionResult as CreatedAtRouteNegotiatedContentResult<BlogModel>;
             Assert.IsNotNull(createdResult);
             Assert.AreEqual(createdResult.RouteName, "DefaultApi");
-        }
-
-        [TestMethod]
-        public void PostBlogApprovedAddsBlogAndPosts()
-        {
-            // Arrange          
-            BlogInfo blogInfo = new BlogInfo
-            {
-                Description = "Stupendous Blog",
-                Title = "KDS Blog"
-            };
-            _wordPressBlogReaderMock.Setup(m => m.VerifyBlog(It.IsAny<string>())).Returns(blogInfo);
-
-            // Act
-            IHttpActionResult actionResult =
-                _controller.PostBlog(
-                     new BlogModel
-                     {
-                         BlogID = _blogIDNotApproved,
-                         BlogType = BlogTypes.WordPress,
-                         CreatedDate = new DateTime(2015, 12, 1, 10, 55, 32),
-                         Approved = true,
-                         AuthorEmail = "k@s.com",
-                         AuthorName = "KDS",
-                         Description = "Stupendous Blog",
-                         Link = "XXXX",
-                         Title = "KDS Blog"
-                     });
-            var statusCodeResult = actionResult as StatusCodeResult;
-
-           // Assert
-           // Verify that:
-           //  Add is called for Blog object
-           //  Unit of Work is called at least once
-           //  ExtractAndSaveBlogPosts is called
-           //  HTTP result is CreatedAtRouteNegotiatedContentResult
-           //  Location header is set in created result
-            _blogRepositoryMock.Verify(b => b.Add(It.IsAny<Blog>()), Times.Once);
-            _unitOfWorkMock.Verify(uow => uow.Commit(), Times.AtLeastOnce);
-            _blogServiceMock.Verify(bs => bs.ExtractAndSaveBlogPosts(It.IsAny<Blog>()), Times.Once);
-           Assert.IsInstanceOfType
-                    (actionResult, typeof(CreatedAtRouteNegotiatedContentResult<BlogModel>));
-            var createdResult = actionResult as CreatedAtRouteNegotiatedContentResult<BlogModel>;
-            Assert.IsNotNull(createdResult);
-            Assert.AreEqual(createdResult.RouteName, "DefaultApi");
-        }
-
-        [TestMethod]
-        public void DeleteBlogUnauthorizedUserReturnsUnauthorized()
-        {
-            // Arrange
-            _userRepositoryMock.Setup(pr => pr.FirstOrDefault(It.IsAny<Expression<Func<User, bool>>>()))
-                                                                       .Returns(_users[_userUnauthorizedIndexInArray]);
-
-            // Act
-            IHttpActionResult actionResult = _controller.DeleteBlog(_blogIDApprovedNoMockPosts);
-
-            // Assert
-            // Verify that HTTP status code result of delete is unauthorized
-            Assert.IsInstanceOfType(actionResult, typeof(UnauthorizedResult));
         }
 
         [TestMethod]

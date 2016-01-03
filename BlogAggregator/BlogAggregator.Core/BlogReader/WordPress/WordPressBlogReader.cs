@@ -140,7 +140,7 @@ namespace BlogAggregator.Core.BlogReader.WordPress
             }
             catch (Exception ex)
             {
-                _logger.Error("Unable to parse blog info from {0}\nException: {1}\nStackTrace: {2}",
+                _logger.Warn("Unable to parse blog info from {0}\nException: {1}\nStackTrace: {2}",
                                         blogLink, ex.Message, ex.StackTrace);
                 return null;
             }
