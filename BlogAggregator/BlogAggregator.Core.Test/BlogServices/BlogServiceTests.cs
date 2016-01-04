@@ -11,7 +11,6 @@ using System.Linq;
 using System.Collections.Generic;
 using BlogAggregator.Core.BlogReader;
 using System.Linq.Expressions;
-using NLog;
 
 namespace BlogAggregator.Core.Test.BlogServices
 {

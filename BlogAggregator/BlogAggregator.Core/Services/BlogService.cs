@@ -154,9 +154,9 @@ namespace BlogAggregator.Core.Services
 
             if (savedPosts > 0)
             {
-                _unitOfWork.Commit();
-                _logger.Trace("Saved {0} new posts for blog ID {1}", savedPosts, blogId);
+                _unitOfWork.Commit();               
             }
+            _logger.Trace("Saved {0} new posts for blog ID {1}", savedPosts, blogId);
         }
     }
 }
