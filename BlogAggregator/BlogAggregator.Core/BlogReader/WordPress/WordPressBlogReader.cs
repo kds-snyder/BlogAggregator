@@ -30,6 +30,7 @@ namespace BlogAggregator.Core.BlogReader.WordPress
             }
             else
             {
+                _logger.Warn("Unable to get blog feed from {0}", blogLink);
                 return null;
             }
         }
@@ -82,7 +83,7 @@ namespace BlogAggregator.Core.BlogReader.WordPress
         {
             string feedUrl = getFeedUrl(blogLink, postPage);
             string feedData = WebData.Instance.GetWebData(feedUrl, out HTTPresult);
-
+          
             return feedData;
         }
 

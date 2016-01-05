@@ -34,10 +34,7 @@ namespace BlogAggregator.Core.Services
                 webData = "";
                 // Return HTTP status code if available
                 HTTPresult = ex.Response == null ? HttpStatusCode.Unused :
-                                        ((HttpWebResponse)ex.Response).StatusCode;
-
-                _logger.Warn("Web exception reading from URL: {0}, HTTP status code: {1}\nException: {2}\nStackTrace: {3}", 
-                        webUrl, HTTPresult, ex.Message, ex.StackTrace);              
+                                        ((HttpWebResponse)ex.Response).StatusCode;                     
             }
             return webData;
             

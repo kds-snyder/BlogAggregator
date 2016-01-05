@@ -43,7 +43,7 @@ namespace BlogAggregator.Core.Services
             _logger.Trace("Extracted {0} posts from {1}",
                             blogPosts.Count(), blog.Link);
 
-            SaveBlogPosts(blog.BlogID, blogPosts);
+            SaveBlogPosts(blog, blogPosts);
         }
 
         // Extract posts of blog, and save posts in Post table
@@ -55,7 +55,7 @@ namespace BlogAggregator.Core.Services
             _logger.Trace("Extracted {0} posts from {1}",
                             blogPosts.Count(), blog.Link);
 
-            SaveNewBlogPosts(blog.BlogID, blogPosts);
+            SaveNewBlogPosts(blog, blogPosts);
         }
 
         // For all approved blogs, extract posts, and save posts in Post table         
@@ -109,13 +109,13 @@ namespace BlogAggregator.Core.Services
         }
 
         // Save blog posts in Post table
-        public void SaveBlogPosts(int blogId, IEnumerable<Post> posts)
+        public void SaveBlogPosts(Blog blog, IEnumerable<Post> posts)
         {
             foreach (var post in posts)
             {
                 _postRepository.Add(new Post
                 {
-                    BlogID = blogId,
+                    BlogID = blog.BlogID,
                     Content = post.Content,
                     Description = post.Description,
                     Guid = post.Guid,
@@ -126,11 +126,11 @@ namespace BlogAggregator.Core.Services
             }
 
             _unitOfWork.Commit();
-            _logger.Trace("Saved {0} posts for blog ID {1}", posts.Count(), blogId);
+            _logger.Trace("Saved {0} posts for blog {1}", posts.Count(), blog.Link);
         }
 
         // Save blog posts that are not already in Post table
-        public void SaveNewBlogPosts(int blogId, IEnumerable<Post> posts)
+        public void SaveNewBlogPosts(Blog blog, IEnumerable<Post> posts)
         {
             int savedPosts = 0;
             foreach (var post in posts)
@@ -141,7 +141,7 @@ namespace BlogAggregator.Core.Services
                     ++savedPosts;
                     _postRepository.Add(new Post
                     {
-                        BlogID = blogId,
+                        BlogID = blog.BlogID,
                         Content = post.Content,
                         Description = post.Description,
                         Guid = post.Guid,
@@ -156,7 +156,7 @@ namespace BlogAggregator.Core.Services
             {
                 _unitOfWork.Commit();               
             }
-            _logger.Trace("Saved {0} new posts for blog ID {1}", savedPosts, blogId);
+            _logger.Trace("Saved {0} new posts for blog {1}", savedPosts, blog.Link);
         }
     }
 }

@@ -364,7 +364,7 @@ namespace BlogAggregator.Core.Test.BlogServices
             IEnumerable<Post> posts = _postsBlogA.ToList();
 
             // Act
-            _blogService.SaveBlogPosts(_blogIDAWithPosts, posts);
+            _blogService.SaveBlogPosts(_blogA, posts);
 
             // Assert
             // Verify that:
@@ -382,7 +382,7 @@ namespace BlogAggregator.Core.Test.BlogServices
             _postRepositoryMock.Setup(pr => pr.Any(It.IsAny<Expression<Func<Post, bool>>>())).Returns(false);
 
             // Act
-            _blogService.SaveNewBlogPosts(_blogIDBWithPosts, posts);
+            _blogService.SaveNewBlogPosts(_blogB, posts);
 
             // Assert
             // Verify that:
