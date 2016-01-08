@@ -126,7 +126,7 @@ namespace BlogAggregator.Core.Services
             }
 
             _unitOfWork.Commit();
-            _logger.Trace("Saved {0} posts for blog {1}", posts.Count(), blog.Link);
+            _logger.Trace("Saved {0} posts for {1}", posts.Count(), blog.Link);
         }
 
         // Save blog posts that are not already in Post table
@@ -156,7 +156,7 @@ namespace BlogAggregator.Core.Services
             {
                 _unitOfWork.Commit();               
             }
-            _logger.Trace("Saved {0} new posts for blog {1}", savedPosts, blog.Link);
+            _logger.Trace("Saved {0} new posts for {1}", savedPosts, blog.Link);
         }
     }
 }
