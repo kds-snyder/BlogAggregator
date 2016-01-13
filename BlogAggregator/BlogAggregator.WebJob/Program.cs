@@ -36,7 +36,7 @@ namespace BlogAggregator.WebJob
                 Console.WriteLine("Completed SaveNewBlogPosts");
 
                 // Console.ReadLine must be commented out when deployed as it causes WebJob to fail with timeout error
-                //Console.ReadLine();
+                Console.ReadLine();
             }
             catch (Exception e)
             {
@@ -48,7 +48,7 @@ namespace BlogAggregator.WebJob
                                 e.InnerException, e.InnerException.StackTrace);
                }
                 // Console.ReadLine must be commented out when deployed as it causes WebJob to fail with timeout error
-                //Console.ReadLine();
+                Console.ReadLine();
                 throw;
             }           
         }
