@@ -10,10 +10,10 @@ namespace System
     {
         // Adjust the input content (which should first have HTML scrubbing applied) as follows:
         // -Remove characters after [&#8230;], if the content contains:         
-        //  [&#8230;]\nThe post <post link> appeared first on <post blog link>
+        //  "[&#8230;]\nThe post " and " appeared first on "
         // -If content does not have [&#8230;], but ends with &#8230; then add brackets
         //  so that content ends with [&#8230;] 
-        // Note that &#8230; is displayed as ...  
+        // Note that &#8230; is displayed as ellipsis (...) 
         public static string AdjustContent(this string content)
         {
             // If content is empty, no adjustment is needed

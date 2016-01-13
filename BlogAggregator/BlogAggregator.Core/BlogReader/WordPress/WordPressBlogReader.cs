@@ -1,12 +1,10 @@
 ﻿using BlogAggregator.Core.Domain;
-using BlogAggregator.Core.Infrastructure;
-using BlogAggregator.Core.Models;
 using BlogAggregator.Core.Services;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net;
 using System.Xml.Linq;
 
 namespace BlogAggregator.Core.BlogReader.WordPress
@@ -14,77 +12,117 @@ namespace BlogAggregator.Core.BlogReader.WordPress
     // Handle Word Press blogs
     public class WordPressBlogReader : IWordPressBlogReader
     {
-        public static WordPressBlogReader Instance => new WordPressBlogReader();
+        private static ILogger _logger = LogManager.GetCurrentClassLogger();
 
         // Retrieve blog description and title from blog Website
         //  according to input blog link, and return in BlogInfo object
         // Return null if unable to get blog info
         public BlogInfo VerifyBlog(string blogLink)
-        {            
-            // Get the XML of the blog
-            string xmlData = getBlogXML(blogLink);
+        {           
 
-            // If blog XML was obtained, parse the blog information
-            if (xmlData != "")
+            // Get the blog feed
+            string feedData = getBlogFeed(blogLink);
+
+            // If blog feed was obtained, parse the blog information
+            if (feedData != "")
             {
-                return parseBlogInfo(xmlData, blogLink);               
+                return parseBlogInfo(feedData, blogLink);
             }
             else
             {
+                _logger.Warn("Unable to get blog feed from {0}", blogLink);
                 return null;
             }
-
         }
 
-        // Parse the posts corresponding to blog,
+        // Parse the blog posts,
         //  and return a list of the posts       
         public IEnumerable<Post> GetBlogPosts(string blogLink)
         {
             List<Post> blogPosts = new List<Post>();
+            bool done = false;
+            HttpStatusCode HTTPresult;
+            int postPage = 1;
 
-            // Get the XML of the blog
-            string xmlData = getBlogXML(blogLink);
-
-            // If blog XML was obtained, parse the blog information
-            // and store in the blog record
-            if (xmlData != "")
+            while (!done)
             {
-                blogPosts = parseBlogPosts(xmlData);
+                // Get blog feed
+                string feedData = getBlogFeed(blogLink, out HTTPresult, postPage);
+
+                if (HTTPresult != HttpStatusCode.OK)
+                {
+                    if (HTTPresult == HttpStatusCode.NotFound)
+                    {
+                        done = true;
+                    }
+                    else
+                    {
+                        _logger.Error("Unable to get blog feed from {0}, postPage: {1}, HTTP status code: {2}",
+                                        blogLink, postPage, HTTPresult);
+                        throw new Exception("Unable to get feed from blog at " + blogLink +
+                                                ", postPage: " + postPage +
+                                                ", HTTP status code: " + HTTPresult);
+                    }
+                }
+                else
+                {
+                    // Parse the posts and append them to blogPosts
+                    // Increment post page counter                    
+                    blogPosts.AddRange(parseBlogPosts(blogLink, feedData));
+                    ++postPage;
+                }
             }
+
             return blogPosts;
         }
 
-        // Get the XML string from the blog RSS feed
-        private string getBlogXML(string blogLink)
+        // Get the blog feed and return the HTTP status code
+        // input postPage: 1 indicates get blog information or the recent posts (page 1); 
+        //   value greater than 1 indicates earlier posts (page 2, 3,...)
+        private string getBlogFeed(string blogLink, out HttpStatusCode HTTPresult, int postPage = 1)
         {
-            string xmlUrl = getXMLUrl(blogLink);
-            string xmlData = WebData.Instance.GetWebDataFixUrl(xmlUrl);
-            return xmlData;
+            string feedUrl = getFeedUrl(blogLink, postPage);
+            string feedData = WebData.Instance.GetWebData(feedUrl, out HTTPresult);
+          
+            return feedData;
+        }
+
+        // Overload for getBlogFeed if HTTP status code is not needed
+        private string getBlogFeed(string blogLink, int postPage = 1)
+        {
+            HttpStatusCode HTTPresult;
+            return getBlogFeed(blogLink, out HTTPresult, postPage);
         }
 
         // Get the URL of the blog RSS feed from the blog link
-        private string getXMLUrl(string inputUrl)
+        // The blog feed URL is <blogLink>/feed for the most recent posts,
+        //  and for earlier posts the feed URL is <blogLink>/feed/?paged=2, <blogLink>/feed/?paged=3, etc.
+        private string getFeedUrl(string blogLink, int postPage)
         {
-            string XMLUrl;
+            string feedUrl;
 
             // Append 'feed' or '/feed', depending on whether input ends with '/'
-            if (inputUrl[inputUrl.Length - 1] == '/')
+            if (blogLink[blogLink.Length - 1] == '/')
             {
-                XMLUrl = inputUrl + "feed";
+                feedUrl = blogLink + "feed";
             }
             else
             {
-                XMLUrl = inputUrl + "/feed";
+                feedUrl = blogLink + "/feed";
             }
 
-            return XMLUrl;
+            if (postPage > 1)
+            {
+                feedUrl = feedUrl + "/?paged=" + postPage;
+            }
+
+            return feedUrl;
         }
 
         // Get the blog information from the input XML data,
         //  and return it as BlogInfo object
-        // Return null if unable to get the blog info
         private BlogInfo parseBlogInfo(string xmlData, string blogLink)
-        {            
+        {
             try
             {
                 using (var xmlStream = xmlData.ToStream())
@@ -101,16 +139,18 @@ namespace BlogAggregator.Core.BlogReader.WordPress
                     return blogInfo;
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                _logger.Warn("Unable to parse blog info from {0}\nException: {1}\nStackTrace: {2}",
+                                        blogLink, ex.Message, ex.StackTrace);
                 return null;
-            }          
+            }
         }
 
-        // Get the blog posts from the input XML data,
+        // Get the blog posts from the input feed XML data,
         //  and return as list of Post objects        
-        private List<Post> parseBlogPosts(string xmlData)
-        {           
+        private List<Post> parseBlogPosts(string feedLink, string xmlData)
+        {
             var posts = new List<Post>();
 
             try
@@ -120,11 +160,10 @@ namespace BlogAggregator.Core.BlogReader.WordPress
                     XDocument xmlDoc = XDocument.Load(xmlStream);
 
                     // Get the namespace to use for the content tag
-                    XNamespace contentNameSpace = getContentNameSpace(xmlDoc);
+                    XNamespace contentNameSpace = getContentNameSpace(feedLink, xmlDoc);
 
                     // Get the blog posts from the XML document
                     // They are in <item> tags, which are under <channel> under <rss> 
-                                                 
                     posts =
                        xmlDoc.Element("rss").Element("channel").Descendants("item").Select(post => new Post
                        {
@@ -134,36 +173,51 @@ namespace BlogAggregator.Core.BlogReader.WordPress
                            Link = post.Element("link").Value,
                            PublicationDate = Convert.ToDateTime(post.Element("pubDate").Value),
                            Title = post.Element("title").Value.ScrubHtml()
-                       }).ToList();                        
+                       }).ToList();
                 }
+                return posts;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                // If error occurred, ensure that null object is returned
-                if (posts != null)
-                {
-                    posts = new List<Post>();
-                }
-            }           
-
-            return posts;
+                _logger.Error("Unable to parse blog posts from {0}\nException: {1}\nStackTrace: {2}",
+                                        feedLink, ex.Message, ex.StackTrace);
+                throw new Exception("Unable to parse blog posts from " + feedLink);
+            }
         }
 
         // Get the content namespace specified in the input XML document,
         // from the <rss> tag, attribute xmlns:content
         // If xmlns:content not found, use default value
-        private XNamespace getContentNameSpace(XDocument xmlDoc)
+        private XNamespace getContentNameSpace(string feedLink, XDocument xmlDoc)
         {
-            XNamespace contentNameSpace = "http://purl.org/rss/1.0/modules/content/";
+            const string DEFAULT_CONTENT_NAMESPACE = "http://purl.org/rss/1.0/modules/content/";
+            XNamespace contentNameSpace = DEFAULT_CONTENT_NAMESPACE;
 
-            var contentAttrib = xmlDoc.Element("rss").Attributes()
+            try
+            {
+                var contentAttrib = xmlDoc.Element("rss").Attributes()
                                  .Where(attrib => attrib.IsNamespaceDeclaration &&
                                    attrib.Name.LocalName == "content").FirstOrDefault();
+                if (contentAttrib != null)
+                {
+                    contentNameSpace = contentAttrib.Value;
+                }
+                else
+                {
+                    _logger.Warn("Using default content namespace {0}, as unable to get content namespace from feed at {1}",
+                                           DEFAULT_CONTENT_NAMESPACE, feedLink);
+                }                   
 
-            if (contentAttrib != null) contentNameSpace = contentAttrib.Value;
-
+            }
+            catch (Exception ex)
+            {
+                _logger.Warn
+                    ("Using default content namespace {0}, as unable to get content namespace from feed at {1}\nException: {2}\nStackTrace: {3}",
+                                          DEFAULT_CONTENT_NAMESPACE, feedLink, ex.Message, ex.StackTrace);
+            }
+                        
             return contentNameSpace;
         }
-        
+
     }
 }

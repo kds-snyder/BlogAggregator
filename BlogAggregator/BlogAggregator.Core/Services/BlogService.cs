@@ -2,8 +2,8 @@
 using BlogAggregator.Core.BlogReader.WordPress;
 using BlogAggregator.Core.Domain;
 using BlogAggregator.Core.Infrastructure;
-using BlogAggregator.Core.Models;
 using BlogAggregator.Core.Repository;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,17 +16,23 @@ namespace BlogAggregator.Core.Services
         private readonly IPostRepository _postRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWordPressBlogReader _wordPressBlogReader;
+        //private readonly ILogger _logger;
+        private static ILogger _logger;
 
         public BlogService(
             IBlogRepository blogRepository,
             IPostRepository postRepository,
             IUnitOfWork unitOfWork,
             IWordPressBlogReader wordPressBlogReader)
+            //IWordPressBlogReader wordPressBlogReader,
+            //ILogger logger)
         {
             _blogRepository = blogRepository;
             _postRepository = postRepository;
             _unitOfWork = unitOfWork;
             _wordPressBlogReader = wordPressBlogReader;
+            //_logger = logger;
+            _logger = LogManager.GetCurrentClassLogger();
         }
 
         // Extract posts of blog and save them in Post table
@@ -34,7 +40,10 @@ namespace BlogAggregator.Core.Services
         {
             var blogPosts = ExtractBlogPosts(blog);
 
-            SaveBlogPosts(blog.BlogID, blogPosts);
+            _logger.Trace("Extracted {0} posts from {1}",
+                            blogPosts.Count(), blog.Link);
+
+            SaveBlogPosts(blog, blogPosts);
         }
 
         // Extract posts of blog, and save posts in Post table
@@ -43,7 +52,10 @@ namespace BlogAggregator.Core.Services
         {
             var blogPosts = ExtractBlogPosts(blog);
 
-            SaveNewBlogPosts(blog.BlogID, blogPosts);
+            _logger.Trace("Extracted {0} posts from {1}",
+                            blogPosts.Count(), blog.Link);
+
+            SaveNewBlogPosts(blog, blogPosts);
         }
 
         // For all approved blogs, extract posts, and save posts in Post table         
@@ -74,6 +86,7 @@ namespace BlogAggregator.Core.Services
             {
                 case BlogTypes.WordPress:
                     return extractBlogPosts(_wordPressBlogReader, blog.Link);
+
                 default:
                     throw new ArgumentException(nameof(blog));
             }
@@ -82,25 +95,27 @@ namespace BlogAggregator.Core.Services
         // Extract blog posts
         private IEnumerable<Post> extractBlogPosts(IBlogReader reader, string blogLink)
         {
-            BlogInfo blogInfo = reader.VerifyBlog(blogLink);
-            if (blogInfo != null)
+            BlogInfo bloginfo = reader.VerifyBlog(blogLink);
+            if (bloginfo != null)
             {
+                _logger.Trace("Extracting posts from {0}", blogLink);
+
                 return reader.GetBlogPosts(blogLink);
             }
             else
             {
-                throw new Exception("Blog at " + blogLink + " could not be verified for extraction");
+                throw new Exception("blog at " + blogLink + " could not be verified for extraction");
             }
         }
 
         // Save blog posts in Post table
-        public void SaveBlogPosts(int blogId, IEnumerable<Post> posts)
+        public void SaveBlogPosts(Blog blog, IEnumerable<Post> posts)
         {
             foreach (var post in posts)
             {
                 _postRepository.Add(new Post
                 {
-                    BlogID = blogId,
+                    BlogID = blog.BlogID,
                     Content = post.Content,
                     Description = post.Description,
                     Guid = post.Guid,
@@ -111,21 +126,22 @@ namespace BlogAggregator.Core.Services
             }
 
             _unitOfWork.Commit();
+            _logger.Trace("Saved {0} posts for {1}", posts.Count(), blog.Link);
         }
 
         // Save blog posts that are not already in Post table
-        public void SaveNewBlogPosts(int blogId, IEnumerable<Post> posts)
+        public void SaveNewBlogPosts(Blog blog, IEnumerable<Post> posts)
         {
-            bool savedPosts = false;
+            int savedPosts = 0;
             foreach (var post in posts)
             {
                 // Add post to Post table if its Guid does not match any post
                 if (!_postRepository.Any(p => p.Guid == post.Guid))
                 {
-                    savedPosts = true;
+                    ++savedPosts;
                     _postRepository.Add(new Post
                     {
-                        BlogID = blogId,
+                        BlogID = blog.BlogID,
                         Content = post.Content,
                         Description = post.Description,
                         Guid = post.Guid,
@@ -136,11 +152,11 @@ namespace BlogAggregator.Core.Services
                 }
             }
 
-            if (savedPosts)
+            if (savedPosts > 0)
             {
-                _unitOfWork.Commit();
-
+                _unitOfWork.Commit();               
             }
+            _logger.Trace("Saved {0} new posts for {1}", savedPosts, blog.Link);
         }
     }
 }

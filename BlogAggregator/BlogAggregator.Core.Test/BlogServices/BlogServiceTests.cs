@@ -9,7 +9,6 @@ using BlogAggregator.API;
 using BlogAggregator.Core.Domain;
 using System.Linq;
 using System.Collections.Generic;
-using BlogAggregator.Core.Models;
 using BlogAggregator.Core.BlogReader;
 using System.Linq.Expressions;
 
@@ -22,6 +21,7 @@ namespace BlogAggregator.Core.Test.BlogServices
         private Mock<IPostRepository> _postRepositoryMock;
         private Mock<IUnitOfWork> _unitOfWorkMock;        
         private Mock<IWordPressBlogReader> _wordPressBlogReaderMock;
+        //private Mock<ILogger> _loggerMock;
         private BlogService _blogService;
 
         private Blog[] _blogs;
@@ -244,8 +244,11 @@ namespace BlogAggregator.Core.Test.BlogServices
             // Set up unit of work and services
             _unitOfWorkMock = new Mock<IUnitOfWork>();
             _wordPressBlogReaderMock = new Mock<IWordPressBlogReader>();
+            //_loggerMock = new Mock<ILogger>();
             _blogService = new BlogService(_blogRepositoryMock.Object, _postRepositoryMock.Object,
-                                                _unitOfWorkMock.Object, _wordPressBlogReaderMock.Object);
+                                            _unitOfWorkMock.Object, _wordPressBlogReaderMock.Object);
+                                                //_unitOfWorkMock.Object, _wordPressBlogReaderMock.Object,
+                                                //_loggerMock.Object);
 
         }
 
@@ -361,7 +364,7 @@ namespace BlogAggregator.Core.Test.BlogServices
             IEnumerable<Post> posts = _postsBlogA.ToList();
 
             // Act
-            _blogService.SaveBlogPosts(_blogIDAWithPosts, posts);
+            _blogService.SaveBlogPosts(_blogA, posts);
 
             // Assert
             // Verify that:
@@ -379,7 +382,7 @@ namespace BlogAggregator.Core.Test.BlogServices
             _postRepositoryMock.Setup(pr => pr.Any(It.IsAny<Expression<Func<Post, bool>>>())).Returns(false);
 
             // Act
-            _blogService.SaveNewBlogPosts(_blogIDBWithPosts, posts);
+            _blogService.SaveNewBlogPosts(_blogB, posts);
 
             // Assert
             // Verify that:

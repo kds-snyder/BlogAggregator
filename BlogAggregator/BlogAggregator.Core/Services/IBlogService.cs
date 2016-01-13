@@ -10,7 +10,7 @@ namespace BlogAggregator.Core.Services
         void ExtractAndSaveNewBlogPosts(Blog blog);
         void ExtractAndSaveAllNewBlogPosts();
         IEnumerable<Post> ExtractBlogPosts(Blog blog);
-        void SaveBlogPosts(int blogId, IEnumerable<Post> posts);
-        void SaveNewBlogPosts(int blogId, IEnumerable<Post> posts);
+        void SaveBlogPosts(Blog blog, IEnumerable<Post> posts);
+        void SaveNewBlogPosts(Blog blog, IEnumerable<Post> posts);
     }
 }

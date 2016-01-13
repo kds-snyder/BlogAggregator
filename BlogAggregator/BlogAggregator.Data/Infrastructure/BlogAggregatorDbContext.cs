@@ -1,18 +1,12 @@
 ﻿using BlogAggregator.Core.Domain;
-using Microsoft.AspNet.Identity.EntityFramework;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BlogAggregator.Data.Infrastructure
 {
     public class BlogAggregatorDbContext : DbContext
     {
 
-        public BlogAggregatorDbContext() : base("BlogAggregator_oauth")
+        public BlogAggregatorDbContext() : base("BlogAggregator")
         {
             var ensureDLLIsCopied =
                 System.Data.Entity.SqlServer.SqlProviderServices.Instance;

@@ -1,7 +1,7 @@
 ﻿{
   "$schema": "http://schemastore.org/schemas/json/webjob-publish-settings.json",
   "webJobName": "BlogAggregatorWebJob",
-  "startTime": "2015-12-29T11:00:00-08:00",
+  "startTime": "2016-01-13T13:00:00-08:00",
   "endTime": null,
   "jobRecurrenceFrequency": "Hour",
   "interval": 1,

@@ -1,4 +1,4 @@
-use BlogAggregator_oauth;
+use BlogAggregator;
 GO
 
 INSERT INTO Users

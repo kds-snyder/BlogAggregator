@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using BlogAggregator.Core.Domain;
 using BlogAggregator.Core.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Cors;
@@ -39,6 +37,7 @@ namespace BlogAggregator.API
 
             // Initialize AutoMapper
             CreateMaps();
+
         }
 
         public static void CreateMaps()

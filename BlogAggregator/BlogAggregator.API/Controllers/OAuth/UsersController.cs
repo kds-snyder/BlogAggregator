@@ -32,7 +32,7 @@ namespace BlogAggregator.API.Controllers.OAuth
         [EnableQuery]
         public IQueryable<UserModel> GetUsers()
         {
-            // Allow only for authorized user
+            //Allow only for authorized user
             var userToCheck = _userRepository.FirstOrDefault(u => u.UserName == User.Identity.Name);
             if (!userToCheck.Authorized)
             {

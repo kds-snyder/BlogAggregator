@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
 using SimpleInjector;
 using BlogAggregator.Core.Services;
@@ -11,7 +7,6 @@ using BlogAggregator.Data.Infrastructure;
 using BlogAggregator.Core.Infrastructure;
 using BlogAggregator.Core.Repository;
 using BlogAggregator.Data.Repository;
-using SimpleInjector.Extensions.ExecutionContextScoping;
 
 namespace BlogAggregator.WebJob
 {
@@ -22,32 +17,40 @@ namespace BlogAggregator.WebJob
         // AzureWebJobsDashboard and AzureWebJobsStorage
         static void Main()
         {
-            // Configure SimpleInjector                     
-            Container container = configureSimpleInjector();
-
-            // Configure JobHost.
-            var jobHostConfiguration = new JobHostConfiguration
-            {
-                JobActivator = new BlogAggregatorJobActivator(container)
-            };
-            var jobHost = new JobHost(jobHostConfiguration);
-
-            // Call the scheduled blog post updating method
-            Console.WriteLine("Calling SaveNewBlogPosts");
             try
             {
+                // Configure SimpleInjector                     
+                Container container = configureSimpleInjector();
+
+                // Configure JobHost.
+                var jobHostConfiguration = new JobHostConfiguration
+                {
+                    JobActivator = new BlogAggregatorJobActivator(container)
+                };
+
+                var jobHost = new JobHost(jobHostConfiguration);
+
+                // Call the scheduled blog post updating method
+                Console.WriteLine("Calling SaveNewBlogPosts");
                 jobHost.Call(typeof(Functions).GetMethod("SaveNewBlogPosts"));
                 Console.WriteLine("Completed SaveNewBlogPosts");
+
+                // Console.ReadLine must be commented out when deployed as it causes WebJob to fail with timeout error
+                //Console.ReadLine();
             }
             catch (Exception e)
             {
-                Console.WriteLine("Exception occurred: {0}", e.Message);
-                Console.WriteLine("Source: {0}", e.Source);
-                Console.WriteLine("StackTrace: {0}", e.StackTrace);                
+                Console.WriteLine("Exception occurred: {0}\nSource: {1}\nStackTrace: {2}", 
+                                    e.Message, e.Source, e.StackTrace);
+                if (e.InnerException != null)
+                {
+                    Console.WriteLine("InnerException: {0}\n{1}",
+                                e.InnerException, e.InnerException.StackTrace);
+               }
+                // Console.ReadLine must be commented out when deployed as it causes WebJob to fail with timeout error
+                //Console.ReadLine();
                 throw;
-            }                      
-            // Console.ReadLine commented out as it causes WebJob to fail with timeout error although SaveNewBlogPosts is successful
-            //Console.ReadLine();
+            }           
         }
 
         // Configure Simple Injector dependencies
@@ -63,6 +66,8 @@ namespace BlogAggregator.WebJob
 
             container.Register<IBlogService, BlogService>();
             container.Register<IWordPressBlogReader, WordPressBlogReader>();
+
+            //container.Register<ILogger, Logger>();
 
             container.Verify();
 
