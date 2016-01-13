@@ -98,7 +98,7 @@ namespace BlogAggregator.Core.Services
             BlogInfo bloginfo = reader.VerifyBlog(blogLink);
             if (bloginfo != null)
             {
-                _logger.Trace("Getting posts from {0}", blogLink);
+                _logger.Trace("Extracting posts from {0}", blogLink);
 
                 return reader.GetBlogPosts(blogLink);
             }

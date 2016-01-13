@@ -160,7 +160,7 @@ namespace BlogAggregator.Core.BlogReader.WordPress
                     XDocument xmlDoc = XDocument.Load(xmlStream);
 
                     // Get the namespace to use for the content tag
-                    XNamespace contentNameSpace = getContentNameSpace(xmlDoc);
+                    XNamespace contentNameSpace = getContentNameSpace(feedLink, xmlDoc);
 
                     // Get the blog posts from the XML document
                     // They are in <item> tags, which are under <channel> under <rss> 
@@ -188,16 +188,34 @@ namespace BlogAggregator.Core.BlogReader.WordPress
         // Get the content namespace specified in the input XML document,
         // from the <rss> tag, attribute xmlns:content
         // If xmlns:content not found, use default value
-        private XNamespace getContentNameSpace(XDocument xmlDoc)
+        private XNamespace getContentNameSpace(string feedLink, XDocument xmlDoc)
         {
-            XNamespace contentNameSpace = "http://purl.org/rss/1.0/modules/content/";
+            const string DEFAULT_CONTENT_NAMESPACE = "http://purl.org/rss/1.0/modules/content/";
+            XNamespace contentNameSpace = DEFAULT_CONTENT_NAMESPACE;
 
-            var contentAttrib = xmlDoc.Element("rss").Attributes()
+            try
+            {
+                var contentAttrib = xmlDoc.Element("rss").Attributes()
                                  .Where(attrib => attrib.IsNamespaceDeclaration &&
                                    attrib.Name.LocalName == "content").FirstOrDefault();
+                if (contentAttrib != null)
+                {
+                    contentNameSpace = contentAttrib.Value;
+                }
+                else
+                {
+                    _logger.Warn("Using default content namespace {0}, as unable to get content namespace from feed at {1}",
+                                           DEFAULT_CONTENT_NAMESPACE, feedLink);
+                }                   
 
-            if (contentAttrib != null) contentNameSpace = contentAttrib.Value;
-
+            }
+            catch (Exception ex)
+            {
+                _logger.Warn
+                    ("Using default content namespace {0}, as unable to get content namespace from feed at {1}\nException: {2}\nStackTrace: {3}",
+                                          DEFAULT_CONTENT_NAMESPACE, feedLink, ex.Message, ex.StackTrace);
+            }
+                        
             return contentNameSpace;
         }
 

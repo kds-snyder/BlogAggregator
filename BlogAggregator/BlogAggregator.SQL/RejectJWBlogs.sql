@@ -1,4 +1,4 @@
-use BlogAggregator_oauth;
+use BlogAggregator;
 GO
 
 DELETE FROM Posts WHERE BlogID = (SELECT BlogID FROM Blogs Where AuthorName = 'Jeff Ward');
