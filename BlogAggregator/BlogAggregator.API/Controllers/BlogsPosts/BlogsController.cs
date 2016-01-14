@@ -14,6 +14,7 @@ using BlogAggregator.Core.Infrastructure;
 using BlogAggregator.Core.BlogReader.WordPress;
 using System.Web.Http.OData;
 using BlogAggregator.Core.BlogReader;
+using System.Collections.Generic;
 
 namespace BlogAggregator.API.Controllers
 {
@@ -41,7 +42,7 @@ namespace BlogAggregator.API.Controllers
 
         // GET: api/Blogs
         [EnableQuery]
-        public IQueryable<BlogModel> GetBlogs()
+        public IQueryable<BlogModel> GetBlogs()      
         {
             return _blogRepository.GetAll().ProjectTo<BlogModel>();
         }

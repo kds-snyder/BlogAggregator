@@ -1,9 +1,5 @@
 ﻿using BlogAggregator.Core.Domain;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BlogAggregator.Core.Models
 {
@@ -26,5 +22,6 @@ namespace BlogAggregator.Core.Models
         public string Link { get; set; }
 
         public string Title { get; set; }
+     
     }
 }
