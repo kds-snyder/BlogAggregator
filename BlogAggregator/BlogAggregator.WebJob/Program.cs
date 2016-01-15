@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.Azure.WebJobs;
 using SimpleInjector;
 using BlogAggregator.Core.Services;
 using BlogAggregator.Core.BlogReader.WordPress;
@@ -9,34 +8,21 @@ using BlogAggregator.Core.Repository;
 using BlogAggregator.Data.Repository;
 
 namespace BlogAggregator.WebJob
-{
-    // To learn more about Microsoft Azure WebJobs SDK, please see http://go.microsoft.com/fwlink/?LinkID=320976
+{   
     class Program
     {
-        // Please set the following connection strings in app.config for this WebJob to run:
-        // AzureWebJobsDashboard and AzureWebJobsStorage
         static void Main()
         {
-
             try
             {
                 // Configure SimpleInjector                     
                 Container container = configureSimpleInjector();
 
-                // Configure JobHost.
-                var jobHostConfiguration = new JobHostConfiguration
-                {
-                    JobActivator = new BlogAggregatorJobActivator(container)
-                };
-
-                var jobHost = new JobHost(jobHostConfiguration);
-
-                // Call the scheduled blog post updating method
-                Console.WriteLine("Calling SaveNewBlogPosts");
-                //jobHost.Call(typeof(Functions).GetMethod("SaveNewBlogPosts"));  
+                // Call the method to save new blog posts
+                Console.WriteLine("Calling ExtractAndSaveAllNewBlogPosts");
                 IBlogService blogService = container.GetInstance<BlogService>();
                 blogService.ExtractAndSaveAllNewBlogPosts();
-                Console.WriteLine("Completed SaveNewBlogPosts");
+                Console.WriteLine("Completed ExtractAndSaveAllNewBlogPosts");
             }
             catch (Exception e)
             {
@@ -69,8 +55,6 @@ namespace BlogAggregator.WebJob
 
             container.Register<IBlogService, BlogService>();
             container.Register<IWordPressBlogReader, WordPressBlogReader>();
-
-            //container.Register<ILogger, Logger>();
 
             container.Verify();
 
