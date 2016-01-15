@@ -26,8 +26,8 @@ namespace BlogAggregator.Core.Domain
         public string Title { get; set; }
 
         // Blog can have many posts
-        public virtual ICollection<Post> Posts { get; set; }  
-        
+        public virtual ICollection<Post> Posts { get; set; }
+      
         public void Update(BlogModel blog)
         {
             if (blog.BlogID == 0)

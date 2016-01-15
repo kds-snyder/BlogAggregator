@@ -17,6 +17,7 @@ namespace BlogAggregator.WebJob
         // AzureWebJobsDashboard and AzureWebJobsStorage
         static void Main()
         {
+
             try
             {
                 // Configure SimpleInjector                     
@@ -32,25 +33,27 @@ namespace BlogAggregator.WebJob
 
                 // Call the scheduled blog post updating method
                 Console.WriteLine("Calling SaveNewBlogPosts");
-                jobHost.Call(typeof(Functions).GetMethod("SaveNewBlogPosts"));
+                //jobHost.Call(typeof(Functions).GetMethod("SaveNewBlogPosts"));  
+                IBlogService blogService = container.GetInstance<BlogService>();
+                blogService.ExtractAndSaveAllNewBlogPosts();
                 Console.WriteLine("Completed SaveNewBlogPosts");
-
-                // Console.ReadLine must be commented out when deployed as it causes WebJob to fail with timeout error
-                //Console.ReadLine();
             }
             catch (Exception e)
             {
-                Console.WriteLine("Exception occurred: {0}\nSource: {1}\nStackTrace: {2}", 
+                Console.WriteLine("Exception occurred: {0}\nSource: {1}\nStackTrace: {2}",
                                     e.Message, e.Source, e.StackTrace);
                 if (e.InnerException != null)
                 {
                     Console.WriteLine("InnerException: {0}\n{1}",
                                 e.InnerException, e.InnerException.StackTrace);
-               }
-                // Console.ReadLine must be commented out when deployed as it causes WebJob to fail with timeout error
-                //Console.ReadLine();
+                }
                 throw;
-            }           
+            }
+            finally
+            {
+                // Comment out when deploying
+                //Console.ReadLine();
+            }
         }
 
         // Configure Simple Injector dependencies

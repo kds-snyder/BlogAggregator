@@ -1,12 +1,10 @@
 ﻿using Microsoft.Azure.WebJobs;
-using BlogAggregator.Core.Repository;
-using BlogAggregator.Core.Infrastructure;
 using BlogAggregator.Core.Services;
 
 namespace BlogAggregator.WebJob
 {
     public class Functions
-    {
+    {       
         private readonly IBlogService _blogService;       
 
         public Functions(IBlogService blogService)
