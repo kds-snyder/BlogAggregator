@@ -9,7 +9,7 @@ The database connection string is stored in files that are not uploaded to GitHu
 
 --File ConnectionStringsAPI.config in folder BlogAggregator.API  
 ---Format for ConnectionStringsAPI.config:  
-    <add name="BlogAggregator" connectionString="(connection string for Azure SQL DB)" providerName="System.Data.SqlClient" />
+    \<add name="BlogAggregator" connectionString="(connection string for Azure SQL DB)" providerName="System.Data.SqlClient" \/\>  
 
 --File ConnectionStringsWebJob.config in folder BlogAggregator.WebJob/bin/Debug  
 ---Format for ConnectionStringsWebJob.config in Debug folder:  
