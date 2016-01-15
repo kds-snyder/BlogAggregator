@@ -1,5 +1,4 @@
-﻿
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BlogAggregator.Core.BlogReader.WordPress;
 using BlogAggregator.Core.Domain;
 using System.Collections.Generic;

@@ -25,6 +25,7 @@ namespace BlogAggregator.Core.Services
                 using (WebClient webClient = new WebClient())
                 {
                     webClient.Encoding = Encoding.UTF8;
+                    string newUrl = webUrl.FixWebUrl();
                     webData = webClient.DownloadString(webUrl.FixWebUrl());
                     HTTPresult = HttpStatusCode.OK;
                 }               

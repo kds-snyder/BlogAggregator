@@ -22,6 +22,13 @@ namespace BlogAggregator.Core.Models
         public string Link { get; set; }
 
         public string Title { get; set; }
-     
+
+        public string FixedLink
+        {
+            get
+            {
+                return Link.FixWebUrl();
+            }
+        }
     }
 }
